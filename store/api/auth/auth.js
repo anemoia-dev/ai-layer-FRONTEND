@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import i18n from '../../../i18/i18n';
+import i18n from '../../../i18/i18n.ts';
 
 const baseUrl = 'http://localhost:6500/api/';
 
