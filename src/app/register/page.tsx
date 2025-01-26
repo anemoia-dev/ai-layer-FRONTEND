@@ -13,8 +13,6 @@ export default function Page() {
   const { i18n } = useTranslation();
   const getLanguage = i18n.language as 'ar' | 'en'; // Type assertion to restrict getLanguage to 'ar' or 'en'
 
-  console.log(getLanguage, 'language');
-
   return (
     <div className="relative" dir={getLanguage === 'ar' ? 'rtl' : 'ltr'}>
       <div className="fixed top-0 z-[60] flex w-full justify-end">
