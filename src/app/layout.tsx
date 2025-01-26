@@ -14,8 +14,6 @@ const poppins = Poppins({
   subsets: ['latin'],
 });
 
-export const fonts = [poppins];
-
 function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
