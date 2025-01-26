@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+
+.custom-bg{
+  background-image: url('/bg-image.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@tailwind utilities;
