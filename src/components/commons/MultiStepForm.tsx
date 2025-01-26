@@ -14,11 +14,9 @@ interface MultiStepFormProps {
 const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
   const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(1);
-  console.log('Current language:', language);
 
   return (
     <div className="flex min-h-screen flex-col bg-white text-black lg:flex-row">
-      {/* Left side panel */}
       <div className="custom-bg sticky top-0 hidden max-h-[100vh] w-full rounded-r-3xl bg-gray-100 p-4 lg:flex lg:w-[35%] lg:flex-col lg:items-center lg:justify-center">
         <div
           className={`flex items-center ${
@@ -64,7 +62,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
                 className={`z-[50] mb-2 flex h-12 w-12 items-center justify-center rounded-[50%] border-2 lg:h-8 lg:w-8 lg:rounded-full xl:h-12 xl:w-12 ${
                   currentStep >= step
                     ? 'bg-black text-white'
-                    : 'bg-white-300 border border-gray-500 text-gray-500'
+                    : 'border border-gray-500 text-gray-500'
                 }`}
               >
                 {step}
@@ -74,14 +72,13 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
         </div>
       </div>
 
-      {/* Right side form */}
       <div className="w-full bg-white lg:w-[65%]">
         <form>
           {currentStep === 1 && <Step1 setCurrentStep={setCurrentStep} />}
           {currentStep === 2 && <Step2 setCurrentStep={setCurrentStep} />}
           {currentStep === 3 && <Step3 setCurrentStep={setCurrentStep} />}
           {currentStep === 4 && <Step4 setCurrentStep={setCurrentStep} />}
-          {currentStep === 5 && <Step5 />}
+          {currentStep === 5 && <Step5 setCurrentStep={setCurrentStep} />}
         </form>
       </div>
     </div>

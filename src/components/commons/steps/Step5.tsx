@@ -9,8 +9,6 @@ import { useRegisterUserMutation } from '@/../store/api/auth/auth';
 
 interface Step5Props {
   setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
-  formData: any;
-  currentLanguage: string;
 }
 
 interface FormData {
@@ -23,14 +21,12 @@ const Step5: React.FC<Step5Props> = ({ setCurrentStep }) => {
   const { t } = useTranslation();
   const [register] = useRegisterUserMutation();
 
-  // Initialize react-hook-form
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
 
-  // General function for rendering radio button groups
   const renderRadioGroup = (
     name: keyof FormData,
     label: string,
@@ -71,32 +67,19 @@ const Step5: React.FC<Step5Props> = ({ setCurrentStep }) => {
   );
 
   const onSubmit = async (data: FormData) => {
-    console.log('Form Data:', data);
-
-    // Retrieve all previous step data
     const step1 = JSON.parse(localStorage.getItem('step-1') || '{}');
     const step2 = JSON.parse(localStorage.getItem('step-2') || '{}');
     const step3 = JSON.parse(localStorage.getItem('step-3') || '{}');
     const step4 = JSON.parse(localStorage.getItem('step-4') || '{}');
 
-    const mergedData = {
-      ...step1,
-      ...step2,
-      ...step3,
-      ...step4,
-      ...data,
-    };
+    const mergedData = { ...step1, ...step2, ...step3, ...step4, ...data };
 
     localStorage.setItem('step-5', JSON.stringify(mergedData));
 
-    console.log('Merged Data:', mergedData);
-
     try {
       const response = await register({ userCredentials: mergedData });
-      console.log(response);
-
       if (response?.error) {
-        const errorMessages = response?.error?.message;
+        const errorMessages = response?.error;
 
         if (Array.isArray(errorMessages)) {
           errorMessages.forEach((err: { field: string; message: string }) => {
@@ -107,10 +90,7 @@ const Step5: React.FC<Step5Props> = ({ setCurrentStep }) => {
             }
           });
         } else {
-          toast.error(
-            response?.error?.message ||
-              t('An error occurred, please check the data.'),
-          );
+          toast.error('An error occurred, please check the data.');
         }
       } else if (response?.data?.message) {
         toast.success(response?.data?.message || t('Submission successful!'));
@@ -138,7 +118,6 @@ const Step5: React.FC<Step5Props> = ({ setCurrentStep }) => {
         </div>
 
         <div className="flex flex-col gap-5 p-5 md:p-10">
-          {/* Render each radio group using the renderRadioGroup function */}
           {renderRadioGroup(
             'timeDedication',
             'How much time can you dedicate daily to using the application?',

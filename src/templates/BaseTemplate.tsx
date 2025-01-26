@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 
-import { AppConfig } from '@/styles/utils/AppConfig';
+import { AppConfig } from '@/utils/AppConfig';
 
 type IBaseTemplateProps = {
   leftNav: ReactNode;

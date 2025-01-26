@@ -4,7 +4,7 @@ import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-interface Step2 {
+interface Step2Data {
   organization: string;
   duration: string;
   legalWorkType: string;
@@ -24,7 +24,7 @@ const Step2: React.FC<Step2Props> = ({ setCurrentStep }) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<Step2>({
+  } = useForm<Step2Data>({
     defaultValues: {
       organization: '',
       duration: '',
@@ -35,10 +35,8 @@ const Step2: React.FC<Step2Props> = ({ setCurrentStep }) => {
     },
   });
 
-  const onSubmit = (data: Step2) => {
-    console.log(data);
+  const onSubmit = (data: Step2Data) => {
     localStorage.setItem('step-2', JSON.stringify(data));
-
     setCurrentStep((prev) => prev + 1);
   };
 

@@ -11,7 +11,8 @@ import LanguageSwitcher from '@/components/globals/dropdown/LanguageSwitcher';
 
 export default function Page() {
   const { i18n } = useTranslation();
-  const getLanguage = i18n.language;
+  const getLanguage = i18n.language as 'ar' | 'en'; // Type assertion to restrict getLanguage to 'ar' or 'en'
+
   console.log(getLanguage, 'language');
 
   return (

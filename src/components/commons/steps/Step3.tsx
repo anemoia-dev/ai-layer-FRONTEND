@@ -11,28 +11,24 @@ interface Step3Props {
 const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
   const { t } = useTranslation();
 
-  // Initialize react-hook-form with default values
   const {
     control,
     handleSubmit,
     formState: { errors },
-    setValue, // added to update form values
   } = useForm({
     defaultValues: {
-      familiarityLevel: '', // initial value
-      usefulFeatures: '', // initial value
-      trackTrainingHours: '', // initial value
-      careerGoals: '', // initial value
+      familiarityLevel: '',
+      usefulFeatures: '',
+      trackTrainingHours: '',
+      careerGoals: '',
     },
   });
 
-  // Submit handler for the "Next" button
   const handlePrevious = () => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
   const onSubmit = (data: any) => {
-    console.log(data);
     localStorage.setItem('step-3', JSON.stringify(data));
     setCurrentStep((prevStep) => prevStep + 1);
   };
@@ -45,21 +41,20 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="bpx-5 mt-10 flex w-full flex-col gap-2 border-b px-5 md:px-10">
+        <div className="mt-10 flex w-full flex-col gap-2 border-b px-5 md:px-10">
           <h1 className="text-lg font-[500]">
             {t('Your Opinion on the Ai Legal Traning System')}
           </h1>
-          <p className="text-xs text-gray-400 ">
+          <p className="text-xs text-gray-400">
             {t('Please provide the information required in the below form')}
           </p>
         </div>
 
         <div className="flex w-full flex-col gap-5 p-5 md:p-10">
-          {/* LEVEL OF FAMILIARITY WITH AI TECHNOLOGIES */}
           <div className="flex flex-col gap-3">
             <h2 className="text-sm font-[500]">
               {t(
-                'What is your level of familiarity with AI technologies in the legal field ?',
+                'What is your level of familiarity with AI technologies in the legal field?',
               )}
             </h2>
             <Controller
@@ -69,7 +64,7 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
               render={({ field }) => (
                 <RadioGroup
                   {...field}
-                  value={field.value || ''} // Ensure the value is always controlled
+                  value={field.value || ''}
                   className="text-gray-700"
                 >
                   <FormControlLabel
@@ -78,9 +73,7 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
                       <Radio
                         sx={{
                           color: 'black',
-                          '&.Mui-checked': {
-                            color: 'black',
-                          },
+                          '&.Mui-checked': { color: 'black' },
                         }}
                       />
                     }
@@ -92,9 +85,7 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
                       <Radio
                         sx={{
                           color: 'black',
-                          '&.Mui-checked': {
-                            color: 'black',
-                          },
+                          '&.Mui-checked': { color: 'black' },
                         }}
                       />
                     }
@@ -106,9 +97,7 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
                       <Radio
                         sx={{
                           color: 'black',
-                          '&.Mui-checked': {
-                            color: 'black',
-                          },
+                          '&.Mui-checked': { color: 'black' },
                         }}
                       />
                     }
@@ -124,11 +113,10 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
             )}
           </div>
 
-          {/* MOST USEFUL FEATURES */}
           <div className="flex flex-col gap-3">
             <h2 className="text-sm font-[500]">
               {t(
-                'Which features do you think would be most useful in the application ?',
+                'Which features do you think would be most useful in the application?',
               )}
             </h2>
             <Controller
@@ -138,7 +126,7 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
               render={({ field }) => (
                 <RadioGroup
                   {...field}
-                  value={field.value || ''} // Ensure the value is always controlled
+                  value={field.value || ''}
                   className="text-gray-700"
                 >
                   <FormControlLabel
@@ -147,9 +135,7 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
                       <Radio
                         sx={{
                           color: 'black',
-                          '&.Mui-checked': {
-                            color: 'black',
-                          },
+                          '&.Mui-checked': { color: 'black' },
                         }}
                       />
                     }
@@ -161,9 +147,7 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
                       <Radio
                         sx={{
                           color: 'black',
-                          '&.Mui-checked': {
-                            color: 'black',
-                          },
+                          '&.Mui-checked': { color: 'black' },
                         }}
                       />
                     }
@@ -175,9 +159,7 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
                       <Radio
                         sx={{
                           color: 'black',
-                          '&.Mui-checked': {
-                            color: 'black',
-                          },
+                          '&.Mui-checked': { color: 'black' },
                         }}
                       />
                     }
@@ -189,9 +171,7 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
                       <Radio
                         sx={{
                           color: 'black',
-                          '&.Mui-checked': {
-                            color: 'black',
-                          },
+                          '&.Mui-checked': { color: 'black' },
                         }}
                       />
                     }
@@ -214,7 +194,6 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
             )}
           </div>
 
-          {/* IMPORTANCE OF TRACKING PRACTICAL TRAINING HOURS */}
           <div className="flex flex-col gap-3">
             <h2 className="text-sm font-[500]">
               {t(
@@ -228,7 +207,7 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
               render={({ field }) => (
                 <RadioGroup
                   {...field}
-                  value={field.value || ''} // Ensure the value is always controlled
+                  value={field.value || ''}
                   className="text-gray-700"
                 >
                   <FormControlLabel
@@ -237,9 +216,7 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
                       <Radio
                         sx={{
                           color: 'black',
-                          '&.Mui-checked': {
-                            color: 'black',
-                          },
+                          '&.Mui-checked': { color: 'black' },
                         }}
                       />
                     }
@@ -251,9 +228,7 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
                       <Radio
                         sx={{
                           color: 'black',
-                          '&.Mui-checked': {
-                            color: 'black',
-                          },
+                          '&.Mui-checked': { color: 'black' },
                         }}
                       />
                     }
@@ -269,7 +244,6 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
             )}
           </div>
 
-          {/* CAREER GOALS */}
           <div className="flex w-full flex-col gap-3">
             <h2 className="text-sm font-[500]">
               {t(
@@ -294,8 +268,6 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
               </p>
             )}
           </div>
-
-          {/* Navigation Buttons */}
         </div>
       </motion.div>
       <div className="my-10 flex justify-between px-5 md:px-10">

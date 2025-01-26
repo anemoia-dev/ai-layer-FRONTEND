@@ -2,18 +2,19 @@
 
 import Error from 'next/error';
 
-// Test commit
 export default function GlobalError({
+  error,
   params: { locale },
 }: {
-  error: Error & { digest?: string };
+  error: { statusCode?: number; message?: string };
   params: { locale: string };
 }) {
+  const statusCode = error?.statusCode || 500;
+
   return (
     <html lang={locale}>
       <body>
-        {/* This is the default Next.js error component but it doesn't allow omitting the statusCode property yet. */}
-        <Error statusCode={undefined as any} />
+        <Error statusCode={statusCode} />
       </body>
     </html>
   );

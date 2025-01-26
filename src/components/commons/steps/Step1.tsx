@@ -1,8 +1,20 @@
 import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import { motion } from 'framer-motion';
 import React from 'react';
+import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+
+// Define the type for form data
+interface Step1FormData {
+  fullName: string;
+  email: string;
+  mobileNumber: string;
+  institution: string;
+  fieldOfStudy: string;
+  academicLevel: string;
+  legalTraining: string;
+}
 
 // Define props type
 interface Step1Props {
@@ -12,20 +24,19 @@ interface Step1Props {
 const Step1: React.FC<Step1Props> = ({ setCurrentStep }) => {
   const { t } = useTranslation();
 
-  // react-hook-form
+  // react-hook-form setup with generic type for form data
   const {
     register,
     handleSubmit,
     watch,
     setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm<Step1FormData>();
 
-  const formValues = watch();
+  const formValues = watch(); // watch form values
 
   // Submit function for my next button
-  const onSubmit = () => {
-    console.log(formValues);
+  const onSubmit: SubmitHandler<Step1FormData> = () => {
     localStorage.setItem('step-1', JSON.stringify(formValues));
     setCurrentStep((prevStep) => prevStep + 1);
   };
@@ -62,7 +73,7 @@ const Step1: React.FC<Step1Props> = ({ setCurrentStep }) => {
                   t('This field cannot contain only spaces'),
               })}
               error={Boolean(errors.fullName)}
-              helperText={errors.fullName?.message}
+              helperText={errors.fullName ? errors.fullName.message : ''}
             />
             <TextField
               id="email"
@@ -75,8 +86,8 @@ const Step1: React.FC<Step1Props> = ({ setCurrentStep }) => {
                   value.trim() !== '' ||
                   t('This field cannot contain only spaces'),
               })}
-              error={!!errors.email}
-              helperText={errors.email?.message}
+              error={Boolean(errors.email)}
+              helperText={errors.email ? errors.email.message : ''}
             />
             <TextField
               id="mobileNumber"
@@ -89,8 +100,10 @@ const Step1: React.FC<Step1Props> = ({ setCurrentStep }) => {
                   value.trim() !== '' ||
                   t('This field cannot contain only spaces'),
               })}
-              error={!!errors.mobileNumber}
-              helperText={errors.mobileNumber?.message}
+              error={Boolean(errors.mobileNumber)}
+              helperText={
+                errors.mobileNumber ? errors.mobileNumber.message : ''
+              }
             />
             <TextField
               id="institution"
@@ -103,8 +116,8 @@ const Step1: React.FC<Step1Props> = ({ setCurrentStep }) => {
                   value.trim() !== '' ||
                   t('This field cannot contain only spaces'),
               })}
-              error={!!errors.institution}
-              helperText={errors.institution?.message}
+              error={Boolean(errors.institution)}
+              helperText={errors.institution ? errors.institution.message : ''}
             />
           </div>
 
@@ -121,8 +134,10 @@ const Step1: React.FC<Step1Props> = ({ setCurrentStep }) => {
                   value.trim() !== '' ||
                   t('This field cannot contain only spaces'),
               })}
-              error={!!errors.fieldOfStudy}
-              helperText={errors.fieldOfStudy?.message}
+              error={Boolean(errors.fieldOfStudy)}
+              helperText={
+                errors.fieldOfStudy ? errors.fieldOfStudy.message : ''
+              }
             />
           </div>
 
@@ -139,8 +154,10 @@ const Step1: React.FC<Step1Props> = ({ setCurrentStep }) => {
                   value.trim() !== '' ||
                   t('This field cannot contain only spaces'),
               })}
-              error={!!errors.academicLevel}
-              helperText={errors.academicLevel?.message}
+              error={Boolean(errors.academicLevel)}
+              helperText={
+                errors.academicLevel ? errors.academicLevel.message : ''
+              }
             />
           </div>
 

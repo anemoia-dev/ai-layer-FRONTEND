@@ -16,14 +16,14 @@ interface Step4Props {
 }
 
 interface FormData {
-  lawName: '';
-  articleNumber: '';
-  articleText: '';
-  issuingAuthority: '';
-  judgmentSummary: '';
-  keyHighlights: '';
-  practicalExamples: '';
-  priorityLegalAreas: '';
+  lawName: string;
+  articleNumber: string;
+  articleText: string;
+  issuingAuthority: string;
+  judgmentSummary: string;
+  keyHighlights: string;
+  practicalExamples: string;
+  priorityLegalAreas: string;
 }
 
 const Step4: React.FC<Step4Props> = ({ setCurrentStep }) => {
@@ -40,7 +40,6 @@ const Step4: React.FC<Step4Props> = ({ setCurrentStep }) => {
   };
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
     localStorage.setItem('step-4', JSON.stringify(data));
     setCurrentStep((prevStep) => prevStep + 1);
   };

@@ -3,8 +3,7 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import persistStore from 'redux-persist/es/persistStore';
-import { userAuthApi } from './api/auth/auth.js';
-import authReducer from './slices/auth/auth.user.js';
+import { userAuthApi } from './api/auth/auth';
 
 const persistConfig = {
   key: 'root',
@@ -12,7 +11,6 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  authUser: authReducer,
   [userAuthApi.reducerPath]: userAuthApi.reducer,
 });
 
