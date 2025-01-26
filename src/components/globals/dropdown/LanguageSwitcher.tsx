@@ -3,14 +3,18 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const LanguageSwitcher = ({ language }) => {
-  const [bar, setBar] = useState(false);
+interface LanguageSwitcherProps {
+  language: 'en' | 'ar';
+}
+
+const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ language }) => {
+  const [bar, setBar] = useState<boolean>(false);
   const { i18n } = useTranslation();
   const { t } = useTranslation();
 
-  const changeLanguage = (lng) => {
+  const changeLanguage = (lng: 'en' | 'ar') => {
     i18n.changeLanguage(lng);
-    setBar(false); // Close the dropdown after language change
+    setBar(false);
   };
 
   return (

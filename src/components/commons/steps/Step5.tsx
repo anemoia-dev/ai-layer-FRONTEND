@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify'; 
+import { toast } from 'react-toastify';
 
 import { useRegisterUserMutation } from '@/../store/api/auth/auth';
 
@@ -96,7 +96,7 @@ const Step5: React.FC<Step5Props> = ({ setCurrentStep }) => {
       console.log(response);
 
       if (response?.error) {
-        const errorMessages = response?.error?.data?.message;
+        const errorMessages = response?.error?.message;
 
         if (Array.isArray(errorMessages)) {
           errorMessages.forEach((err: { field: string; message: string }) => {
