@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import i18n from '../../../i18/i18n.ts';
 
-const baseUrl = 'http://localhost:6500/api/';
+const baseUrl = 'https://api.ailexfuture.com/api/';
 
 export const userAuthApi = createApi({
   reducerPath: 'authApi',
