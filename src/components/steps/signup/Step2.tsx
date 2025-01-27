@@ -14,10 +14,11 @@ interface Step2Data {
 }
 
 interface Step2Props {
-  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
+  next: () => void;
+  back: () => void;
 }
 
-const Step2: React.FC<Step2Props> = ({ setCurrentStep }) => {
+const Step2: React.FC<Step2Props> = ({ next, back }) => {
   const { t } = useTranslation();
 
   const {
@@ -37,11 +38,7 @@ const Step2: React.FC<Step2Props> = ({ setCurrentStep }) => {
 
   const onSubmit = (data: Step2Data) => {
     localStorage.setItem('step-2', JSON.stringify(data));
-    setCurrentStep((prev) => prev + 1);
-  };
-
-  const handlePrevious = () => {
-    setCurrentStep((prev) => prev - 1);
+    next();
   };
 
   return (
@@ -52,7 +49,6 @@ const Step2: React.FC<Step2Props> = ({ setCurrentStep }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {/* TITLE AND DESCRIPTION */}
         <div className="mt-10 flex w-full flex-col gap-2 border-b p-5 md:px-10">
           <h1 className="text-lg font-[500]">{t('Organization')}</h1>
           <p className="text-xs text-gray-400">
@@ -60,9 +56,7 @@ const Step2: React.FC<Step2Props> = ({ setCurrentStep }) => {
           </p>
         </div>
 
-        {/* FORM INPUTS */}
         <div className="flex w-full flex-col gap-10 p-5 md:p-10 lg:w-[80%]">
-          {/* Organization and Duration */}
           <div className="flex flex-wrap justify-between gap-5 lg:gap-10">
             <Controller
               name="organization"
@@ -96,7 +90,6 @@ const Step2: React.FC<Step2Props> = ({ setCurrentStep }) => {
             />
           </div>
 
-          {/* Legal Work Type */}
           <div className="flex">
             <Controller
               name="legalWorkType"
@@ -115,7 +108,6 @@ const Step2: React.FC<Step2Props> = ({ setCurrentStep }) => {
             />
           </div>
 
-          {/* Interest Area */}
           <div>
             <Controller
               name="interestArea"
@@ -134,7 +126,6 @@ const Step2: React.FC<Step2Props> = ({ setCurrentStep }) => {
             />
           </div>
 
-          {/* Specific Skills */}
           <div className="flex flex-col gap-3">
             <h2 className="text-sm font-[500]">
               {t(
@@ -153,9 +144,7 @@ const Step2: React.FC<Step2Props> = ({ setCurrentStep }) => {
                       <Radio
                         sx={{
                           color: 'black',
-                          '&.Mui-checked': {
-                            color: 'black',
-                          },
+                          '&.Mui-checked': { color: 'black' },
                         }}
                       />
                     }
@@ -167,9 +156,7 @@ const Step2: React.FC<Step2Props> = ({ setCurrentStep }) => {
                       <Radio
                         sx={{
                           color: 'black',
-                          '&.Mui-checked': {
-                            color: 'black',
-                          },
+                          '&.Mui-checked': { color: 'black' },
                         }}
                       />
                     }
@@ -185,7 +172,6 @@ const Step2: React.FC<Step2Props> = ({ setCurrentStep }) => {
             )}
           </div>
 
-          {/* Practical Experience */}
           <div className="flex flex-col gap-3">
             <h2 className="text-sm font-[500]">
               {t('Do you have practical experience in the legal field?')}
@@ -202,9 +188,7 @@ const Step2: React.FC<Step2Props> = ({ setCurrentStep }) => {
                       <Radio
                         sx={{
                           color: 'black',
-                          '&.Mui-checked': {
-                            color: 'black',
-                          },
+                          '&.Mui-checked': { color: 'black' },
                         }}
                       />
                     }
@@ -216,9 +200,7 @@ const Step2: React.FC<Step2Props> = ({ setCurrentStep }) => {
                       <Radio
                         sx={{
                           color: 'black',
-                          '&.Mui-checked': {
-                            color: 'black',
-                          },
+                          '&.Mui-checked': { color: 'black' },
                         }}
                       />
                     }
@@ -233,14 +215,13 @@ const Step2: React.FC<Step2Props> = ({ setCurrentStep }) => {
               </p>
             )}
           </div>
-
-          {/* Buttons */}
         </div>
       </motion.div>
+
       <div className="mb-10 mt-8 flex justify-between px-5 md:px-10">
         <button
           type="button"
-          onClick={handlePrevious}
+          onClick={back}
           className="rounded-md border-2 border-black bg-white px-8 py-3 font-[500] text-black"
         >
           {t('Previous')}
