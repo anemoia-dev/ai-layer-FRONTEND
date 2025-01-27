@@ -1,11 +1,8 @@
 import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import { motion } from 'framer-motion';
-import React from 'react';
-import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-// Define the type for form data
 interface Step1FormData {
   fullName: string;
   email: string;
@@ -16,29 +13,35 @@ interface Step1FormData {
   legalTraining: string;
 }
 
-// Define props type
 interface Step1Props {
-  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
+  next: () => void;
+  back: () => void;
 }
 
-const Step1: React.FC<Step1Props> = ({ setCurrentStep }) => {
+const Step1: React.FC<Step1Props> = ({ next }) => {
   const { t } = useTranslation();
-
-  // react-hook-form setup with generic type for form data
   const {
     register,
     handleSubmit,
     watch,
     setValue,
     formState: { errors },
-  } = useForm<Step1FormData>();
+  } = useForm<Step1FormData>({
+    defaultValues: {
+      fullName: '',
+      email: '',
+      mobileNumber: '',
+      institution: '',
+      fieldOfStudy: '',
+      academicLevel: '',
+      legalTraining: '',
+    },
+  });
 
-  const formValues = watch(); // watch form values
+  const formValues = watch();
 
-  // Submit function for my next button
-  const onSubmit: SubmitHandler<Step1FormData> = () => {
-    localStorage.setItem('step-1', JSON.stringify(formValues));
-    setCurrentStep((prevStep) => prevStep + 1);
+  const onSubmit = () => {
+    next();
   };
 
   return (
@@ -49,7 +52,6 @@ const Step1: React.FC<Step1Props> = ({ setCurrentStep }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {/* TITLE AND DESCRIPTION */}
         <div className="mt-10 flex w-full flex-col gap-2 border-b p-5 md:px-10">
           <h1 className="text-lg font-[500]">{t('General information')}</h1>
           <p className="text-xs text-gray-400">
@@ -57,9 +59,7 @@ const Step1: React.FC<Step1Props> = ({ setCurrentStep }) => {
           </p>
         </div>
 
-        {/* INPUTS USER IS GOING TO FILL */}
         <div className="flex w-[100%] flex-col gap-5 p-5 md:p-10 lg:w-[80%]">
-          {/* NAME AND EMAIL MOBILE NUMBER AND EDUCATIONAL INSTITUTES */}
           <div className="flex flex-wrap justify-between gap-5 lg:gap-10">
             <TextField
               id="fullName"
@@ -121,13 +121,12 @@ const Step1: React.FC<Step1Props> = ({ setCurrentStep }) => {
             />
           </div>
 
-          {/* FIELD OF STUDY */}
           <div>
             <TextField
               id="fieldOfStudy"
               placeholder={t('Field of Study')}
               variant="outlined"
-              className="w-full "
+              className="w-full"
               {...register('fieldOfStudy', {
                 required: t('This field is required'),
                 validate: (value) =>
@@ -141,13 +140,12 @@ const Step1: React.FC<Step1Props> = ({ setCurrentStep }) => {
             />
           </div>
 
-          {/* ACADEMIC LEVEL */}
           <div>
             <TextField
               id="academicLevel"
               placeholder={t('Academic Level')}
               variant="outlined"
-              className="w-full "
+              className="w-full"
               {...register('academicLevel', {
                 required: t('This field is required'),
                 validate: (value) =>
@@ -161,7 +159,6 @@ const Step1: React.FC<Step1Props> = ({ setCurrentStep }) => {
             />
           </div>
 
-          {/* RADIO BUTTONS FOR ASKING LEGAL TRAINING */}
           <div>
             <h2 className="mb-5 font-[500]">
               {t('Do you currently enrolled in a legal training program?')}
@@ -169,9 +166,9 @@ const Step1: React.FC<Step1Props> = ({ setCurrentStep }) => {
             <RadioGroup
               aria-labelledby="legalTraining-group"
               name="legalTraining"
-              value={formValues.legalTraining || ''} // Ensure controlled component
+              value={formValues.legalTraining || ''}
               onChange={(e) => {
-                setValue('legalTraining', e.target.value); // Update react-hook-form value
+                setValue('legalTraining', e.target.value);
               }}
               className="relative flex flex-col text-gray-600"
             >
@@ -179,12 +176,7 @@ const Step1: React.FC<Step1Props> = ({ setCurrentStep }) => {
                 value="No"
                 control={
                   <Radio
-                    sx={{
-                      color: 'black',
-                      '&.Mui-checked': {
-                        color: 'black',
-                      },
-                    }}
+                    sx={{ color: 'black', '&.Mui-checked': { color: 'black' } }}
                   />
                 }
                 label={t('No')}
@@ -194,12 +186,7 @@ const Step1: React.FC<Step1Props> = ({ setCurrentStep }) => {
                 value="Yes"
                 control={
                   <Radio
-                    sx={{
-                      color: 'black',
-                      '&.Mui-checked': {
-                        color: 'black',
-                      },
-                    }}
+                    sx={{ color: 'black', '&.Mui-checked': { color: 'black' } }}
                   />
                 }
                 label={t('Yes')}

@@ -12,7 +12,8 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 interface Step4Props {
-  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
+  next: () => void;
+  back: () => void;
 }
 
 interface FormData {
@@ -26,7 +27,7 @@ interface FormData {
   priorityLegalAreas: string;
 }
 
-const Step4: React.FC<Step4Props> = ({ setCurrentStep }) => {
+const Step4: React.FC<Step4Props> = ({ next, back }) => {
   const { t } = useTranslation();
 
   const {
@@ -35,13 +36,9 @@ const Step4: React.FC<Step4Props> = ({ setCurrentStep }) => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const handlePrevious = () => {
-    setCurrentStep((prevStep) => prevStep - 1);
-  };
-
   const onSubmit = (data: FormData) => {
     localStorage.setItem('step-4', JSON.stringify(data));
-    setCurrentStep((prevStep) => prevStep + 1);
+    next();
   };
 
   return (
@@ -321,7 +318,7 @@ const Step4: React.FC<Step4Props> = ({ setCurrentStep }) => {
       <div className="my-10 flex justify-between px-5 md:px-10">
         <button
           type="button"
-          onClick={handlePrevious}
+          onClick={back}
           className="rounded-md border-2 border-black bg-white px-8 py-3 font-[500] text-black"
         >
           {t('Previous')}

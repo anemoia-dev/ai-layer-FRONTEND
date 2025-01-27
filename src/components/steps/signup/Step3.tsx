@@ -5,10 +5,11 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 interface Step3Props {
-  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
+  next: () => void;
+  back: () => void;
 }
 
-const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
+const Step3: React.FC<Step3Props> = ({ next, back }) => {
   const { t } = useTranslation();
 
   const {
@@ -24,13 +25,9 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
     },
   });
 
-  const handlePrevious = () => {
-    setCurrentStep((prevStep) => prevStep - 1);
-  };
-
   const onSubmit = (data: any) => {
     localStorage.setItem('step-3', JSON.stringify(data));
-    setCurrentStep((prevStep) => prevStep + 1);
+    next();
   };
 
   return (
@@ -273,7 +270,7 @@ const Step3: React.FC<Step3Props> = ({ setCurrentStep }) => {
       <div className="my-10 flex justify-between px-5 md:px-10">
         <button
           type="button"
-          onClick={handlePrevious}
+          onClick={back}
           className="rounded-md border-2 border-black bg-white px-8 py-3 font-[500] text-black"
         >
           {t('Previous')}
