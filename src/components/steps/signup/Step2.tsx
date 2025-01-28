@@ -4,21 +4,12 @@ import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-interface Step2Data {
-  organization: string;
-  duration: string;
-  legalWorkType: string;
-  interestArea: string;
-  specificSkills: string;
-  practicalExperience: string;
-}
-
-interface Step2Props {
+interface Step3Props {
   next: () => void;
   back: () => void;
 }
 
-const Step2: React.FC<Step2Props> = ({ next, back }) => {
+const Step3: React.FC<Step3Props> = ({ next, back }) => {
   const { t } = useTranslation();
 
   const {
@@ -26,28 +17,33 @@ const Step2: React.FC<Step2Props> = ({ next, back }) => {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<Step2Data>({
+  } = useForm({
     defaultValues: {
-      organization: '',
-      duration: '',
-      legalWorkType: '',
-      interestArea: '',
-      specificSkills: '',
-      practicalExperience: '',
+      familiarityLevel: '',
+      usefulFeatures: '',
+      trackTrainingHours: '',
+      careerGoals: '',
     },
   });
 
   useEffect(() => {
-    const storedData = localStorage.getItem('step-2');
-    if (storedData) {
-      const parsedData: Step2Data = JSON.parse(storedData);
-      Object.entries(parsedData).forEach(([key, value]) => {
-        setValue(key as keyof Step2Data, value);
+    const savedData = localStorage.getItem('step-2');
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      Object.keys(parsedData).forEach((key) => {
+        setValue(
+          key as
+            | 'familiarityLevel'
+            | 'usefulFeatures'
+            | 'trackTrainingHours'
+            | 'careerGoals',
+          parsedData[key],
+        );
       });
     }
   }, [setValue]);
 
-  const onSubmit = (data: Step2Data) => {
+  const onSubmit = (data: any) => {
     localStorage.setItem('step-2', JSON.stringify(data));
     next();
   };
@@ -60,97 +56,34 @@ const Step2: React.FC<Step2Props> = ({ next, back }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="mt-10 flex w-full flex-col gap-2 border-b p-5 md:px-10">
-          <h1 className="text-lg font-[500]">{t('Organization')}</h1>
+        <div className="mt-10 flex w-full flex-col gap-2 border-b px-5 md:px-10">
+          <h1 className="text-lg font-[500]">
+            {t('Your Opinion on the Ai Legal Training System')}
+          </h1>
           <p className="text-xs text-gray-400">
             {t('Please provide the information required in the below form')}
           </p>
         </div>
 
-        <div className="flex w-full flex-col gap-10 p-5 md:p-10 lg:w-[80%]">
-          <div className="flex flex-wrap justify-between gap-5 lg:gap-10">
-            <Controller
-              name="organization"
-              control={control}
-              rules={{ required: t('This field is required') }}
-              render={({ field }) => (
-                <TextField
-                  placeholder={t('Organization')}
-                  variant="outlined"
-                  className="w-[45%]"
-                  {...field}
-                  error={!!errors.organization}
-                  helperText={errors.organization?.message}
-                />
-              )}
-            />
-            <Controller
-              name="duration"
-              control={control}
-              rules={{ required: t('This field is required') }}
-              render={({ field }) => (
-                <TextField
-                  placeholder={t('Duration')}
-                  variant="outlined"
-                  className="w-[45%]"
-                  {...field}
-                  error={!!errors.duration}
-                  helperText={errors.duration?.message}
-                />
-              )}
-            />
-          </div>
-
-          <div className="flex">
-            <Controller
-              name="legalWorkType"
-              control={control}
-              rules={{ required: t('This field is required') }}
-              render={({ field }) => (
-                <TextField
-                  placeholder={t('Type of Legal Work')}
-                  variant="outlined"
-                  className="w-full lg:w-[100%]"
-                  {...field}
-                  error={!!errors.legalWorkType}
-                  helperText={errors.legalWorkType?.message}
-                />
-              )}
-            />
-          </div>
-
-          <div>
-            <Controller
-              name="interestArea"
-              control={control}
-              rules={{ required: t('This field is required') }}
-              render={({ field }) => (
-                <TextField
-                  placeholder={t('Which area of law interests you the most')}
-                  variant="outlined"
-                  className="w-full lg:w-[100%]"
-                  {...field}
-                  error={!!errors.interestArea}
-                  helperText={errors.interestArea?.message}
-                />
-              )}
-            />
-          </div>
-
+        <div className="flex w-full flex-col gap-5 p-5 md:p-10">
           <div className="flex flex-col gap-3">
             <h2 className="text-sm font-[500]">
               {t(
-                'Do you have specific interests in developing particular skills such as drafting legal memos, case management, or advocacy ?',
+                'What is your level of familiarity with AI technologies in the legal field?',
               )}
             </h2>
             <Controller
-              name="specificSkills"
+              name="familiarityLevel"
               control={control}
               rules={{ required: t('This field is required') }}
               render={({ field }) => (
-                <RadioGroup {...field} className="text-gray-700 ">
+                <RadioGroup
+                  {...field}
+                  value={field.value || ''}
+                  className="text-gray-700"
+                >
                   <FormControlLabel
-                    value="Yes"
+                    value="Very Good"
                     control={
                       <Radio
                         sx={{
@@ -159,10 +92,10 @@ const Step2: React.FC<Step2Props> = ({ next, back }) => {
                         }}
                       />
                     }
-                    label={t('Yes')}
+                    label={t('Very Good')}
                   />
                   <FormControlLabel
-                    value="No"
+                    value="Moderate"
                     control={
                       <Radio
                         sx={{
@@ -171,28 +104,127 @@ const Step2: React.FC<Step2Props> = ({ next, back }) => {
                         }}
                       />
                     }
-                    label={t('No')}
+                    label={t('Moderate')}
+                  />
+                  <FormControlLabel
+                    value="Limited"
+                    control={
+                      <Radio
+                        sx={{
+                          color: 'black',
+                          '&.Mui-checked': { color: 'black' },
+                        }}
+                      />
+                    }
+                    label={t('Limited')}
                   />
                 </RadioGroup>
               )}
             />
-            {errors.specificSkills && (
-              <p className="text-xs text-red-500">
-                {errors.specificSkills.message}
+            {errors.familiarityLevel && (
+              <p className="text-sm text-red-500">
+                {errors.familiarityLevel.message}
               </p>
             )}
           </div>
 
           <div className="flex flex-col gap-3">
             <h2 className="text-sm font-[500]">
-              {t('Do you have practical experience in the legal field?')}
+              {t(
+                'Which features do you think would be most useful in the application?',
+              )}
             </h2>
             <Controller
-              name="practicalExperience"
+              name="usefulFeatures"
               control={control}
               rules={{ required: t('This field is required') }}
               render={({ field }) => (
-                <RadioGroup {...field} className="text-gray-700 ">
+                <RadioGroup
+                  {...field}
+                  value={field.value || ''}
+                  className="text-gray-700"
+                >
+                  <FormControlLabel
+                    value="Analyzing legal texts"
+                    control={
+                      <Radio
+                        sx={{
+                          color: 'black',
+                          '&.Mui-checked': { color: 'black' },
+                        }}
+                      />
+                    }
+                    label={t('Analyzing legal texts')}
+                  />
+                  <FormControlLabel
+                    value="Providing realistic simulation exercises"
+                    control={
+                      <Radio
+                        sx={{
+                          color: 'black',
+                          '&.Mui-checked': { color: 'black' },
+                        }}
+                      />
+                    }
+                    label={t('Providing realistic simulation exercises')}
+                  />
+                  <FormControlLabel
+                    value="Periodic progress reports"
+                    control={
+                      <Radio
+                        sx={{
+                          color: 'black',
+                          '&.Mui-checked': { color: 'black' },
+                        }}
+                      />
+                    }
+                    label={t('Periodic progress reports')}
+                  />
+                  <FormControlLabel
+                    value="Managing training tasks between layers and trainees"
+                    control={
+                      <Radio
+                        sx={{
+                          color: 'black',
+                          '&.Mui-checked': { color: 'black' },
+                        }}
+                      />
+                    }
+                    label={t(
+                      'Managing training tasks between layers and trainees',
+                    )}
+                  />
+                  <FormControlLabel
+                    value="Other"
+                    control={<Radio />}
+                    label={t('Other')}
+                  />
+                </RadioGroup>
+              )}
+            />
+            {errors.usefulFeatures && (
+              <p className="text-sm text-red-500">
+                {errors.usefulFeatures.message}
+              </p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <h2 className="text-sm font-[500]">
+              {t(
+                'Do you see the importance of having a system to track practical training hours?',
+              )}
+            </h2>
+            <Controller
+              name="trackTrainingHours"
+              control={control}
+              rules={{ required: t('This field is required') }}
+              render={({ field }) => (
+                <RadioGroup
+                  {...field}
+                  value={field.value || ''}
+                  className="text-gray-700"
+                >
                   <FormControlLabel
                     value="Yes"
                     control={
@@ -220,16 +252,41 @@ const Step2: React.FC<Step2Props> = ({ next, back }) => {
                 </RadioGroup>
               )}
             />
-            {errors.practicalExperience && (
-              <p className="text-xs text-red-500">
-                {errors.practicalExperience.message}
+            {errors.trackTrainingHours && (
+              <p className="text-sm text-red-500">
+                {errors.trackTrainingHours.message}
+              </p>
+            )}
+          </div>
+
+          <div className="flex w-full flex-col gap-3">
+            <h2 className="text-sm font-[500]">
+              {t(
+                'How do you think this application can help you achieve your career goals?',
+              )}
+            </h2>
+            <Controller
+              name="careerGoals"
+              control={control}
+              rules={{ required: t('This field is required') }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  className="w-full lg:w-[75%]"
+                  placeholder={t('Please describe your career goals')}
+                />
+              )}
+            />
+            {errors.careerGoals && (
+              <p className="text-sm text-red-500">
+                {errors.careerGoals.message}
               </p>
             )}
           </div>
         </div>
       </motion.div>
 
-      <div className="mb-10 mt-8 flex justify-between px-5 md:px-10">
+      <div className="my-10 flex justify-between px-5 md:px-10">
         <button
           type="button"
           onClick={back}
@@ -249,4 +306,4 @@ const Step2: React.FC<Step2Props> = ({ next, back }) => {
   );
 };
 
-export default Step2;
+export default Step3;
