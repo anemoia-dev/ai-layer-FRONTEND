@@ -82,7 +82,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
                   {stepNumber === 1 && t('General information')}
                   {stepNumber === 2 && t('Experience and interest')}
                   {stepNumber === 3 &&
-                    t('Your Opinion on the Ai Legal Traning System')}
+                    t('Your Opinion on the Ai Legal Training System')}
                   {stepNumber === 4 &&
                     t('Relevant Laws and Judgments in the Application')}
                   {stepNumber === 5 && t('Commitment and Collaboration')}
@@ -95,10 +95,68 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
                     : 'border border-gray-500 text-gray-500'
                 }`}
               >
-                {stepNumber}
+                {t(`${stepNumber}`)}
               </div>
             </div>
           ))}
+        </div>
+      </div>
+      {/* //////////////// MOBILE  */}
+      <div className="custom-bg  max-h-[100vh] w-full rounded-r-3xl bg-gray-100 p-5 pt-20 lg:hidden">
+        <div
+          className={`flex items-center   justify-start  ${
+            language === 'ar' && 'flex-row-reverse '
+          } mb-10 w-full  gap-5`}
+        >
+          <div className="h-12 w-12 rounded-bl-md rounded-tr-md border-2 border-black" />
+          <div className="flex flex-col items-center  ">
+            <h1 className="text-3xl font-[400]">LEXTFUTURE</h1>
+            <p className="text-xs">FUTURE OF LAYERS</p>
+          </div>
+        </div>
+
+        <div className="relative flex items-center  justify-between space-y-10 ">
+          <div className="flex w-full flex-row  items-center justify-between gap-5 ">
+            {[1, 2, 3, 4, 5].map((stepNumber) => (
+              <div
+                key={stepNumber}
+                className={`flex items-center ${
+                  language === 'ar' && 'flex-row-reverse'
+                } relative z-[20] flex-wrap items-center justify-center `}
+              >
+                <div
+                  className={`flex justify-end ${
+                    language === 'en' && 'mr-5'
+                  } w-[80%] whitespace-nowrap lg:w-[22vw]`}
+                >
+                  <div
+                    className={`ml-4 hidden w-full font-[500] text-black lg:flex lg:text-[9px] xl:text-[0.7rem] 2xl:text-[0.9rem] ${
+                      currentStep >= stepNumber - 1
+                        ? 'text-black'
+                        : 'text-gray-500'
+                    }`}
+                  >
+                    {stepNumber === 1 && t('General information')}
+                    {stepNumber === 2 && t('Experience and interest')}
+                    {stepNumber === 3 &&
+                      t('Your Opinion on the Ai Legal Training System')}
+                    {stepNumber === 4 &&
+                      t('Relevant Laws and Judgments in the Application')}
+                    {stepNumber === 5 && t('Commitment and Collaboration')}
+                  </div>
+                </div>
+                <div
+                  className={`z-[50] mb-2 flex h-12 w-12 items-center justify-center rounded-[50%] border-2 lg:h-8 lg:w-8 lg:rounded-full xl:h-12 xl:w-12 ${
+                    currentStep >= stepNumber - 1
+                      ? 'bg-black text-white'
+                      : 'border border-gray-500 text-gray-500'
+                  }`}
+                >
+                  {t(`${stepNumber}`)}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

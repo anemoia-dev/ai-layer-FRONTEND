@@ -38,11 +38,11 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
 
   const renderRadioGroup = (
     name: keyof FormData,
-    label: string,
+    labelKey: string,
     options: string[],
   ) => (
     <div className="flex flex-col gap-3">
-      <h2 className="text-sm">{t(label)}</h2>
+      <h2 className="text-sm">{t(labelKey)}</h2>
       <Controller
         name={name}
         control={control}
@@ -92,6 +92,7 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
         toast.error(error.data.message);
       } else {
         toast.success('Form submitted successfully');
+        localStorage.clear();
         router.push('/home');
       }
     } catch (err) {
@@ -112,7 +113,7 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
             {t('Commitment and Collaboration')}
           </h1>
           <p className="text-xs text-gray-400">
-            {t('Please provide the information required in the below form.')}
+            {t('Please provide the information required in the below form')}
           </p>
         </div>
 
