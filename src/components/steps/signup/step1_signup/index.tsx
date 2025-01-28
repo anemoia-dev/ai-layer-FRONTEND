@@ -1,7 +1,7 @@
 import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useAtom } from 'jotai';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form'; // Import Controller
 import { useTranslation } from 'react-i18next';
 
 import { multiStepFormAtom } from '../signup_state';
@@ -27,7 +27,7 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
   const {
     register,
     handleSubmit,
-    setValue,
+    control, // Add control here
     formState: { errors },
   } = useForm<Step1FormData>({
     defaultValues: formData.step1 || {
@@ -140,47 +140,42 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
             <h2 className="mb-5 font-[500]">
               {t('Are you currently enrolled in a legal training program?')}
             </h2>
-            <RadioGroup
-              aria-labelledby="legalTraining-group"
-              name="legalTraining"
-              value={formData.step1.legalTraining || ''}
-              onChange={(e) =>
-                setValue('legalTraining', e.target.value, {
-                  shouldValidate: true,
-                })
-              }
-              className="relative flex flex-col text-gray-600"
-            >
-              <FormControlLabel
-                value="No"
-                control={
-                  <Radio
-                    sx={{
-                      color: 'black',
-                      '&.Mui-checked': { color: 'black' },
-                    }}
+            <Controller
+              name="legalTraining" // Make sure 'legalTraining' matches your form data
+              control={control}
+              rules={{ required: t('This field is required') }}
+              render={({ field }) => (
+                <RadioGroup {...field} className="text-gray-700 ">
+                  <FormControlLabel
+                    value="Yes"
+                    control={
+                      <Radio
+                        sx={{
+                          color: 'black',
+                          '&.Mui-checked': { color: 'black' },
+                        }}
+                      />
+                    }
+                    label={t('Yes')}
                   />
-                }
-                label={t('No')}
-                className="text-sm sm:text-base"
-              />
-              <FormControlLabel
-                value="Yes"
-                control={
-                  <Radio
-                    sx={{
-                      color: 'black',
-                      '&.Mui-checked': { color: 'black' },
-                    }}
+                  <FormControlLabel
+                    value="No"
+                    control={
+                      <Radio
+                        sx={{
+                          color: 'black',
+                          '&.Mui-checked': { color: 'black' },
+                        }}
+                      />
+                    }
+                    label={t('No')}
                   />
-                }
-                label={t('Yes')}
-                className="text-xs sm:text-base"
-              />
-            </RadioGroup>
+                </RadioGroup>
+              )}
+            />
             {errors.legalTraining && (
               <p className="text-xs text-red-500 sm:text-sm">
-                {errors.legalTraining.message}
+                {errors.legalTraining?.message || t('This field is required')}
               </p>
             )}
           </div>

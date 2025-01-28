@@ -1,4 +1,11 @@
-import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
+import {
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Radio,
+  RadioGroup,
+  TextField,
+} from '@mui/material';
 import { motion } from 'framer-motion';
 import { useAtom } from 'jotai';
 import React from 'react';
@@ -6,6 +13,20 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { multiStepFormAtom } from '../signup_state';
+
+const options = [
+  { value: 'Analyzing legal texts', label: 'Analyzing legal texts' },
+  {
+    value: 'Providing realistic simulation exercises',
+    label: 'Providing realistic simulation exercises',
+  },
+  { value: 'Periodic progress reports', label: 'Periodic progress reports' },
+  {
+    value: 'Managing training tasks between lawyers and trainees',
+    label: 'Managing training tasks between lawyers and trainees',
+  },
+  { value: 'Other', label: 'Other' },
+];
 
 interface Step3Props {
   next: () => void;
@@ -23,17 +44,14 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
   } = useForm({
     defaultValues: formData.step3 || {
       familiarityLevel: '',
-      usefulFeatures: '',
+      usefulFeatures: [],
       trackTrainingHours: '',
       careerGoals: '',
     },
   });
 
   const onSubmit = (data: any) => {
-    setFormData((prev) => ({
-      ...prev,
-      step3: data,
-    }));
+    setFormData((prev) => ({ ...prev, step3: data }));
     next();
   };
 
@@ -47,7 +65,7 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
       >
         <div className="mt-10 flex w-full flex-col gap-2 border-b px-5 md:px-10">
           <h1 className="text-lg font-[500]">
-            {t('Your Opinion on the Ai Legal Training System')}
+            {t('Your Opinion on the AI Legal Training System')}
           </h1>
           <p className="text-xs text-gray-400">
             {t('Please provide the information required in the below form')}
@@ -66,47 +84,22 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
               control={control}
               rules={{ required: t('This field is required') }}
               render={({ field }) => (
-                <RadioGroup
-                  {...field}
-                  value={field.value || ''}
-                  className="text-gray-700"
-                >
-                  <FormControlLabel
-                    value="Very Good"
-                    control={
-                      <Radio
-                        sx={{
-                          color: 'black',
-                          '&.Mui-checked': { color: 'black' },
-                        }}
-                      />
-                    }
-                    label={t('Very Good')}
-                  />
-                  <FormControlLabel
-                    value="Moderate"
-                    control={
-                      <Radio
-                        sx={{
-                          color: 'black',
-                          '&.Mui-checked': { color: 'black' },
-                        }}
-                      />
-                    }
-                    label={t('Moderate')}
-                  />
-                  <FormControlLabel
-                    value="Limited"
-                    control={
-                      <Radio
-                        sx={{
-                          color: 'black',
-                          '&.Mui-checked': { color: 'black' },
-                        }}
-                      />
-                    }
-                    label={t('Limited')}
-                  />
+                <RadioGroup {...field} className="text-gray-700">
+                  {['Very Good', 'Moderate', 'Limited'].map((level) => (
+                    <FormControlLabel
+                      key={level}
+                      value={level}
+                      control={
+                        <Radio
+                          sx={{
+                            color: 'black',
+                            '&.Mui-checked': { color: 'black' },
+                          }}
+                        />
+                      }
+                      label={t(level)}
+                    />
+                  ))}
                 </RadioGroup>
               )}
             />
@@ -126,71 +119,46 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
             <Controller
               name="usefulFeatures"
               control={control}
-              rules={{ required: t('This field is required') }}
+              rules={{
+                validate: (value: string[]) =>
+                  value && value.length > 0
+                    ? true
+                    : t('This field is required'),
+              }}
               render={({ field }) => (
-                <RadioGroup
-                  {...field}
-                  value={field.value || ''}
-                  className="text-gray-700"
-                >
-                  <FormControlLabel
-                    value="Analyzing legal texts"
-                    control={
-                      <Radio
-                        sx={{
-                          color: 'black',
-                          '&.Mui-checked': { color: 'black' },
-                        }}
-                      />
-                    }
-                    label={t('Analyzing legal texts')}
-                  />
-                  <FormControlLabel
-                    value="Providing realistic simulation exercises"
-                    control={
-                      <Radio
-                        sx={{
-                          color: 'black',
-                          '&.Mui-checked': { color: 'black' },
-                        }}
-                      />
-                    }
-                    label={t('Providing realistic simulation exercises')}
-                  />
-                  <FormControlLabel
-                    value="Periodic progress reports"
-                    control={
-                      <Radio
-                        sx={{
-                          color: 'black',
-                          '&.Mui-checked': { color: 'black' },
-                        }}
-                      />
-                    }
-                    label={t('Periodic progress reports')}
-                  />
-                  <FormControlLabel
-                    value="Managing training tasks between layers and trainees"
-                    control={
-                      <Radio
-                        sx={{
-                          color: 'black',
-                          '&.Mui-checked': { color: 'black' },
-                        }}
-                      />
-                    }
-                    label={t(
-                      'Managing training tasks between layers and trainees',
-                    )}
-                  />
-                  <FormControlLabel
-                    value="Other"
-                    control={<Radio />}
-                    label={t('Other')}
-                  />
-                </RadioGroup>
+                <FormGroup>
+                  {options.map(({ value, label }) => (
+                    <FormControlLabel
+                      key={value}
+                      control={
+                        <Checkbox
+                          {...field}
+                          checked={
+                            Array.isArray(field.value) &&
+                            field.value.includes(value)
+                          }
+                          onChange={(e) => {
+                            const currentValue = Array.isArray(field.value)
+                              ? field.value
+                              : [];
+                            const newValue = e.target.checked
+                              ? [...currentValue, value]
+                              : currentValue.filter((item) => item !== value);
+                            field.onChange(newValue);
+                          }}
+                          sx={{
+                            color: 'black',
+                            '&.Mui-checked': { color: 'black' },
+                          }}
+                        />
+                      }
+                      label={label}
+                    />
+                  ))}
+                </FormGroup>
               )}
             />
+
             {errors.usefulFeatures && (
               <p className="text-sm text-red-500">
                 {errors.usefulFeatures.message}
@@ -209,35 +177,22 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
               control={control}
               rules={{ required: t('This field is required') }}
               render={({ field }) => (
-                <RadioGroup
-                  {...field}
-                  value={field.value || ''}
-                  className="text-gray-700"
-                >
-                  <FormControlLabel
-                    value="Yes"
-                    control={
-                      <Radio
-                        sx={{
-                          color: 'black',
-                          '&.Mui-checked': { color: 'black' },
-                        }}
-                      />
-                    }
-                    label={t('Yes')}
-                  />
-                  <FormControlLabel
-                    value="No"
-                    control={
-                      <Radio
-                        sx={{
-                          color: 'black',
-                          '&.Mui-checked': { color: 'black' },
-                        }}
-                      />
-                    }
-                    label={t('No')}
-                  />
+                <RadioGroup {...field} className="text-gray-700">
+                  {['Yes', 'No'].map((option) => (
+                    <FormControlLabel
+                      key={option}
+                      value={option}
+                      control={
+                        <Radio
+                          sx={{
+                            color: 'black',
+                            '&.Mui-checked': { color: 'black' },
+                          }}
+                        />
+                      }
+                      label={t(option)}
+                    />
+                  ))}
                 </RadioGroup>
               )}
             />

@@ -20,7 +20,7 @@ export const multiStepFormAtom = atom({
   },
   step3: {
     familiarityLevel: '',
-    usefulFeatures: '',
+    usefulFeatures: [''],
     trackTrainingHours: '',
     careerGoals: '',
   },
