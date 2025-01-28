@@ -1,8 +1,11 @@
 import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import { motion } from 'framer-motion';
-import React, { useEffect } from 'react';
+import { useAtom } from 'jotai';
+import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+
+import { multiStepFormAtom } from '../signup_state';
 
 interface Step3Props {
   next: () => void;
@@ -11,14 +14,14 @@ interface Step3Props {
 
 const Step3: React.FC<Step3Props> = ({ next, back }) => {
   const { t } = useTranslation();
+  const [formData, setFormData] = useAtom(multiStepFormAtom);
 
   const {
     control,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm({
-    defaultValues: {
+    defaultValues: formData.step3 || {
       familiarityLevel: '',
       usefulFeatures: '',
       trackTrainingHours: '',
@@ -26,25 +29,11 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
     },
   });
 
-  useEffect(() => {
-    const savedData = localStorage.getItem('step-2');
-    if (savedData) {
-      const parsedData = JSON.parse(savedData);
-      Object.keys(parsedData).forEach((key) => {
-        setValue(
-          key as
-            | 'familiarityLevel'
-            | 'usefulFeatures'
-            | 'trackTrainingHours'
-            | 'careerGoals',
-          parsedData[key],
-        );
-      });
-    }
-  }, [setValue]);
-
   const onSubmit = (data: any) => {
-    localStorage.setItem('step-2', JSON.stringify(data));
+    setFormData((prev) => ({
+      ...prev,
+      step3: data,
+    }));
     next();
   };
 

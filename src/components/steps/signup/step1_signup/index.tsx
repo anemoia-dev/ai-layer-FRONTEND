@@ -1,8 +1,10 @@
 import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
+import { useAtom } from 'jotai';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+
+import { multiStepFormAtom } from '../signup_state';
 
 interface Step1FormData {
   fullName: string;
@@ -16,45 +18,34 @@ interface Step1FormData {
 
 interface Step1Props {
   next: () => void;
-  back: () => void;
 }
 
 const Step1: React.FC<Step1Props> = ({ next }) => {
   const { t } = useTranslation();
-  const storedData = localStorage.getItem('step-1');
-  const initialData = storedData ? JSON.parse(storedData) : {};
+  const [formData, setFormData] = useAtom(multiStepFormAtom);
 
   const {
     register,
     handleSubmit,
-    watch,
     setValue,
     formState: { errors },
   } = useForm<Step1FormData>({
-    defaultValues: {
-      fullName: initialData.fullName || '',
-      email: initialData.email || '',
-      mobileNumber: initialData.mobileNumber || '',
-      institution: initialData.institution || '',
-      fieldOfStudy: initialData.fieldOfStudy || '',
-      academicLevel: initialData.academicLevel || '',
-      legalTraining: initialData.legalTraining || '',
+    defaultValues: formData.step1 || {
+      fullName: '',
+      email: '',
+      mobileNumber: '',
+      institution: '',
+      fieldOfStudy: '',
+      academicLevel: '',
+      legalTraining: '',
     },
   });
 
-  const formValues = watch();
-
-  useEffect(() => {
-    if (storedData) {
-      const parsedData: Step1FormData = JSON.parse(storedData);
-      (Object.keys(parsedData) as (keyof Step1FormData)[]).forEach((key) => {
-        setValue(key, parsedData[key]);
-      });
-    }
-  }, [storedData, setValue]);
-
   const onSubmit = (data: Step1FormData) => {
-    localStorage.setItem('step-1', JSON.stringify(data));
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      step1: data,
+    }));
     next();
   };
 
@@ -82,12 +73,9 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
               className="w-[45%]"
               {...register('fullName', {
                 required: t('This field is required'),
-                validate: (value) =>
-                  value.trim() !== '' ||
-                  t('This field cannot contain only spaces'),
               })}
               error={Boolean(errors.fullName)}
-              helperText={errors.fullName ? errors.fullName.message : ''}
+              helperText={errors.fullName?.message}
             />
             <TextField
               id="email"
@@ -96,12 +84,9 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
               className="w-[45%]"
               {...register('email', {
                 required: t('This field is required'),
-                validate: (value) =>
-                  value.trim() !== '' ||
-                  t('This field cannot contain only spaces'),
               })}
               error={Boolean(errors.email)}
-              helperText={errors.email ? errors.email.message : ''}
+              helperText={errors.email?.message}
             />
             <TextField
               id="mobileNumber"
@@ -110,14 +95,9 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
               className="w-[45%]"
               {...register('mobileNumber', {
                 required: t('This field is required'),
-                validate: (value) =>
-                  value.trim() !== '' ||
-                  t('This field cannot contain only spaces'),
               })}
               error={Boolean(errors.mobileNumber)}
-              helperText={
-                errors.mobileNumber ? errors.mobileNumber.message : ''
-              }
+              helperText={errors.mobileNumber?.message}
             />
             <TextField
               id="institution"
@@ -126,52 +106,35 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
               className="w-[45%]"
               {...register('institution', {
                 required: t('This field is required'),
-                validate: (value) =>
-                  value.trim() !== '' ||
-                  t('This field cannot contain only spaces'),
               })}
               error={Boolean(errors.institution)}
-              helperText={errors.institution ? errors.institution.message : ''}
+              helperText={errors.institution?.message}
             />
           </div>
 
-          <div>
-            <TextField
-              id="fieldOfStudy"
-              placeholder={t('Field of Study')}
-              variant="outlined"
-              className="w-full"
-              {...register('fieldOfStudy', {
-                required: t('This field is required'),
-                validate: (value) =>
-                  value.trim() !== '' ||
-                  t('This field cannot contain only spaces'),
-              })}
-              error={Boolean(errors.fieldOfStudy)}
-              helperText={
-                errors.fieldOfStudy ? errors.fieldOfStudy.message : ''
-              }
-            />
-          </div>
+          <TextField
+            id="fieldOfStudy"
+            placeholder={t('Field of Study')}
+            variant="outlined"
+            className="w-full"
+            {...register('fieldOfStudy', {
+              required: t('This field is required'),
+            })}
+            error={Boolean(errors.fieldOfStudy)}
+            helperText={errors.fieldOfStudy?.message}
+          />
 
-          <div>
-            <TextField
-              id="academicLevel"
-              placeholder={t('Academic Level')}
-              variant="outlined"
-              className="w-full"
-              {...register('academicLevel', {
-                required: t('This field is required'),
-                validate: (value) =>
-                  value.trim() !== '' ||
-                  t('This field cannot contain only spaces'),
-              })}
-              error={Boolean(errors.academicLevel)}
-              helperText={
-                errors.academicLevel ? errors.academicLevel.message : ''
-              }
-            />
-          </div>
+          <TextField
+            id="academicLevel"
+            placeholder={t('Academic Level')}
+            variant="outlined"
+            className="w-full"
+            {...register('academicLevel', {
+              required: t('This field is required'),
+            })}
+            error={Boolean(errors.academicLevel)}
+            helperText={errors.academicLevel?.message}
+          />
 
           <div>
             <h2 className="mb-5 font-[500]">
@@ -180,19 +143,22 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
             <RadioGroup
               aria-labelledby="legalTraining-group"
               name="legalTraining"
-              value={formValues.legalTraining || ''}
-              onChange={(e) => {
+              value={formData.step1.legalTraining || ''}
+              onChange={(e) =>
                 setValue('legalTraining', e.target.value, {
                   shouldValidate: true,
-                });
-              }}
+                })
+              }
               className="relative flex flex-col text-gray-600"
             >
               <FormControlLabel
                 value="No"
                 control={
                   <Radio
-                    sx={{ color: 'black', '&.Mui-checked': { color: 'black' } }}
+                    sx={{
+                      color: 'black',
+                      '&.Mui-checked': { color: 'black' },
+                    }}
                   />
                 }
                 label={t('No')}
@@ -202,7 +168,10 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
                 value="Yes"
                 control={
                   <Radio
-                    sx={{ color: 'black', '&.Mui-checked': { color: 'black' } }}
+                    sx={{
+                      color: 'black',
+                      '&.Mui-checked': { color: 'black' },
+                    }}
                   />
                 }
                 label={t('Yes')}
@@ -217,7 +186,8 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
           </div>
         </div>
       </motion.div>
-      <div className="my-10 flex w-full justify-end  px-5 md:px-10 ">
+
+      <div className="my-10 flex w-full justify-end px-5 md:px-10">
         <button
           type="button"
           onClick={handleSubmit(onSubmit)}

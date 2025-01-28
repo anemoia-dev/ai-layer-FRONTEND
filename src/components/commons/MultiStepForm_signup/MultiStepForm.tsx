@@ -2,11 +2,11 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Step1 from '@/components/steps/signup/step1_signup';
-import Step2 from '@/components/steps/signup/step2_signup';
-import Step3 from '@/components/steps/signup/step3_signup';
-import Step4 from '@/components/steps/signup/step4_signup';
-import Step5 from '@/components/steps/signup/step5_signup';
+import Step1 from '@/components/steps/signup/Step1_signup';
+import Step2 from '@/components/steps/signup/Step2_signup';
+import Step3 from '@/components/steps/signup/Step3_signup';
+import Step4 from '@/components/steps/signup/Step4_signup';
+import Step5 from '@/components/steps/signup/Step5_signup';
 import type { StepType } from '@/hooks/useMultiStepForm';
 import useMultistepForm from '@/hooks/useMultiStepForm';
 

@@ -7,9 +7,12 @@ import {
   TextField,
 } from '@mui/material';
 import { motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import { useAtom } from 'jotai';
+import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+
+import { multiStepFormAtom } from '../signup_state';
 
 interface Step4Props {
   next: () => void;
@@ -29,22 +32,14 @@ interface FormData {
 
 const Step4: React.FC<Step4Props> = ({ next, back }) => {
   const { t } = useTranslation();
-  const [initialData, setInitialData] = useState<FormData | null>(null);
-
-  useEffect(() => {
-    const storedData = localStorage.getItem('step-3');
-    if (storedData) {
-      setInitialData(JSON.parse(storedData));
-    }
-  }, []);
+  const [formData, setFormData] = useAtom(multiStepFormAtom);
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-    setValue,
   } = useForm<FormData>({
-    defaultValues: initialData || {
+    defaultValues: formData.step4 || {
       lawName: '',
       articleNumber: '',
       articleText: '',
@@ -56,16 +51,11 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
     },
   });
 
-  useEffect(() => {
-    if (initialData) {
-      Object.keys(initialData).forEach((key) => {
-        setValue(key as keyof FormData, initialData[key as keyof FormData]);
-      });
-    }
-  }, [initialData, setValue]);
-
   const onSubmit = (data: FormData) => {
-    localStorage.setItem('step-3', JSON.stringify(data));
+    setFormData((prev) => ({
+      ...prev,
+      step4: data,
+    }));
     next();
   };
 

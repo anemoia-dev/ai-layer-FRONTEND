@@ -1,7 +1,13 @@
 'use client';
 
-import { FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import {
+  CircularProgress,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+} from '@mui/material';
 import { motion } from 'framer-motion';
+import { useAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -9,6 +15,8 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { useRegisterUserMutation } from '@/../store/api/auth/auth';
+
+import { multiStepFormAtom } from '../signup_state';
 
 interface Step5Props {
   back: () => void;
@@ -30,6 +38,9 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
   const { t } = useTranslation();
   const [register] = useRegisterUserMutation();
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [formData] = useAtom(multiStepFormAtom);
+
   const {
     control,
     handleSubmit,
@@ -70,33 +81,30 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
     </div>
   );
 
-  const onSubmit = async (formData: FormData) => {
-    const step1 = JSON.parse(localStorage.getItem('step-1') || '{}');
-    const step2 = JSON.parse(localStorage.getItem('step-2') || '{}');
-    const step3 = JSON.parse(localStorage.getItem('step-3') || '{}');
-    const step4 = JSON.parse(localStorage.getItem('step-4') || '{}');
+  const onSubmit = async (data: FormData) => {
+    setIsSubmitting(true);
 
-    const finalData = {
-      ...step1,
-      ...step2,
-      ...step3,
-      ...step4,
-      ...formData,
+    const updatedFormData = {
+      ...formData.step1,
+      ...formData.step2,
+      ...formData.step3,
+      ...formData.step4,
+      ...data,
     };
 
     try {
-      const response = await register({ userCredentials: finalData });
+      const response = await register({ userCredentials: updatedFormData });
       const error = response.error as APIError;
-
       if (error?.data?.message) {
         toast.error(error.data.message);
       } else {
         toast.success('Form submitted successfully');
-        localStorage.clear();
         router.push('/home');
       }
     } catch (err) {
       toast.error(String(err));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -147,9 +155,14 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
         <button
           type="button"
           onClick={handleSubmit(onSubmit)}
-          className="rounded-md bg-green-500 px-8 py-3 text-white"
+          className="flex items-center justify-center rounded-md bg-green-500 px-8 py-3 text-white"
+          disabled={isSubmitting}
         >
-          {t('Submit')}
+          {isSubmitting ? (
+            <CircularProgress size={24} sx={{ color: 'white' }} />
+          ) : (
+            t('Submit')
+          )}
         </button>
       </div>
     </>
