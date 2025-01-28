@@ -152,7 +152,7 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
                           }}
                         />
                       }
-                      label={label}
+                      label={t(label)}
                     />
                   ))}
                 </FormGroup>
