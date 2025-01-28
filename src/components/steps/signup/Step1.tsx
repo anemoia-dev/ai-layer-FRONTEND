@@ -1,5 +1,6 @@
 import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -20,6 +21,9 @@ interface Step1Props {
 
 const Step1: React.FC<Step1Props> = ({ next }) => {
   const { t } = useTranslation();
+  const storedData = localStorage.getItem('step-1');
+  const initialData = storedData ? JSON.parse(storedData) : {};
+
   const {
     register,
     handleSubmit,
@@ -28,19 +32,29 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
     formState: { errors },
   } = useForm<Step1FormData>({
     defaultValues: {
-      fullName: '',
-      email: '',
-      mobileNumber: '',
-      institution: '',
-      fieldOfStudy: '',
-      academicLevel: '',
-      legalTraining: '',
+      fullName: initialData.fullName || '',
+      email: initialData.email || '',
+      mobileNumber: initialData.mobileNumber || '',
+      institution: initialData.institution || '',
+      fieldOfStudy: initialData.fieldOfStudy || '',
+      academicLevel: initialData.academicLevel || '',
+      legalTraining: initialData.legalTraining || '',
     },
   });
 
   const formValues = watch();
 
-  const onSubmit = () => {
+  useEffect(() => {
+    if (storedData) {
+      const parsedData: Step1FormData = JSON.parse(storedData);
+      (Object.keys(parsedData) as (keyof Step1FormData)[]).forEach((key) => {
+        setValue(key, parsedData[key]);
+      });
+    }
+  }, [storedData, setValue]);
+
+  const onSubmit = (data: Step1FormData) => {
+    localStorage.setItem('step-1', JSON.stringify(data));
     next();
   };
 
@@ -161,14 +175,16 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
 
           <div>
             <h2 className="mb-5 font-[500]">
-              {t('Do you currently enrolled in a legal training program?')}
+              {t('Are you currently enrolled in a legal training program?')}
             </h2>
             <RadioGroup
               aria-labelledby="legalTraining-group"
               name="legalTraining"
               value={formValues.legalTraining || ''}
               onChange={(e) => {
-                setValue('legalTraining', e.target.value);
+                setValue('legalTraining', e.target.value, {
+                  shouldValidate: true,
+                });
               }}
               className="relative flex flex-col text-gray-600"
             >
@@ -193,7 +209,6 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
                 className="text-xs sm:text-base"
               />
             </RadioGroup>
-
             {errors.legalTraining && (
               <p className="text-xs text-red-500 sm:text-sm">
                 {errors.legalTraining.message}

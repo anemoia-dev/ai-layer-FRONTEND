@@ -21,6 +21,7 @@
   "Experience and interest": "الخبرة والاهتمامات",
   "Relevant Laws and Judgments in the Application": "القوانين والأحكام ذات الصلة في التطبيق",
   "Duration": "المدة",
+  "Are you currently enrolled in a legal training program?": "هل أنت مسجل حاليًا في برنامج تدريب قانوني؟",
   "Do you have specific interests in developing particular skills such as drafting legal memos, case management, or advocacy ?": "هل لديك اهتمامات محددة في تطوير مهارات معينة، مثل صياغة المذكرات القانونية، أو إدارة القضايا، أو المناصرة؟",
   "Do you have practical experience in the legal field?": "هل لديك خبرة عملية في المجال القانوني؟",
   "Type of Legal Work": "نوع العمل القانوني",
@@ -39,12 +40,12 @@
   "Limited": "محدود",
   "Commitment and Collaboration": "الالتزام والتعاون",
   "Very Good": "جيد جدًا",
-  "Your Opinion on the Ai Legal Traning System": "رأيك في نظام التدريب القانوني المعتمد على الذكاء الاصطناعي",
+  "Your Opinion on the Ai Legal Training System": "رأيك في نظام التدريب القانوني المعتمد على الذكاء الاصطناعي",
   "Please provide the information required in the below form": "يرجى تقديم المعلومات المطلوبة في النموذج أدناه",
   "No": "لا",
 
-  "What is your level of familiarity with AI technologies in the legal field ?": "ما هو مستوى معرفتك بتقنيات الذكاء الاصطناعي في المجال القانوني؟",
-  "Which features do you think would be most useful in the application ?": "ما هي الميزات التي تعتقد أنها ستكون الأكثر فائدة في التطبيق؟",
+  "What is your level of familiarity with AI technologies in the legal field?": "ما هو مستوى معرفتك بتقنيات الذكاء الاصطناعي في المجال القانوني؟",
+  "Which features do you think would be most useful in the application?": "ما هي الميزات التي تعتقد أنها ستكون الأكثر فائدة في التطبيق؟",
   "Do you see the importance of having a system to track practical training hours?": "هل ترى أهمية وجود نظام لتتبع ساعات التدريب العملي؟",
   "Next": "التالي",
 
@@ -53,6 +54,7 @@
   "Periodic progress reports": "تقارير تقدم دورية",
   "Managing training tasks between lawyers and trainees": "إدارة مهام التدريب بين المحامين والمتدربين",
   "Other (please specify)": "أخرى (يرجى التحديد)",
+  "Other": "أخرى",
   "Entering Basic Legal Laws and Judgement: Law": "إدخال القوانين الأساسية والأحكام القانونية: القانون",
   "Law Name": "اسم القانون",
   "Article Number": "رقم المادة",
@@ -77,8 +79,10 @@
   "Please describe your career goals": "يرجى وصف أهدافك المهنية",
   "Breif Description of the Judgment or Law": "وصف موجز للحكم أو القانون",
   "Practical Examplaes of the Judgment": "أمثلة عملية على الحكم",
-
+  "Judgment summary is required": "ملخص الحكم مطلوب",
+  "Key highlights are required": "النقاط الرئيسية مطلوبة",
+  "Practical examples are required": "أمثلة عملية مطلوبة",
   "How much time can you dedicate daily to using the application?": "كم من الوقت يمكنك تخصيصه يوميًا لاستخدام التطبيق؟",
-  "Are you willing to participate in the application development phases by providing feddback or testing early versions ?": "هل أنت مستعد للمشاركة في مراحل تطوير التطبيق من خلال تقديم الملاحظات واختبار الإصدارات المبكرة؟",
-  "Do you have suggestions on the best ways to encourage students and trainees to use the application?": "هل لديك اقتراحات حول أفضل الطرق لتشجيع الطلاب والمتدربين على استخدام التطبيق؟"
+  "Are you willing to participate in the application development phases?": "هل أنت مستعد للمشاركة في مراحل تطوير التطبيق من خلال تقديم الملاحظات واختبار الإصدارات المبكرة؟",
+  "Do you have suggestions for encouraging students to use the application?": "هل لديك اقتراحات حول أفضل الطرق لتشجيع الطلاب والمتدربين على استخدام التطبيق؟"
 }

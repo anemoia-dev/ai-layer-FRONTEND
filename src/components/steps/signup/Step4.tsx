@@ -7,7 +7,7 @@ import {
   TextField,
 } from '@mui/material';
 import { motion } from 'framer-motion';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -29,12 +29,40 @@ interface FormData {
 
 const Step4: React.FC<Step4Props> = ({ next, back }) => {
   const { t } = useTranslation();
+  const [initialData, setInitialData] = useState<FormData | null>(null);
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('step-4');
+    if (storedData) {
+      setInitialData(JSON.parse(storedData));
+    }
+  }, []);
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+    setValue,
+  } = useForm<FormData>({
+    defaultValues: initialData || {
+      lawName: '',
+      articleNumber: '',
+      articleText: '',
+      issuingAuthority: '',
+      judgmentSummary: '',
+      keyHighlights: '',
+      practicalExamples: '',
+      priorityLegalAreas: '',
+    },
+  });
+
+  useEffect(() => {
+    if (initialData) {
+      Object.keys(initialData).forEach((key) => {
+        setValue(key as keyof FormData, initialData[key as keyof FormData]);
+      });
+    }
+  }, [initialData, setValue]);
 
   const onSubmit = (data: FormData) => {
     localStorage.setItem('step-4', JSON.stringify(data));
@@ -63,7 +91,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
             <Controller
               name="lawName"
               control={control}
-              rules={{ required: t('Law name is required') }}
+              rules={{ required: t('This field is required') }}
               render={({ field }) => (
                 <FormControl
                   className="w-[45%]"
@@ -73,6 +101,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
                     {...field}
                     placeholder={t('Law Name')}
                     variant="outlined"
+                    value={field.value || ''}
                   />
                   {errors.lawName && (
                     <FormHelperText>{errors.lawName.message}</FormHelperText>
@@ -84,7 +113,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
             <Controller
               name="articleNumber"
               control={control}
-              rules={{ required: t('Article number is required') }}
+              rules={{ required: t('This field is required') }}
               render={({ field }) => (
                 <FormControl
                   className="w-[45%]"
@@ -94,6 +123,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
                     {...field}
                     placeholder={t('Article Number')}
                     variant="outlined"
+                    value={field.value || ''}
                   />
                   {errors.articleNumber && (
                     <FormHelperText>
@@ -108,7 +138,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
           <Controller
             name="articleText"
             control={control}
-            rules={{ required: t('Article or judgment text is required') }}
+            rules={{ required: t('This field is required') }}
             render={({ field }) => (
               <FormControl
                 error={Boolean(errors.articleText)}
@@ -118,6 +148,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
                   {...field}
                   placeholder={t('Text of the Article or Judgment')}
                   variant="outlined"
+                  value={field.value || ''}
                 />
                 {errors.articleText && (
                   <FormHelperText>{errors.articleText.message}</FormHelperText>
@@ -129,7 +160,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
           <Controller
             name="issuingAuthority"
             control={control}
-            rules={{ required: t('Issuing authority is required') }}
+            rules={{ required: t('This field is required') }}
             render={({ field }) => (
               <FormControl
                 error={Boolean(errors.issuingAuthority)}
@@ -139,6 +170,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
                   {...field}
                   placeholder={t('Issuing Authority')}
                   variant="outlined"
+                  value={field.value || ''}
                 />
                 {errors.issuingAuthority && (
                   <FormHelperText>
@@ -155,7 +187,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
               <Controller
                 name="judgmentSummary"
                 control={control}
-                rules={{ required: t('Judgment summary is required') }}
+                rules={{ required: t('This field is required') }}
                 render={({ field }) => (
                   <FormControl
                     error={Boolean(errors.judgmentSummary)}
@@ -165,6 +197,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
                       {...field}
                       variant="outlined"
                       placeholder={t('Judgment summary is required')}
+                      value={field.value || ''}
                     />
                     {errors.judgmentSummary && (
                       <FormHelperText>
@@ -181,7 +214,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
               <Controller
                 name="keyHighlights"
                 control={control}
-                rules={{ required: t('Key highlights are required') }}
+                rules={{ required: t('This field is required') }}
                 render={({ field }) => (
                   <FormControl
                     error={Boolean(errors.keyHighlights)}
@@ -191,6 +224,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
                       {...field}
                       variant="outlined"
                       placeholder={t('Key highlights are required')}
+                      value={field.value || ''}
                     />
                     {errors.keyHighlights && (
                       <FormHelperText>
@@ -209,7 +243,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
               <Controller
                 name="practicalExamples"
                 control={control}
-                rules={{ required: t('Practical examples are required') }}
+                rules={{ required: t('This field is required') }}
                 render={({ field }) => (
                   <FormControl
                     error={Boolean(errors.practicalExamples)}
@@ -219,6 +253,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
                       {...field}
                       variant="outlined"
                       placeholder={t('Practical examples are required')}
+                      value={field.value || ''}
                     />
                     {errors.practicalExamples && (
                       <FormHelperText>
@@ -237,7 +272,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
               <Controller
                 name="priorityLegalAreas"
                 control={control}
-                rules={{ required: t('Priority legal areas are required') }}
+                rules={{ required: t('This field is required') }}
                 render={({ field }) => (
                   <FormControl
                     error={Boolean(errors.priorityLegalAreas)}
@@ -308,6 +343,11 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
                         label={t('Other (please specify)')}
                       />
                     </RadioGroup>
+                    {errors.priorityLegalAreas && (
+                      <FormHelperText>
+                        {errors.priorityLegalAreas.message}
+                      </FormHelperText>
+                    )}
                   </FormControl>
                 )}
               />

@@ -1,6 +1,6 @@
 import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import { motion } from 'framer-motion';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -24,6 +24,7 @@ const Step2: React.FC<Step2Props> = ({ next, back }) => {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<Step2Data>({
     defaultValues: {
@@ -35,6 +36,16 @@ const Step2: React.FC<Step2Props> = ({ next, back }) => {
       practicalExperience: '',
     },
   });
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('step-2');
+    if (storedData) {
+      const parsedData: Step2Data = JSON.parse(storedData);
+      Object.entries(parsedData).forEach(([key, value]) => {
+        setValue(key as keyof Step2Data, value);
+      });
+    }
+  }, [setValue]);
 
   const onSubmit = (data: Step2Data) => {
     localStorage.setItem('step-2', JSON.stringify(data));

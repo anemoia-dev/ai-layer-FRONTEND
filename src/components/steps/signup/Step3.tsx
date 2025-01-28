@@ -1,6 +1,6 @@
 import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import { motion } from 'framer-motion';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -15,6 +15,7 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -24,6 +25,23 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
       careerGoals: '',
     },
   });
+
+  useEffect(() => {
+    const savedData = localStorage.getItem('step-3');
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      Object.keys(parsedData).forEach((key) => {
+        setValue(
+          key as
+            | 'familiarityLevel'
+            | 'usefulFeatures'
+            | 'trackTrainingHours'
+            | 'careerGoals',
+          parsedData[key],
+        );
+      });
+    }
+  }, [setValue]);
 
   const onSubmit = (data: any) => {
     localStorage.setItem('step-3', JSON.stringify(data));
@@ -40,7 +58,7 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
       >
         <div className="mt-10 flex w-full flex-col gap-2 border-b px-5 md:px-10">
           <h1 className="text-lg font-[500]">
-            {t('Your Opinion on the Ai Legal Traning System')}
+            {t('Your Opinion on the Ai Legal Training System')}
           </h1>
           <p className="text-xs text-gray-400">
             {t('Please provide the information required in the below form')}
@@ -179,7 +197,7 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
                   <FormControlLabel
                     value="Other"
                     control={<Radio />}
-                    label={t('Other (please specify)')}
+                    label={t('Other')}
                   />
                 </RadioGroup>
               )}
@@ -267,6 +285,7 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
           </div>
         </div>
       </motion.div>
+
       <div className="my-10 flex justify-between px-5 md:px-10">
         <button
           type="button"
