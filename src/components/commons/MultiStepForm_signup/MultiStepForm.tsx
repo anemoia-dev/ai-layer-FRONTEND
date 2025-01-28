@@ -2,14 +2,13 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import Step1 from '@/components/steps/signup/step1_signup';
+import Step2 from '@/components/steps/signup/step2_signup';
+import Step3 from '@/components/steps/signup/step3_signup';
+import Step4 from '@/components/steps/signup/step4_signup';
+import Step5 from '@/components/steps/signup/step5_signup';
 import type { StepType } from '@/hooks/useMultiStepForm';
 import useMultistepForm from '@/hooks/useMultiStepForm';
-
-import Step1 from '../steps/signup/Step1';
-import Step2 from '../steps/signup/Step2';
-import Step3 from '../steps/signup/Step3';
-import Step4 from '../steps/signup/Step4';
-import Step5 from '../steps/signup/Step5';
 
 interface MultiStepFormProps {
   language: string;
@@ -62,7 +61,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
               key={stepNumber}
               className={`flex items-center ${
                 language === 'ar' && 'flex-row-reverse'
-              } relative z-[20] flex-wrap items-center justify-center`}
+              } relative z-[20] flex-wrap items-center justify-center gap-5`}
             >
               <div
                 className={`flex justify-end ${
@@ -70,9 +69,9 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
                 } w-[80%] whitespace-nowrap lg:w-[22vw]`}
               >
                 <div
-                  className={`ml-4 hidden w-full justify-end font-[500] text-black lg:flex lg:text-[9px] xl:text-[0.7rem] 2xl:text-[0.9rem] ${
+                  className={`ml-4 hidden w-full justify-end   font-[500] text-black lg:flex lg:justify-start lg:text-[9px] xl:text-[0.7rem] 2xl:text-[0.9rem] ${
                     currentStep >= stepNumber - 1
-                      ? 'text-black'
+                      ? 'text-black '
                       : 'text-gray-500'
                   }`}
                 >

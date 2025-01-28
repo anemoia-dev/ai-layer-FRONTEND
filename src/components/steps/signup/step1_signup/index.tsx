@@ -217,7 +217,7 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
           </div>
         </div>
       </motion.div>
-      <div className="my-10 w-full px-5 md:px-10">
+      <div className="my-10 flex w-full justify-end  px-5 md:px-10 ">
         <button
           type="button"
           onClick={handleSubmit(onSubmit)}
