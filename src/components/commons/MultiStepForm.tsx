@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -52,11 +53,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
             language === 'ar' && 'flex-row-reverse'
           } mb-10 w-full justify-center gap-5`}
         >
-          <div className="h-12 w-12 rounded-bl-md rounded-tr-md border-2 border-black" />
-          <div className="flex flex-col items-center justify-center">
-            <h1 className="text-3xl font-[400]">LEXTFUTURE</h1>
-            <p className="text-xs">FUTURE OF LAYERS</p>
-          </div>
+          <Image src="/Arabic.png" alt="arabic-img" width={250} height={250} />
         </div>
 
         <div className="relative flex flex-row items-center justify-between space-y-10 lg:flex-col">
@@ -108,11 +105,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
             language === 'ar' && 'flex-row-reverse '
           } mb-10 w-full  gap-5`}
         >
-          <div className="h-12 w-12 rounded-bl-md rounded-tr-md border-2 border-black" />
-          <div className="flex flex-col items-center  ">
-            <h1 className="text-3xl font-[400]">LEXTFUTURE</h1>
-            <p className="text-xs">FUTURE OF LAYERS</p>
-          </div>
+          <Image src="/Arabic.png" alt="arabic-img" width={200} height={200} />
         </div>
 
         <div className="relative flex items-center  justify-between space-y-10 ">

@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 
 import SubwayForm from '@/components/commons/MultiStepForm';
-import LanguageSwitcher from '@/components/globals/dropdown/LanguageSwitcher';
 
 export default function Page() {
   const { i18n } = useTranslation();
@@ -15,10 +14,6 @@ export default function Page() {
 
   return (
     <div className="relative" dir={getLanguage === 'ar' ? 'rtl' : 'ltr'}>
-      <div className="fixed top-0 z-[60] flex w-full justify-end">
-        <LanguageSwitcher language={getLanguage} />
-      </div>
-
       {/* ToastContainer to display toast messages globally */}
       <ToastContainer
         position="top-right"

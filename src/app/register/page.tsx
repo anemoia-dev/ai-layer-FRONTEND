@@ -1,35 +1,35 @@
 'use client';
 
-import 'react-toastify/dist/ReactToastify.css'; // Import the styles
+import { motion } from 'framer-motion';
 
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { ToastContainer } from 'react-toastify'; // Import ToastContainer
-
-import SubwayForm from '@/components/commons/MultiStepForm';
-import LanguageSwitcher from '@/components/globals/dropdown/LanguageSwitcher';
-
-export default function Page() {
-  const { i18n } = useTranslation();
-  const getLanguage = i18n.language as 'ar' | 'en'; // Type assertion to restrict getLanguage to 'ar' or 'en'
-
+function Page() {
   return (
-    <div className="relative" dir={getLanguage === 'ar' ? 'rtl' : 'ltr'}>
-      <div className="fixed top-0 z-[60] flex w-full justify-end">
-        <LanguageSwitcher language={getLanguage} />
-      </div>
-
-      {/* ToastContainer to display toast messages globally */}
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={getLanguage === 'ar'} // Make toast container RTL if Arabic is selected
-      />
-
-      <SubwayForm language={getLanguage} />
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-blue-100 via-white to-blue-100 p-5">
+      <motion.div
+        className="w-full max-w-lg rounded-xl bg-white p-10 text-center shadow-lg"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: 'easeOut' }}
+      >
+        <motion.h1
+          className="text-4xl font-semibold text-gray-700"
+          initial={{ x: -50 }}
+          animate={{ x: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
+          Register Page
+        </motion.h1>
+        <motion.p
+          className="mt-4 text-lg text-gray-500"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.5 }}
+        >
+          Pending
+        </motion.p>
+      </motion.div>
     </div>
   );
 }
+
+export default Page;

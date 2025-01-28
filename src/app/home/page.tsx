@@ -2,8 +2,10 @@
 
 import { motion } from 'framer-motion';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 function Page() {
+  const { t } = useTranslation();
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <motion.div
@@ -18,7 +20,7 @@ function Page() {
           transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
           className="mb-4 text-4xl font-extrabold text-gray-800"
         >
-          Thanks
+          {t(`Thanks`)}
         </motion.h1>
         <motion.p
           initial={{ y: 50, opacity: 0 }}
@@ -26,7 +28,7 @@ function Page() {
           transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
           className="text-lg text-gray-600"
         >
-          Form submitted succesfully
+          {t('Form Submitted Succesfully')};
         </motion.p>
       </motion.div>
     </div>
