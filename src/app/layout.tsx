@@ -5,9 +5,11 @@ import '@/styles/global.css';
 import { Poppins } from 'next/font/google';
 import Head from 'next/head';
 import { I18nextProvider } from 'react-i18next';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import i18n from '../../i18/i18n.ts';
-import ReduxProvider from '../(reduxProvider)/reduxProvider';
+import { persistor, store } from '../../store/store';
 
 const poppins = Poppins({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
@@ -23,9 +25,11 @@ function RootLayout({ children }: { children: React.ReactNode }) {
           <link rel="icon" href="/favicon-32x32.png" />
           <meta name="description" content="Your site description" />
         </Head>
-        <ReduxProvider>
-          <I18nextProvider i18n={i18n}>{children}</I18nextProvider>
-        </ReduxProvider>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <I18nextProvider i18n={i18n}>{children}</I18nextProvider>
+          </PersistGate>
+        </Provider>
       </body>
     </html>
   );
