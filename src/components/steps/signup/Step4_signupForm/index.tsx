@@ -200,7 +200,9 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
             </div>
 
             <div className="flex flex-col gap-2">
-              <h1 className="mt-5 text-black">{t('Key Highlights')}</h1>
+              <h1 className="mt-5 font-[500] text-black">
+                {t('Key Highlights')}
+              </h1>
               <Controller
                 name="keyHighlights"
                 control={control}
@@ -213,7 +215,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
                     <TextField
                       {...field}
                       variant="outlined"
-                      placeholder={t('Key highlights are required')}
+                      placeholder={t('Key Highlights')}
                       value={field.value || ''}
                     />
                     {errors.keyHighlights && (
@@ -227,7 +229,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
             </div>
 
             <div className="flex flex-col gap-2">
-              <h1 className="mt-5 text-black">
+              <h1 className="mt-5 font-[500] text-black">
                 {t('Practical Examples of the Judgment')}
               </h1>
               <Controller
@@ -242,7 +244,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
                     <TextField
                       {...field}
                       variant="outlined"
-                      placeholder={t('Practical examples are required')}
+                      placeholder={t('Practical Examples of the Judgment')}
                       value={field.value || ''}
                     />
                     {errors.practicalExamples && (
@@ -256,7 +258,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
             </div>
 
             <div className="flex flex-col gap-2">
-              <h1 className="mt-5 text-black">
+              <h1 className="mt-5 font-[500] text-black">
                 {t('Priority Legal Areas for the Application')}
               </h1>
               <Controller
@@ -346,20 +348,40 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
         </div>
       </motion.div>
       <div className="my-10 flex justify-between px-5 md:px-10">
-        <button
+        <motion.button
+          whileHover={{
+            scale: 1.05,
+            rotate: -1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
+          whileTap={{
+            scale: 0.95,
+            rotate: 1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
           type="button"
           onClick={back}
           className="rounded-md border-2 border-black bg-white px-8 py-3 font-[500] text-black"
         >
           {t('Previous')}
-        </button>
-        <button
+        </motion.button>
+        <motion.button
+          whileHover={{
+            scale: 1.05,
+            rotate: -1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
+          whileTap={{
+            scale: 0.95,
+            rotate: 1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
           type="button"
           onClick={handleSubmit(onSubmit)}
           className="rounded-md bg-black px-8 py-3 text-white"
         >
           {t('Next')}
-        </button>
+        </motion.button>
       </div>
     </>
   );

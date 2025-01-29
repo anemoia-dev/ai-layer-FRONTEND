@@ -183,13 +183,23 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
       </motion.div>
 
       <div className="my-10 flex w-full justify-end px-5 md:px-10">
-        <button
+        <motion.button
+          whileHover={{
+            scale: 1.05,
+            rotate: -1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
+          whileTap={{
+            scale: 0.95,
+            rotate: 1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
           type="button"
           onClick={handleSubmit(onSubmit)}
           className="rounded-md bg-black px-8 py-3 text-white"
         >
           {t('Next')}
-        </button>
+        </motion.button>
       </div>
     </>
   );

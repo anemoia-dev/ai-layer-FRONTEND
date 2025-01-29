@@ -231,20 +231,40 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
       </motion.div>
 
       <div className="my-10 flex justify-between px-5 md:px-10">
-        <button
+        <motion.button
+          whileHover={{
+            scale: 1.05,
+            rotate: -1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
+          whileTap={{
+            scale: 0.95,
+            rotate: 1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
           type="button"
           onClick={back}
           className="rounded-md border-2 border-black bg-white px-8 py-3 font-[500] text-black"
         >
           {t('Previous')}
-        </button>
-        <button
+        </motion.button>
+        <motion.button
+          whileHover={{
+            scale: 1.05,
+            rotate: -1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
+          whileTap={{
+            scale: 0.95,
+            rotate: 1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
           type="button"
           onClick={handleSubmit(onSubmit)}
           className="rounded-md bg-black px-8 py-3 text-white"
         >
           {t('Next')}
-        </button>
+        </motion.button>
       </div>
     </>
   );

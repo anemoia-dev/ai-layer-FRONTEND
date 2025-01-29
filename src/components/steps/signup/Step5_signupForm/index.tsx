@@ -57,7 +57,7 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
       <Controller
         name={name}
         control={control}
-        rules={{ required: t('Please select an option') }}
+        rules={{ required: t('This field is required') }}
         render={({ field }) => (
           <RadioGroup {...field}>
             {options.map((option) => (
@@ -125,7 +125,7 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
           </p>
         </div>
 
-        <div className="flex flex-col gap-5 p-5 md:p-10">
+        <div className="flex flex-col gap-5 p-5 font-[500] md:p-10">
           {renderRadioGroup(
             'timeDedication',
             'How much time can you dedicate daily to using the application?',
@@ -145,25 +145,45 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
       </motion.div>
 
       <div className="my-10 flex justify-between px-5 md:px-10">
-        <button
+        <motion.button
           type="button"
+          whileHover={{
+            scale: 1.05,
+            rotate: -1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
+          whileTap={{
+            scale: 0.95,
+            rotate: 1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
           onClick={back}
           className="rounded-md border-2 border-black bg-white px-8 py-3 text-black"
         >
           {t('Previous')}
-        </button>
-        <button
+        </motion.button>
+        <motion.button
           type="button"
           onClick={handleSubmit(onSubmit)}
           className="flex items-center justify-center rounded-md bg-green-500 px-8 py-3 text-white"
           disabled={isSubmitting}
+          whileHover={{
+            scale: 1.05,
+            rotate: -1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
+          whileTap={{
+            scale: 0.95,
+            rotate: 1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
         >
           {isSubmitting ? (
             <CircularProgress size={24} sx={{ color: 'white' }} />
           ) : (
             t('Submit')
           )}
-        </button>
+        </motion.button>
       </div>
     </>
   );
