@@ -1,8 +1,11 @@
 import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import { motion } from 'framer-motion';
-import React, { useEffect } from 'react';
+import { useAtom } from 'jotai';
+import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+
+import { multiStepFormAtom } from '../signup_state';
 
 interface Step2Data {
   organization: string;
@@ -20,35 +23,21 @@ interface Step2Props {
 
 const Step2: React.FC<Step2Props> = ({ next, back }) => {
   const { t } = useTranslation();
+  const [formData, setFormData] = useAtom(multiStepFormAtom);
 
   const {
     control,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm<Step2Data>({
-    defaultValues: {
-      organization: '',
-      duration: '',
-      legalWorkType: '',
-      interestArea: '',
-      specificSkills: '',
-      practicalExperience: '',
-    },
+    defaultValues: formData.step2,
   });
 
-  useEffect(() => {
-    const storedData = localStorage.getItem('step-4');
-    if (storedData) {
-      const parsedData: Step2Data = JSON.parse(storedData);
-      Object.entries(parsedData).forEach(([key, value]) => {
-        setValue(key as keyof Step2Data, value);
-      });
-    }
-  }, [setValue]);
-
   const onSubmit = (data: Step2Data) => {
-    localStorage.setItem('step-4', JSON.stringify(data));
+    setFormData((prev) => ({
+      ...prev,
+      step2: data,
+    }));
     next();
   };
 
@@ -230,20 +219,40 @@ const Step2: React.FC<Step2Props> = ({ next, back }) => {
       </motion.div>
 
       <div className="mb-10 mt-8 flex justify-between px-5 md:px-10">
-        <button
+        <motion.button
+          whileHover={{
+            scale: 1.05,
+            rotate: -1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
+          whileTap={{
+            scale: 0.95,
+            rotate: 1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
           type="button"
           onClick={back}
           className="rounded-md border-2 border-black bg-white px-8 py-3 font-[500] text-black"
         >
           {t('Previous')}
-        </button>
-        <button
+        </motion.button>
+        <motion.button
+          whileHover={{
+            scale: 1.05,
+            rotate: -1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
+          whileTap={{
+            scale: 0.95,
+            rotate: 1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
           type="button"
           onClick={handleSubmit(onSubmit)}
           className="rounded-md bg-black px-8 py-3 text-white"
         >
           {t('Next')}
-        </button>
+        </motion.button>
       </div>
     </>
   );

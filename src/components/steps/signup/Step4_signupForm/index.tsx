@@ -7,9 +7,12 @@ import {
   TextField,
 } from '@mui/material';
 import { motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import { useAtom } from 'jotai';
+import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+
+import { multiStepFormAtom } from '../signup_state';
 
 interface Step4Props {
   next: () => void;
@@ -29,22 +32,14 @@ interface FormData {
 
 const Step4: React.FC<Step4Props> = ({ next, back }) => {
   const { t } = useTranslation();
-  const [initialData, setInitialData] = useState<FormData | null>(null);
-
-  useEffect(() => {
-    const storedData = localStorage.getItem('step-3');
-    if (storedData) {
-      setInitialData(JSON.parse(storedData));
-    }
-  }, []);
+  const [formData, setFormData] = useAtom(multiStepFormAtom);
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-    setValue,
   } = useForm<FormData>({
-    defaultValues: initialData || {
+    defaultValues: formData.step4 || {
       lawName: '',
       articleNumber: '',
       articleText: '',
@@ -56,16 +51,11 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
     },
   });
 
-  useEffect(() => {
-    if (initialData) {
-      Object.keys(initialData).forEach((key) => {
-        setValue(key as keyof FormData, initialData[key as keyof FormData]);
-      });
-    }
-  }, [initialData, setValue]);
-
   const onSubmit = (data: FormData) => {
-    localStorage.setItem('step-3', JSON.stringify(data));
+    setFormData((prev) => ({
+      ...prev,
+      step4: data,
+    }));
     next();
   };
 
@@ -210,7 +200,9 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
             </div>
 
             <div className="flex flex-col gap-2">
-              <h1 className="mt-5 text-black">{t('Key Highlights')}</h1>
+              <h1 className="mt-5 font-[500] text-black">
+                {t('Key Highlights')}
+              </h1>
               <Controller
                 name="keyHighlights"
                 control={control}
@@ -223,7 +215,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
                     <TextField
                       {...field}
                       variant="outlined"
-                      placeholder={t('Key highlights are required')}
+                      placeholder={t('Key Highlights')}
                       value={field.value || ''}
                     />
                     {errors.keyHighlights && (
@@ -237,7 +229,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
             </div>
 
             <div className="flex flex-col gap-2">
-              <h1 className="mt-5 text-black">
+              <h1 className="mt-5 font-[500] text-black">
                 {t('Practical Examples of the Judgment')}
               </h1>
               <Controller
@@ -252,7 +244,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
                     <TextField
                       {...field}
                       variant="outlined"
-                      placeholder={t('Practical examples are required')}
+                      placeholder={t('Practical Examples of the Judgment')}
                       value={field.value || ''}
                     />
                     {errors.practicalExamples && (
@@ -266,7 +258,7 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
             </div>
 
             <div className="flex flex-col gap-2">
-              <h1 className="mt-5 text-black">
+              <h1 className="mt-5 font-[500] text-black">
                 {t('Priority Legal Areas for the Application')}
               </h1>
               <Controller
@@ -356,20 +348,40 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
         </div>
       </motion.div>
       <div className="my-10 flex justify-between px-5 md:px-10">
-        <button
+        <motion.button
+          whileHover={{
+            scale: 1.05,
+            rotate: -1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
+          whileTap={{
+            scale: 0.95,
+            rotate: 1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
           type="button"
           onClick={back}
           className="rounded-md border-2 border-black bg-white px-8 py-3 font-[500] text-black"
         >
           {t('Previous')}
-        </button>
-        <button
+        </motion.button>
+        <motion.button
+          whileHover={{
+            scale: 1.05,
+            rotate: -1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
+          whileTap={{
+            scale: 0.95,
+            rotate: 1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
           type="button"
           onClick={handleSubmit(onSubmit)}
           className="rounded-md bg-black px-8 py-3 text-white"
         >
           {t('Next')}
-        </button>
+        </motion.button>
       </div>
     </>
   );

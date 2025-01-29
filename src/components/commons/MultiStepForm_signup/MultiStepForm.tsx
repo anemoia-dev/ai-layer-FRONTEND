@@ -1,12 +1,13 @@
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Step1 from '@/components/steps/signup/step1_signup';
-import Step2 from '@/components/steps/signup/step2_signup';
-import Step3 from '@/components/steps/signup/step3_signup';
-import Step4 from '@/components/steps/signup/step4_signup';
-import Step5 from '@/components/steps/signup/step5_signup';
+import Step1 from '@/components/steps/signup/Step1_signupForm';
+import Step2 from '@/components/steps/signup/Step2_signupForm';
+import Step3 from '@/components/steps/signup/Step3_signupForm';
+import Step4 from '@/components/steps/signup/Step4_signupForm';
+import Step5 from '@/components/steps/signup/Step5_signupForm';
 import type { StepType } from '@/hooks/useMultiStepForm';
 import useMultistepForm from '@/hooks/useMultiStepForm';
 
@@ -69,7 +70,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
                 } w-[80%] whitespace-nowrap lg:w-[22vw]`}
               >
                 <div
-                  className={`ml-4 hidden w-full justify-end   font-[500] text-black lg:flex lg:justify-start lg:text-[9px] xl:text-[0.7rem] 2xl:text-[0.9rem] ${
+                  className={`ml-4 hidden w-full justify-end font-[500] text-black lg:flex lg:justify-start lg:text-[9px] xl:text-[0.7rem] 2xl:text-[0.9rem] ${
                     currentStep >= stepNumber - 1
                       ? 'text-black '
                       : 'text-gray-500'
@@ -84,15 +85,30 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
                   {stepNumber === 5 && t('Commitment and Collaboration')}
                 </div>
               </div>
-              <div
+              <motion.div
                 className={`z-[50] mb-2 flex h-12 w-12 items-center justify-center rounded-[50%] border-2 lg:h-8 lg:w-8 lg:rounded-full xl:h-12 xl:w-12 ${
                   currentStep >= stepNumber - 1
                     ? 'bg-black text-white'
                     : 'border border-gray-500 text-gray-500'
                 }`}
+                whileHover={{
+                  scale: 1.2,
+                  rotate: 10,
+                  transition: { type: 'spring', stiffness: 300, damping: 20 },
+                }}
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{
+                  scale: currentStep >= stepNumber - 1 ? 1 : 0.8,
+                  opacity: currentStep >= stepNumber - 1 ? 1 : 0.5,
+                }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 300,
+                  damping: 20,
+                }}
               >
                 {t(`${stepNumber}`)}
-              </div>
+              </motion.div>
             </div>
           ))}
         </div>
@@ -100,15 +116,15 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
       {/* //////////////// MOBILE  */}
       <div className="custom-bg  max-h-[100vh] w-full rounded-r-3xl bg-gray-100 p-5 pt-20 lg:hidden">
         <div
-          className={`flex items-center   justify-start  ${
+          className={`flex items-center justify-start ${
             language === 'ar' && 'flex-row-reverse '
-          } mb-10 w-full  gap-5`}
+          } mb-10 w-full gap-5`}
         >
           <Image src="/Arabic.png" alt="arabic-img" width={200} height={200} />
         </div>
 
-        <div className="relative flex items-center  justify-between space-y-10 ">
-          <div className="flex w-full flex-row  items-center justify-between gap-5 ">
+        <div className="relative flex items-center justify-between space-y-10 ">
+          <div className="flex w-full flex-row items-center justify-between gap-5 ">
             {[1, 2, 3, 4, 5].map((stepNumber) => (
               <div
                 key={stepNumber}
@@ -137,15 +153,30 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
                     {stepNumber === 5 && t('Commitment and Collaboration')}
                   </div>
                 </div>
-                <div
+                <motion.div
                   className={`z-[50] mb-2 flex h-12 w-12 items-center justify-center rounded-[50%] border-2 lg:h-8 lg:w-8 lg:rounded-full xl:h-12 xl:w-12 ${
                     currentStep >= stepNumber - 1
                       ? 'bg-black text-white'
                       : 'border border-gray-500 text-gray-500'
                   }`}
+                  whileHover={{
+                    scale: 1.2,
+                    rotate: 10,
+                    transition: { type: 'spring', stiffness: 300, damping: 20 },
+                  }}
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{
+                    scale: currentStep >= stepNumber - 1 ? 1 : 0.8,
+                    opacity: currentStep >= stepNumber - 1 ? 1 : 0.5,
+                  }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 300,
+                    damping: 20,
+                  }}
                 >
                   {t(`${stepNumber}`)}
-                </div>
+                </motion.div>
               </div>
             ))}
           </div>

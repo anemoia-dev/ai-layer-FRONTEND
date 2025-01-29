@@ -1,7 +1,13 @@
 'use client';
 
-import { FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import {
+  CircularProgress,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+} from '@mui/material';
 import { motion } from 'framer-motion';
+import { useAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -9,6 +15,8 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { useRegisterUserMutation } from '@/../store/api/auth/auth';
+
+import { multiStepFormAtom } from '../signup_state';
 
 interface Step5Props {
   back: () => void;
@@ -30,6 +38,9 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
   const { t } = useTranslation();
   const [register] = useRegisterUserMutation();
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [formData] = useAtom(multiStepFormAtom);
+
   const {
     control,
     handleSubmit,
@@ -46,7 +57,7 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
       <Controller
         name={name}
         control={control}
-        rules={{ required: t('Please select an option') }}
+        rules={{ required: t('This field is required') }}
         render={({ field }) => (
           <RadioGroup {...field}>
             {options.map((option) => (
@@ -70,33 +81,30 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
     </div>
   );
 
-  const onSubmit = async (formData: FormData) => {
-    const step1 = JSON.parse(localStorage.getItem('step-1') || '{}');
-    const step2 = JSON.parse(localStorage.getItem('step-2') || '{}');
-    const step3 = JSON.parse(localStorage.getItem('step-3') || '{}');
-    const step4 = JSON.parse(localStorage.getItem('step-4') || '{}');
+  const onSubmit = async (data: FormData) => {
+    setIsSubmitting(true);
 
-    const finalData = {
-      ...step1,
-      ...step2,
-      ...step3,
-      ...step4,
-      ...formData,
+    const updatedFormData = {
+      ...formData.step1,
+      ...formData.step2,
+      ...formData.step3,
+      ...formData.step4,
+      ...data,
     };
 
     try {
-      const response = await register({ userCredentials: finalData });
+      const response = await register({ userCredentials: updatedFormData });
       const error = response.error as APIError;
-
       if (error?.data?.message) {
         toast.error(error.data.message);
       } else {
         toast.success('Form submitted successfully');
-        localStorage.clear();
         router.push('/home');
       }
     } catch (err) {
       toast.error(String(err));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -117,7 +125,7 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
           </p>
         </div>
 
-        <div className="flex flex-col gap-5 p-5 md:p-10">
+        <div className="flex flex-col gap-5 p-5 font-[500] md:p-10">
           {renderRadioGroup(
             'timeDedication',
             'How much time can you dedicate daily to using the application?',
@@ -137,20 +145,45 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
       </motion.div>
 
       <div className="my-10 flex justify-between px-5 md:px-10">
-        <button
+        <motion.button
           type="button"
+          whileHover={{
+            scale: 1.05,
+            rotate: -1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
+          whileTap={{
+            scale: 0.95,
+            rotate: 1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
           onClick={back}
           className="rounded-md border-2 border-black bg-white px-8 py-3 text-black"
         >
           {t('Previous')}
-        </button>
-        <button
+        </motion.button>
+        <motion.button
           type="button"
           onClick={handleSubmit(onSubmit)}
-          className="rounded-md bg-green-500 px-8 py-3 text-white"
+          className="flex items-center justify-center rounded-md bg-green-500 px-8 py-3 text-white"
+          disabled={isSubmitting}
+          whileHover={{
+            scale: 1.05,
+            rotate: -1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
+          whileTap={{
+            scale: 0.95,
+            rotate: 1,
+            transition: { type: 'spring', stiffness: 400 },
+          }}
         >
-          {t('Submit')}
-        </button>
+          {isSubmitting ? (
+            <CircularProgress size={24} sx={{ color: 'white' }} />
+          ) : (
+            t('Submit')
+          )}
+        </motion.button>
       </div>
     </>
   );
