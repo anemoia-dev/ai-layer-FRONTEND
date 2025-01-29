@@ -40,6 +40,7 @@ module.exports = {
           900: '#2a4365',
         },
       },
+
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
       },

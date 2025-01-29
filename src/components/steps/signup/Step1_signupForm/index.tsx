@@ -14,6 +14,7 @@ interface Step1FormData {
   fieldOfStudy: string;
   academicLevel: string;
   legalTraining: string;
+  isStudent: boolean; // Added boolean type for isStudent
 }
 
 interface Step1Props {
@@ -27,7 +28,7 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
   const {
     register,
     handleSubmit,
-    control, // Add control here
+    control,
     formState: { errors },
   } = useForm<Step1FormData>({
     defaultValues: formData.step1 || {
@@ -38,6 +39,7 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
       fieldOfStudy: '',
       academicLevel: '',
       legalTraining: '',
+      isStudent: true, // Default to 'true' (Yes) for isStudent
     },
   });
 
@@ -62,6 +64,52 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
           <p className="text-xs text-gray-400">
             {t('Please provide the information required in the below form')}
           </p>
+        </div>
+
+        {/* Radio buttons for "Are you a student?" */}
+        <div className="relative flex max-w-[100vw] flex-col border-b border-black bg-gray-100 p-5 md:p-10">
+          <div className="absolute left-0 top-0 rounded-br-3xl bg-green-500 px-10  py-5 font-bold text-white ">
+            <p className="important-check">{t('Important !')}</p>
+          </div>
+          <h2 className="mb-5 font-[500]">{t('Are you a student?')}</h2>
+          <Controller
+            name="isStudent"
+            control={control}
+            rules={{ required: t('This field is required') }}
+            render={({ field }) => (
+              <RadioGroup {...field} className="text-gray-700">
+                <FormControlLabel
+                  value
+                  control={
+                    <Radio
+                      sx={{
+                        color: 'black',
+                        '&.Mui-checked': { color: 'black' },
+                      }}
+                    />
+                  }
+                  label={t('Yes')}
+                />
+                <FormControlLabel
+                  value={false}
+                  control={
+                    <Radio
+                      sx={{
+                        color: 'black',
+                        '&.Mui-checked': { color: 'black' },
+                      }}
+                    />
+                  }
+                  label={t('No')}
+                />
+              </RadioGroup>
+            )}
+          />
+          {errors.isStudent && (
+            <p className="text-xs text-red-500 sm:text-sm">
+              {errors.isStudent?.message || t('This field is required')}
+            </p>
+          )}
         </div>
 
         <div className="flex w-[100%] flex-col gap-5 p-5 md:p-10 lg:w-[80%]">
@@ -136,16 +184,17 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
             helperText={errors.academicLevel?.message}
           />
 
+          {/* Question for legal training */}
           <div>
             <h2 className="mb-5 font-[500]">
               {t('Are you currently enrolled in a legal training program?')}
             </h2>
             <Controller
-              name="legalTraining" // Make sure 'legalTraining' matches your form data
+              name="legalTraining"
               control={control}
               rules={{ required: t('This field is required') }}
               render={({ field }) => (
-                <RadioGroup {...field} className="text-gray-700 ">
+                <RadioGroup {...field} className="text-gray-700">
                   <FormControlLabel
                     value="Yes"
                     control={

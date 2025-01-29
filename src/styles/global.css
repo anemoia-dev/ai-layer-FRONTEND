@@ -9,5 +9,43 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+.hero-bg{
+  background-image: url('/heropage-bg.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.mac-bg{
+  background-image: url('/mac-screen.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
 
+
+
+.important-check {
+  animation: springy-scaling 2s infinite ease-in-out;
+}
+
+@keyframes springy-scaling {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+/* scaling-animation  */
 @tailwind utilities;
