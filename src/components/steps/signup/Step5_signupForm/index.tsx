@@ -150,7 +150,7 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
         </div>
         <div>
           {model && (
-            <div className=" w-full rounded-lg p-5 shadow-lg shadow-gray-500  md:p-10">
+            <div className=" m-10  flex flex-col gap-5  rounded-lg p-5 shadow-lg shadow-gray-500 md:p-10">
               <p className="font-bold ">{t('Please give us your opinion')}</p>
               <TextField className="w-full" />
               <div className="flex items-center justify-center">

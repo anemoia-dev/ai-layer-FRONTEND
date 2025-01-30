@@ -2,7 +2,6 @@ import { atom } from 'jotai';
 
 export const multiStepFormAtom = atom({
   step1: {
-    fullName: '',
     email: '',
     institution: '',
     fieldOfStudy: '',

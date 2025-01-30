@@ -220,6 +220,7 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
               render={({ field }) => (
                 <TextField
                   {...field}
+                  error={Boolean(errors.careerGoals)}
                   className="w-full lg:w-[75%]"
                   placeholder={t('Please describe your career goals')}
                 />
