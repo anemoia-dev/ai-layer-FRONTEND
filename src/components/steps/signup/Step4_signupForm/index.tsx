@@ -1,11 +1,4 @@
-import {
-  FormControl,
-  FormControlLabel,
-  FormHelperText,
-  Radio,
-  RadioGroup,
-  TextField,
-} from '@mui/material';
+import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useAtom } from 'jotai';
 import React from 'react';
@@ -14,48 +7,37 @@ import { useTranslation } from 'react-i18next';
 
 import { multiStepFormAtom } from '../signup_state';
 
-interface Step4Props {
+interface Step2Data {
+  LawFirm: string;
+  Mobile_Number: string;
+  legalWorkType: string;
+  interestArea: string;
+  specificSkills: string;
+  practicalExperience: string;
+}
+
+interface Step2Props {
   next: () => void;
   back: () => void;
 }
 
-interface FormData {
-  lawName: string;
-  articleNumber: string;
-  articleText: string;
-  issuingAuthority: string;
-  judgmentSummary: string;
-  keyHighlights: string;
-  practicalExamples: string;
-  priorityLegalAreas: string;
-}
-
-const Step4: React.FC<Step4Props> = ({ next, back }) => {
+const Step4: React.FC<Step2Props> = ({ next, back }) => {
   const { t } = useTranslation();
-  const [formData, setFormData] = useAtom(multiStepFormAtom);
+  const [formData] = useAtom(multiStepFormAtom);
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
-    defaultValues: formData.step4 || {
-      lawName: '',
-      articleNumber: '',
-      articleText: '',
-      issuingAuthority: '',
-      judgmentSummary: '',
-      keyHighlights: '',
-      practicalExamples: '',
-      priorityLegalAreas: '',
-    },
+  } = useForm<Step2Data>({
+    defaultValues: formData.step2,
   });
 
-  const onSubmit = (data: FormData) => {
-    setFormData((prev) => ({
-      ...prev,
-      step4: data,
-    }));
+  const onSubmit = () => {
+    // setFormData((prev) => ({
+    //   ...prev,
+    //   step4: data,
+    // }));
     next();
   };
 
@@ -67,287 +49,125 @@ const Step4: React.FC<Step4Props> = ({ next, back }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="mt-10 flex flex-col gap-2 border-b p-5 md:px-10">
-          <h1 className="text-lg font-[500]">
-            {t('Relevant Laws and Judgments in the Application')}
-          </h1>
+        <div className="mt-10 flex w-full flex-col gap-2 border-b p-5 md:px-10">
+          <h1 className="text-lg font-[500]">{t('Law firm')}</h1>
           <p className="text-xs text-gray-400">
             {t('Please provide the information required in the below form')}
           </p>
         </div>
 
-        <div className="flex w-full flex-col justify-between gap-5 p-5 text-sm md:p-10 lg:w-[80%] lg:gap-10">
-          <div className="flex flex-wrap justify-between">
+        <div className="flex w-full flex-col gap-10 p-5 md:p-10 lg:w-[80%]">
+          <div className="flex flex-wrap justify-between gap-5 lg:gap-10">
             <Controller
-              name="lawName"
+              name="LawFirm"
               control={control}
               rules={{ required: t('This field is required') }}
               render={({ field }) => (
-                <FormControl
+                <TextField
+                  placeholder={t('Law firm')}
+                  variant="outlined"
                   className="w-[45%]"
-                  error={Boolean(errors.lawName)}
-                >
-                  <TextField
-                    {...field}
-                    placeholder={t('Law Name')}
-                    variant="outlined"
-                    value={field.value || ''}
-                  />
-                  {errors.lawName && (
-                    <FormHelperText>{errors.lawName.message}</FormHelperText>
-                  )}
-                </FormControl>
+                  {...field}
+                  error={!!errors.LawFirm}
+                  helperText={errors.LawFirm?.message}
+                />
               )}
             />
-
             <Controller
-              name="articleNumber"
+              name="Mobile_Number"
               control={control}
               rules={{ required: t('This field is required') }}
               render={({ field }) => (
-                <FormControl
+                <TextField
+                  placeholder={t('Mobile Number')}
+                  variant="outlined"
                   className="w-[45%]"
-                  error={Boolean(errors.articleNumber)}
-                >
-                  <TextField
-                    {...field}
-                    placeholder={t('Article Number')}
-                    variant="outlined"
-                    value={field.value || ''}
-                  />
-                  {errors.articleNumber && (
-                    <FormHelperText>
-                      {errors.articleNumber.message}
-                    </FormHelperText>
-                  )}
-                </FormControl>
+                  {...field}
+                  error={!!errors.Mobile_Number}
+                  helperText={errors.Mobile_Number?.message}
+                />
               )}
             />
           </div>
-
           <Controller
-            name="articleText"
+            name="legalWorkType"
             control={control}
             rules={{ required: t('This field is required') }}
             render={({ field }) => (
-              <FormControl
-                error={Boolean(errors.articleText)}
-                className="w-full"
-              >
-                <TextField
-                  {...field}
-                  placeholder={t('Text of the Article or Judgment')}
-                  variant="outlined"
-                  value={field.value || ''}
-                />
-                {errors.articleText && (
-                  <FormHelperText>{errors.articleText.message}</FormHelperText>
-                )}
-              </FormControl>
+              <TextField
+                placeholder={t('Type of Legal Work')}
+                variant="outlined"
+                className="w-full lg:w-[100%]"
+                {...field}
+                error={!!errors.legalWorkType}
+                helperText={errors.legalWorkType?.message}
+              />
             )}
           />
-
           <Controller
-            name="issuingAuthority"
+            name="interestArea"
             control={control}
             rules={{ required: t('This field is required') }}
             render={({ field }) => (
-              <FormControl
-                error={Boolean(errors.issuingAuthority)}
-                className="w-full"
-              >
-                <TextField
-                  {...field}
-                  placeholder={t('Issuing Authority')}
-                  variant="outlined"
-                  value={field.value || ''}
-                />
-                {errors.issuingAuthority && (
-                  <FormHelperText>
-                    {errors.issuingAuthority.message}
-                  </FormHelperText>
-                )}
-              </FormControl>
+              <TextField
+                placeholder={t('Which area of law interests you the most')}
+                variant="outlined"
+                className="w-full lg:w-[100%]"
+                {...field}
+                error={!!errors.interestArea}
+                helperText={errors.interestArea?.message}
+              />
             )}
           />
-
-          <div className="flex flex-col gap-10">
-            <div className="flex flex-col gap-2">
-              <h1 className="text-lg font-[500]">{t('Judgment Summary')}</h1>
-              <Controller
-                name="judgmentSummary"
-                control={control}
-                rules={{ required: t('This field is required') }}
-                render={({ field }) => (
-                  <FormControl
-                    error={Boolean(errors.judgmentSummary)}
-                    className="w-full"
-                  >
-                    <TextField
-                      {...field}
-                      variant="outlined"
-                      placeholder={t('Judgment summary is required')}
-                      value={field.value || ''}
-                    />
-                    {errors.judgmentSummary && (
-                      <FormHelperText>
-                        {errors.judgmentSummary.message}
-                      </FormHelperText>
-                    )}
-                  </FormControl>
-                )}
-              />
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <h1 className="mt-5 font-[500] text-black">
-                {t('Key Highlights')}
-              </h1>
-              <Controller
-                name="keyHighlights"
-                control={control}
-                rules={{ required: t('This field is required') }}
-                render={({ field }) => (
-                  <FormControl
-                    error={Boolean(errors.keyHighlights)}
-                    className="w-full"
-                  >
-                    <TextField
-                      {...field}
-                      variant="outlined"
-                      placeholder={t('Key Highlights')}
-                      value={field.value || ''}
-                    />
-                    {errors.keyHighlights && (
-                      <FormHelperText>
-                        {errors.keyHighlights.message}
-                      </FormHelperText>
-                    )}
-                  </FormControl>
-                )}
-              />
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <h1 className="mt-5 font-[500] text-black">
-                {t('Practical Examples of the Judgment')}
-              </h1>
-              <Controller
-                name="practicalExamples"
-                control={control}
-                rules={{ required: t('This field is required') }}
-                render={({ field }) => (
-                  <FormControl
-                    error={Boolean(errors.practicalExamples)}
-                    className="w-full"
-                  >
-                    <TextField
-                      {...field}
-                      variant="outlined"
-                      placeholder={t('Practical Examples of the Judgment')}
-                      value={field.value || ''}
-                    />
-                    {errors.practicalExamples && (
-                      <FormHelperText>
-                        {errors.practicalExamples.message}
-                      </FormHelperText>
-                    )}
-                  </FormControl>
-                )}
-              />
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <h1 className="mt-5 font-[500] text-black">
-                {t('Priority Legal Areas for the Application')}
-              </h1>
-              <Controller
-                name="priorityLegalAreas"
-                control={control}
-                rules={{ required: t('This field is required') }}
-                render={({ field }) => (
-                  <FormControl
-                    error={Boolean(errors.priorityLegalAreas)}
-                    className="w-full"
-                  >
-                    <RadioGroup {...field} className="text-gray-700">
-                      <FormControlLabel
-                        value="Labor and Corporate Laws"
-                        control={
-                          <Radio
-                            sx={{
-                              color: 'black',
-                              '&.Mui-checked': {
-                                color: 'black',
-                              },
-                            }}
-                          />
-                        }
-                        label={t('Labor and Corporate Laws')}
+          <div className="flex flex-col gap-3">
+            <h2 className="text-sm font-[500]">
+              {t(
+                'Do you have specific interests in developing particular skills such as drafting legal memos, case management, or advocacy?',
+              )}
+            </h2>
+            <Controller
+              name="specificSkills"
+              control={control}
+              rules={{ required: t('This field is required') }}
+              render={({ field }) => (
+                <RadioGroup {...field} className="text-gray-700 ">
+                  <FormControlLabel
+                    value="Yes"
+                    control={
+                      <Radio
+                        sx={{
+                          color: 'black',
+                          '&.Mui-checked': { color: 'black' },
+                        }}
                       />
-                      <FormControlLabel
-                        value="Family Laws (Marriage, Divorce, Custody)"
-                        control={
-                          <Radio
-                            sx={{
-                              color: 'black',
-                              '&.Mui-checked': {
-                                color: 'black',
-                              },
-                            }}
-                          />
-                        }
-                        label={t('Family Laws (Marriage, Divorce, Custody)')}
+                    }
+                    label={t('Yes')}
+                  />
+                  <FormControlLabel
+                    value="No"
+                    control={
+                      <Radio
+                        sx={{
+                          color: 'black',
+                          '&.Mui-checked': { color: 'black' },
+                        }}
                       />
-                      <FormControlLabel
-                        value="International Laws"
-                        control={
-                          <Radio
-                            sx={{
-                              color: 'black',
-                              '&.Mui-checked': {
-                                color: 'black',
-                              },
-                            }}
-                          />
-                        }
-                        label={t('International Laws')}
-                      />
-                      <FormControlLabel
-                        value="Commercial Laws (Contracts, Intellectual Property)"
-                        control={
-                          <Radio
-                            sx={{
-                              color: 'black',
-                              '&.Mui-checked': {
-                                color: 'black',
-                              },
-                            }}
-                          />
-                        }
-                        label={t(
-                          'Commercial Laws (Contracts, Intellectual Property)',
-                        )}
-                      />
-                      <FormControlLabel
-                        value="Other"
-                        control={<Radio />}
-                        label={t('Other (please specify)')}
-                      />
-                    </RadioGroup>
-                    {errors.priorityLegalAreas && (
-                      <FormHelperText>
-                        {errors.priorityLegalAreas.message}
-                      </FormHelperText>
-                    )}
-                  </FormControl>
-                )}
-              />
-            </div>
+                    }
+                    label={t('No')}
+                  />
+                </RadioGroup>
+              )}
+            />
+            {errors.specificSkills && (
+              <p className="text-xs text-red-500">
+                {errors.specificSkills.message}
+              </p>
+            )}
           </div>
         </div>
       </motion.div>
-      <div className="my-10 flex justify-between px-5 md:px-10">
+
+      <div className="mb-10 mt-8 flex justify-between px-5 md:px-10">
         <motion.button
           whileHover={{
             scale: 1.05,

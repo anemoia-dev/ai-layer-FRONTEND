@@ -76,7 +76,7 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
           <div className="flex flex-col gap-3">
             <h2 className="text-sm font-[500]">
               {t(
-                'What is your level of familiarity with AI technologies in the legal field?',
+                'How familiar are you with artificial intelligence technologies in the legal field, and how do you use them in your work or study?',
               )}
             </h2>
             <Controller
@@ -85,7 +85,11 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
               rules={{ required: t('This field is required') }}
               render={({ field }) => (
                 <RadioGroup {...field} className="text-gray-700">
-                  {['Very Good', 'Moderate', 'Limited'].map((level) => (
+                  {[
+                    'Very good, I use it regularly',
+                    'Average I have some knowledge of it but I dont use it much',
+                    'Limited, I need to learn more about it',
+                  ].map((level) => (
                     <FormControlLabel
                       key={level}
                       value={level}

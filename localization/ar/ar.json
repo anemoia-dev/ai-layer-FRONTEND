@@ -7,8 +7,13 @@
   "4": "٤",
   "5": "٥",
   "Full Name": "الاسم الكامل",
+  "Are you a Lawyer?": "هل أنت محامي؟",
   "select language": "اختر اللغة",
+  "How familiar are you with artificial intelligence technologies in the legal field, and how do you use them in your work or study?": "ما مدى معرفتك بتقنيات الذكاء الاصطناعي في المجال القانوني، وكيف تستخدمها في عملك أو دراستك؟",
   "If yes, Please specify the goal orginzatio nwhere you are training": "إذا كانت الإجابة نعم، يرجى تحديد المنظمة القانونية التي يتم فيها التدريب، أحتاج إلى اللغة العربية.",
+  "Very good, I use it regularly": "جيد جدًا، أستخدمه بانتظام",
+  "Average I have some knowledge of it but I dont use it much": "متوسط ​​لدي بعض المعرفة به ولكني لا أستخدمه كثيرًا",
+  "Limited, I need to learn more about it": "محدودة، وأحتاج إلى معرفة المزيد عنها",
   "arabic": "العربية",
   "If yes, Please specify the legal organization where you are training": "إذا كانت الإجابة نعم، يرجى تحديد الجهة القانونية التي تتدرب فيها",
   "Do you currently enrolled in a legal training program?": "هل أنت مسجل حاليًا في برنامج تدريب قانوني؟",
@@ -18,7 +23,8 @@
   "Field of Study": "مجال الدراسة",
   "Academic Level": "المستوى الأكاديمي",
   "Organization": "المنظمة",
-  "Law form and interest": "شكل القانون والفائدة",
+  "Please give us your opinion": "من فضلك أعطنا رأيك",
+  "Law firm": "شركة محاماة",
   "Relevant Laws and Judgments in the Application": "القوانين والأحكام ذات الصلة في التطبيق",
   "Duration": "المدة",
   "Are you currently enrolled in a legal training program?": "هل أنت مسجل حاليًا في برنامج تدريب قانوني؟",
@@ -72,7 +78,8 @@
   "Less than an hour": "أقل من ساعة",
   "More than 2 hours": "أكثر من ساعتين",
   "1-2 hours": "1-2 ساعة",
-
+  "Case Type": "نوع الحالة",
+  "Do you have specific interests in developing particular skills such as drafting legal memos, case management, or advocacy?": "هل لديك اهتمامات محددة في تطوير مهارات معينة مثل صياغة المذكرات القانونية أو إدارة القضايا أو المناصرة؟",
   "Providing realistic simulation exercises": "توفير تمارين محاكاة واقعية",
   "Managing training tasks between layers and trainees": "إدارة مهام التدريب بين المحامين والمتدربين",
   "How do you think this application can help you achieve your career goals?": "كيف تعتقد أن هذا التطبيق يمكن أن يساعدك في تحقيق أهدافك المهنية؟",
@@ -87,5 +94,7 @@
   "Do you have suggestions for encouraging students to use the application?": "هل لديك اقتراحات حول أفضل الطرق لتشجيع الطلاب والمتدربين على استخدام التطبيق؟",
   "Thanks": "شكراً",
   "Form Submitted Succesfully": "تم تقديم النموذج بنجاح",
-  "Submit": "يُقدّم"
+  "Submit": "يُقدّم",
+  "Thank you!": "شكرًا لك!",
+  "The form has been submitted successfully! We value your time and participation, and we will use your feedback to improve Future Balance. Stay tuned for updates soon.”": "!تم تقديم النموذج بنجاح. نقدر وقتك ومشاركتك، وسنستخدم ملاحظاتك لتحسين 'ميزان المستقبل'. ترقب التحديثات قريبًا"
 }

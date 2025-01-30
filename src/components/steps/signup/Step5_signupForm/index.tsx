@@ -5,18 +5,13 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
+  TextField,
 } from '@mui/material';
 import { motion } from 'framer-motion';
-import { useAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
-
-import { useRegisterUserMutation } from '@/../store/api/auth/auth';
-
-import { multiStepFormAtom } from '../signup_state';
 
 interface Step5Props {
   back: () => void;
@@ -28,18 +23,13 @@ interface FormData {
   suggestionsForTrainees: string;
 }
 
-interface APIError {
-  data?: {
-    message?: string;
-  };
-}
-
 const Step5: React.FC<Step5Props> = ({ back }) => {
   const { t } = useTranslation();
-  const [register] = useRegisterUserMutation();
+  // const [register] = useRegisterUserMutation();
   const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [formData] = useAtom(multiStepFormAtom);
+  const [isSubmitting] = useState(false);
+  // const [formData] = useAtom(multiStepFormAtom);
+  const [model, setModel] = useState(false);
 
   const {
     control,
@@ -59,7 +49,23 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
         control={control}
         rules={{ required: t('This field is required') }}
         render={({ field }) => (
-          <RadioGroup {...field}>
+          <RadioGroup
+            {...field}
+            onChange={(e) => {
+              field.onChange(e);
+              if (
+                name === 'suggestionsForTrainees' &&
+                e.target.value === 'Yes'
+              ) {
+                setModel(true);
+              } else if (
+                name === 'suggestionsForTrainees' &&
+                e.target.value === 'No'
+              ) {
+                setModel(false);
+              }
+            }}
+          >
             {options.map((option) => (
               <FormControlLabel
                 key={option}
@@ -81,31 +87,31 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
     </div>
   );
 
-  const onSubmit = async (data: FormData) => {
-    setIsSubmitting(true);
+  const onSubmit = async () => {
+    router.push('/home');
 
-    const updatedFormData = {
-      ...formData.step1,
-      ...formData.step2,
-      ...formData.step3,
-      ...formData.step4,
-      ...data,
-    };
+    // const updatedFormData = {
+    //   ...formData.step1,
+    //   ...formData.step2,
+    //   ...formData.step3,
+    //   ...formData.step4,
+    //   ...data,
+    // };
 
-    try {
-      const response = await register({ userCredentials: updatedFormData });
-      const error = response.error as APIError;
-      if (error?.data?.message) {
-        toast.error(error.data.message);
-      } else {
-        toast.success('Form submitted successfully');
-        router.push('/home');
-      }
-    } catch (err) {
-      toast.error(String(err));
-    } finally {
-      setIsSubmitting(false);
-    }
+    // try {
+    //   const response = await register({ userCredentials: updatedFormData });
+    //   const error = response.error as APIError;
+    //   if (error?.data?.message) {
+    //     toast.error(error.data.message);
+    //   } else {
+    //     toast.success('Form submitted successfully');
+    //     router.push('/home');
+    //   }
+    // } catch (err) {
+    //   toast.error(String(err));
+    // } finally {
+    //   setIsSubmitting(false);
+    // }
   };
 
   return (
@@ -142,21 +148,28 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
             ['Yes', 'No'],
           )}
         </div>
+        <div>
+          {model && (
+            <div className=" w-full rounded-lg p-5 shadow-lg shadow-gray-500  md:p-10">
+              <p className="font-bold ">{t('Please give us your opinion')}</p>
+              <TextField className="w-full" />
+              <div className="flex items-center justify-center">
+                <button
+                  type="button"
+                  className="rounded-md border-2 border-black bg-white px-8 py-3 text-black"
+                  onClick={() => setModel(false)}
+                >
+                  {t('Submit')}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </motion.div>
 
       <div className="my-10 flex justify-between px-5 md:px-10">
         <motion.button
           type="button"
-          whileHover={{
-            scale: 1.05,
-            rotate: -1,
-            transition: { type: 'spring', stiffness: 400 },
-          }}
-          whileTap={{
-            scale: 0.95,
-            rotate: 1,
-            transition: { type: 'spring', stiffness: 400 },
-          }}
           onClick={back}
           className="rounded-md border-2 border-black bg-white px-8 py-3 text-black"
         >
@@ -167,16 +180,6 @@ const Step5: React.FC<Step5Props> = ({ back }) => {
           onClick={handleSubmit(onSubmit)}
           className="flex items-center justify-center rounded-md bg-green-500 px-8 py-3 text-white"
           disabled={isSubmitting}
-          whileHover={{
-            scale: 1.05,
-            rotate: -1,
-            transition: { type: 'spring', stiffness: 400 },
-          }}
-          whileTap={{
-            scale: 0.95,
-            rotate: 1,
-            transition: { type: 'spring', stiffness: 400 },
-          }}
         >
           {isSubmitting ? (
             <CircularProgress size={24} sx={{ color: 'white' }} />
