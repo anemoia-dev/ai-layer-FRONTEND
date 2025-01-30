@@ -77,11 +77,10 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
                   }`}
                 >
                   {stepNumber === 1 && t('General information')}
-                  {stepNumber === 2 &&
-                    t('Your Opinion on the Ai Legal Training System')}
+                  {stepNumber === 2 && t('Case Type')}
                   {stepNumber === 3 &&
                     t('Relevant Laws and Judgments in the Application')}
-                  {stepNumber === 4 && t('Law form and interest')}
+                  {stepNumber === 4 && t('Law firm')}
                   {stepNumber === 5 && t('Commitment and Collaboration')}
                 </div>
               </div>
@@ -145,11 +144,10 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
                     }`}
                   >
                     {stepNumber === 1 && t('General information')}
-                    {stepNumber === 2 &&
-                      t('Your Opinion on the Ai Legal Training System')}
+                    {stepNumber === 2 && t('Case Type')}
                     {stepNumber === 3 &&
                       t('Relevant Laws and Judgments in the Application')}
-                    {stepNumber === 4 && t('Law form and interest')}
+                    {stepNumber === 4 && t('Law Firm')}
                     {stepNumber === 5 && t('Commitment and Collaboration')}
                   </div>
                 </div>

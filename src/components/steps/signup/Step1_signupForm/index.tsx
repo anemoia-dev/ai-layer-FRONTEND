@@ -1,12 +1,13 @@
 import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useAtom } from 'jotai';
-import { Controller, useForm } from 'react-hook-form'; // Import Controller
+import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { multiStepFormAtom } from '../signup_state';
 
 interface Step1FormData {
+  isLawyer: string;
   fullName: string;
   email: string;
   mobileNumber: string;
@@ -27,10 +28,11 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
   const {
     register,
     handleSubmit,
-    control, // Add control here
+    control,
     formState: { errors },
   } = useForm<Step1FormData>({
     defaultValues: formData.step1 || {
+      isLawyer: '',
       fullName: '',
       email: '',
       mobileNumber: '',
@@ -42,7 +44,7 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
   });
 
   const onSubmit = (data: Step1FormData) => {
-    setFormData((prevFormData) => ({
+    setFormData((prevFormData: typeof formData) => ({
       ...prevFormData,
       step1: data,
     }));
@@ -50,21 +52,40 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
   };
 
   return (
-    <>
-      <motion.div
-        className="min-h-[80vh] w-full border-b"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="mt-10 flex w-full flex-col gap-2 border-b p-5 md:px-10">
-          <h1 className="text-lg font-[500]">{t('General information')}</h1>
-          <p className="text-xs text-gray-400">
-            {t('Please provide the information required in the below form')}
-          </p>
-        </div>
+    <motion.div
+      className="min-h-[80vh] w-full border-b"
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="mt-10 flex w-full flex-col gap-2 border-b p-5 md:px-10">
+        <h1 className="text-lg font-[500]">{t('General information')}</h1>
+        <p className="text-xs text-gray-400">
+          {t('Please provide the information required in the below form')}
+        </p>
+      </div>
 
-        <div className="flex w-[100%] flex-col gap-5 p-5 md:p-10 lg:w-[80%]">
+      <div className="p-5 md:p-10">
+        <h1 className="text-lg font-[500]">{t('Are you a Lawyer?')}</h1>
+        <div className="flex justify-around border-b py-10 font-bold lg:w-[75%]">
+          <button
+            type="button"
+            className="rounded-xl border border-gray-600 px-10 py-2"
+            onClick={() => next()}
+          >
+            {t('Yes')}
+          </button>
+          <button
+            type="button"
+            className="rounded-xl border bg-black px-10 py-2 text-white"
+          >
+            {t('No')}
+          </button>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex w-full flex-col gap-5 p-5 md:p-10 lg:w-[80%]">
           <div className="flex flex-wrap justify-between gap-5 lg:gap-10">
             <TextField
               id="fullName"
@@ -89,21 +110,10 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
               helperText={errors.email?.message}
             />
             <TextField
-              id="mobileNumber"
-              placeholder={t('Mobile Number')}
-              variant="outlined"
-              className="w-[45%]"
-              {...register('mobileNumber', {
-                required: t('This field is required'),
-              })}
-              error={Boolean(errors.mobileNumber)}
-              helperText={errors.mobileNumber?.message}
-            />
-            <TextField
               id="institution"
               placeholder={t('University Or Educational Institution')}
               variant="outlined"
-              className="w-[45%]"
+              className="w-full"
               {...register('institution', {
                 required: t('This field is required'),
               })}
@@ -141,11 +151,11 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
               {t('Are you currently enrolled in a legal training program?')}
             </h2>
             <Controller
-              name="legalTraining" // Make sure 'legalTraining' matches your form data
+              name="legalTraining"
               control={control}
               rules={{ required: t('This field is required') }}
               render={({ field }) => (
-                <RadioGroup {...field} className="text-gray-700 ">
+                <RadioGroup {...field} className="text-gray-700">
                   <FormControlLabel
                     value="Yes"
                     control={
@@ -180,28 +190,27 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
             )}
           </div>
         </div>
-      </motion.div>
 
-      <div className="my-10 flex w-full justify-end px-5 md:px-10">
-        <motion.button
-          whileHover={{
-            scale: 1.05,
-            rotate: -1,
-            transition: { type: 'spring', stiffness: 400 },
-          }}
-          whileTap={{
-            scale: 0.95,
-            rotate: 1,
-            transition: { type: 'spring', stiffness: 400 },
-          }}
-          type="button"
-          onClick={handleSubmit(onSubmit)}
-          className="rounded-md bg-black px-8 py-3 text-white"
-        >
-          {t('Next')}
-        </motion.button>
-      </div>
-    </>
+        <div className="my-10 flex w-full justify-end px-5 md:px-10">
+          <motion.button
+            whileHover={{
+              scale: 1.05,
+              rotate: -1,
+              transition: { type: 'spring', stiffness: 400 },
+            }}
+            whileTap={{
+              scale: 0.95,
+              rotate: 1,
+              transition: { type: 'spring', stiffness: 400 },
+            }}
+            type="submit"
+            className="rounded-md bg-black px-8 py-3 text-white"
+          >
+            {t('Next')}
+          </motion.button>
+        </div>
+      </form>
+    </motion.div>
   );
 };
 

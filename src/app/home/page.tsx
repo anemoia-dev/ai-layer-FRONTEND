@@ -20,7 +20,7 @@ function Page() {
           transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
           className="mb-4 text-4xl font-extrabold text-gray-800"
         >
-          {t(`Thanks`)}
+          {t(`Thank you!`)}
         </motion.h1>
         <motion.p
           initial={{ y: 50, opacity: 0 }}
@@ -28,7 +28,10 @@ function Page() {
           transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
           className="text-lg text-gray-600"
         >
-          {t('Form Submitted Succesfully')};
+          {t(
+            'The form has been submitted successfully! We value your time and participation, and we will use your feedback to improve Future Balance. Stay tuned for updates soon.”',
+          )}
+          ;
         </motion.p>
       </motion.div>
     </div>
