@@ -7,7 +7,6 @@ import Step1 from '@/components/steps/signup/Step1_signupForm';
 import Step2 from '@/components/steps/signup/Step2_signupForm';
 import Step3 from '@/components/steps/signup/Step3_signupForm';
 import Step4 from '@/components/steps/signup/Step4_signupForm';
-import Step5 from '@/components/steps/signup/Step5_signupForm';
 import type { StepType } from '@/hooks/useMultiStepForm';
 import useMultistepForm from '@/hooks/useMultiStepForm';
 
@@ -25,7 +24,6 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
     { type: Step2, props: {} },
     { type: Step3, props: {} },
     { type: Step4, props: {} },
-    { type: Step5, props: {} },
   ];
 
   const { step: StepComponent, next, back } = useMultistepForm(steps);
@@ -47,7 +45,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
   return (
     <div className="flex min-h-screen flex-col bg-white text-black lg:flex-row">
       {/* Large Screen View */}
-      <div className="custom-bg sticky top-0 hidden max-h-[100vh] w-full rounded-r-3xl bg-gray-100 p-4 lg:flex lg:w-[35%] lg:flex-col lg:items-center lg:justify-center">
+      <div className="custom-bg sticky top-0 hidden max-h-[100vh] w-full rounded-r-3xl bg-gray-100 p-4 shadow-2xl shadow-gray-400 lg:flex lg:w-[35%] lg:flex-col lg:items-center lg:justify-center">
         <div
           className={`flex items-center ${
             language === 'ar' && 'flex-row-reverse'
@@ -57,7 +55,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
         </div>
 
         <div className="relative flex flex-row items-center justify-between space-y-10 lg:flex-col">
-          {[1, 2, 3, 4, 5].map((stepNumber) => (
+          {[1, 2, 3, 4].map((stepNumber) => (
             <div
               key={stepNumber}
               className={`flex items-center ${
@@ -78,18 +76,17 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
                 >
                   {stepNumber === 1 && t('General information')}
                   {stepNumber === 2 &&
-                    t('Your Opinion on the Ai Legal Training System')}
+                    t('Relevant Laws and Judgments in the Application')}
                   {stepNumber === 3 &&
                     t('Relevant Laws and Judgments in the Application')}
-                  {stepNumber === 4 && t('Law form and interest')}
-                  {stepNumber === 5 && t('Commitment and Collaboration')}
+                  {stepNumber === 4 && t('Commitment and Collaboration')}
                 </div>
               </div>
               <motion.div
                 className={`z-[50] mb-2 flex h-12 w-12 items-center justify-center rounded-[50%] border-2 lg:h-8 lg:w-8 lg:rounded-full xl:h-12 xl:w-12 ${
                   currentStep >= stepNumber - 1
                     ? 'bg-black text-white'
-                    : 'border border-gray-500 text-gray-500'
+                    : 'border border-gray-500 bg-white text-gray-500'
                 }`}
                 whileHover={{
                   scale: 1.2,
@@ -125,7 +122,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
 
         <div className="relative flex items-center justify-between space-y-10 ">
           <div className="flex w-full flex-row items-center justify-between gap-5 ">
-            {[1, 2, 3, 4, 5].map((stepNumber) => (
+            {[1, 2, 3, 4].map((stepNumber) => (
               <div
                 key={stepNumber}
                 className={`flex items-center ${
@@ -146,11 +143,10 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
                   >
                     {stepNumber === 1 && t('General information')}
                     {stepNumber === 2 &&
-                      t('Your Opinion on the Ai Legal Training System')}
+                      t('Relevant Laws and Judgments in the Application')}
                     {stepNumber === 3 &&
                       t('Relevant Laws and Judgments in the Application')}
-                    {stepNumber === 4 && t('Law form and interest')}
-                    {stepNumber === 5 && t('Commitment and Collaboration')}
+                    {stepNumber === 4 && t('Commitment and Collaboration')}
                   </div>
                 </div>
                 <motion.div
