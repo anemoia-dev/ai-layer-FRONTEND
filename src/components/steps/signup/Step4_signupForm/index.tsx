@@ -1,99 +1,69 @@
 'use client';
 
+import 'react-toastify/dist/ReactToastify.css';
+
 import {
   CircularProgress,
+  FormControl,
   FormControlLabel,
+  FormLabel,
   Radio,
   RadioGroup,
 } from '@mui/material';
 import { motion } from 'framer-motion';
+import { useAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import { useRegisterUserMutation } from 'store/api/auth/auth';
+
+import { multiStepFormAtom } from '../state';
 
 interface Step4Props {
   back: () => void;
 }
 
-interface FormData {
+interface Step4FormData {
   timeDedication: string;
   participateInDevelopment: string;
-  suggestionsForTrainees: string;
 }
 
 const Step4: React.FC<Step4Props> = ({ back }) => {
   const { t } = useTranslation();
-  // const [register] = useRegisterUserMutation();
+  const [register] = useRegisterUserMutation();
+  const [formData, setFormData] = useAtom(multiStepFormAtom);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
-  const [isSubmitting] = useState(false);
-  // const [formData] = useAtom(multiStepFormAtom);
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<Step4FormData>({
+    defaultValues: formData.step4,
+  });
 
-  const renderRadioGroup = (
-    name: keyof FormData,
-    labelKey: string,
-    options: string[],
-  ) => (
-    <div className="flex flex-col gap-3">
-      <h2 className="text-sm">{t(labelKey)}</h2>
-      <Controller
-        name={name}
-        control={control}
-        rules={{ required: t('This field is required') }}
-        render={({ field }) => (
-          <RadioGroup {...field}>
-            {options.map((option) => (
-              <FormControlLabel
-                key={option}
-                value={option}
-                control={
-                  <Radio
-                    sx={{ color: 'black', '&.Mui-checked': { color: 'black' } }}
-                  />
-                }
-                label={<span className="text-gray-700">{t(option)}</span>}
-              />
-            ))}
-          </RadioGroup>
-        )}
-      />
-      {errors[name] && (
-        <p className="text-sm text-red-500">{errors[name]?.message}</p>
-      )}
-    </div>
-  );
+  const onSubmit = async (data: Step4FormData) => {
+    setIsSubmitting(true);
 
-  const onSubmit = async () => {
-    router.push('/home');
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      step4: { ...data },
+    }));
 
-    // const updatedFormData = {
-    //   ...formData.step1,
-    //   ...formData.step2,
-    //   ...formData.step3,
-    //   ...formData.step4,
-    //   ...data,
-    // };
-
-    // try {
-    //   const response = await register({ userCredentials: updatedFormData });
-    //   const error = response.error as APIError;
-    //   if (error?.data?.message) {
-    //     toast.error(error.data.message);
-    //   } else {
-    //     toast.success('Form submitted successfully');
-    //     router.push('/home');
-    //   }
-    // } catch (err) {
-    //   toast.error(String(err));
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
+    try {
+      setTimeout(async () => {
+        await register({ userCredentials: formData }).unwrap();
+      }, 1000);
+      toast.success('Form submitted successfully!');
+      router.push('/home');
+    } catch (error) {
+      toast.error('Failed to submit form. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -114,16 +84,86 @@ const Step4: React.FC<Step4Props> = ({ back }) => {
         </div>
 
         <div className="flex flex-col gap-5 p-5 font-[500] md:p-10">
-          {renderRadioGroup(
-            'timeDedication',
-            'How much time can you dedicate daily to using the application?',
-            ['Less than an hour', '1-2 hours', 'More than 2 hours'],
-          )}
-          {renderRadioGroup(
-            'participateInDevelopment',
-            'Are you willing to participate in the application development phases?',
-            ['Yes', 'No'],
-          )}
+          <FormControl component="fieldset" error={!!errors.timeDedication}>
+            <FormLabel component="legend">
+              {t(
+                'How much time can you dedicate daily to using the application?',
+              )}
+            </FormLabel>
+            <Controller
+              name="timeDedication"
+              control={control}
+              rules={{ required: t('This field is required') }}
+              render={({ field }) => (
+                <RadioGroup {...field}>
+                  {['Less than an hour', '1-2 hours', 'More than 2 hours'].map(
+                    (option) => (
+                      <FormControlLabel
+                        key={option}
+                        value={option}
+                        control={
+                          <Radio
+                            sx={{
+                              color: 'black',
+                              '&.Mui-checked': { color: 'black' },
+                            }}
+                          />
+                        }
+                        label={
+                          <span className="text-gray-700">{t(option)}</span>
+                        }
+                      />
+                    ),
+                  )}
+                </RadioGroup>
+              )}
+            />
+            {errors.timeDedication && (
+              <p className="text-sm text-red-500">
+                {errors.timeDedication?.message}
+              </p>
+            )}
+          </FormControl>
+
+          <FormControl
+            component="fieldset"
+            error={!!errors.participateInDevelopment}
+          >
+            <FormLabel component="legend">
+              {t(
+                'Are you willing to participate in the application development phases?',
+              )}
+            </FormLabel>
+            <Controller
+              name="participateInDevelopment"
+              control={control}
+              rules={{ required: t('This field is required') }}
+              render={({ field }) => (
+                <RadioGroup {...field}>
+                  {['Yes', 'No'].map((option) => (
+                    <FormControlLabel
+                      key={option}
+                      value={option}
+                      control={
+                        <Radio
+                          sx={{
+                            color: 'black',
+                            '&.Mui-checked': { color: 'black' },
+                          }}
+                        />
+                      }
+                      label={<span className="text-gray-700">{t(option)}</span>}
+                    />
+                  ))}
+                </RadioGroup>
+              )}
+            />
+            {errors.participateInDevelopment && (
+              <p className="text-sm text-red-500">
+                {errors.participateInDevelopment?.message}
+              </p>
+            )}
+          </FormControl>
         </div>
       </motion.div>
 
