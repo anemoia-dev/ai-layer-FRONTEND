@@ -54,6 +54,7 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
         ...data,
       },
     }));
+
     next();
   };
 
@@ -78,120 +79,130 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
         className="flex flex-col gap-5 p-5 md:px-10 lg:gap-10"
       >
         <h1 className="font-[500]">{t('Case Data')}</h1>
-        <div className="flex flex-wrap justify-between gap-5 lg:w-[75%] lg:gap-7">
+        <div className="flex flex-wrap justify-between gap-5 lg:w-[75%] ">
           <TextField
-            {...register('caseType', { required: 'This field is required' })}
+            {...register('caseType', { required: t('This field is required') })}
             placeholder={t('Case Type')}
             variant="outlined"
             className="w-[47%]"
             error={!!errors.caseType}
-            helperText={errors.caseType ? 'This field is required' : ''}
+            helperText={errors.caseType ? t('This field is required') : ''}
           />
           <TextField
             {...register('judgementNumber', {
-              required: 'This field is required',
+              required: t('This field is required'),
             })}
             placeholder={t('Judgement Number')}
             variant="outlined"
             className="w-[47%]"
             error={!!errors.judgementNumber}
-            helperText={errors.judgementNumber ? 'This field is required' : ''}
+            helperText={
+              errors.judgementNumber ? t('This field is required') : ''
+            }
           />
           <TextField
             {...register('issuingCourt', {
-              required: 'This field is required',
+              required: t('This field is required'),
             })}
             placeholder={t('Issuing Court')}
             variant="outlined"
             className="w-[47%]"
             error={!!errors.issuingCourt}
-            helperText={errors.issuingCourt ? 'This field is required' : ''}
+            helperText={errors.issuingCourt ? t('This field is required') : ''}
           />
           <TextField
             {...register('judgementDate', {
-              required: 'This field is required',
+              required: t('This field is required'),
             })}
             placeholder={t('Judgement Date')}
             variant="outlined"
             className="w-[47%]"
             error={!!errors.judgementDate}
-            helperText={errors.judgementDate ? 'This field is required' : ''}
+            helperText={errors.judgementDate ? t('This field is required') : ''}
           />
           <TextField
             {...register('involvedParties', {
-              required: 'This field is required',
+              required: t('This field is required'),
             })}
             placeholder={t('Involved Parties')}
             variant="outlined"
             className="w-[47%]"
             error={!!errors.involvedParties}
-            helperText={errors.involvedParties ? 'This field is required' : ''}
+            helperText={
+              errors.involvedParties ? t('This field is required') : ''
+            }
           />
           <TextField
             {...register('supportiveDocuments', {
-              required: 'This field is required',
+              required: t('This field is required'),
             })}
             placeholder={t('Supportive Documents')}
             variant="outlined"
             className="w-[47%]"
             error={!!errors.supportiveDocuments}
             helperText={
-              errors.supportiveDocuments ? 'This field is required' : ''
+              errors.supportiveDocuments ? t('This field is required') : ''
             }
           />
         </div>
 
         <h1 className="font-[500]">{t('Analysis and Judgement Summary')}</h1>
         <TextField
-          {...register('caseOverview', { required: 'This field is required' })}
+          {...register('caseOverview', {
+            required: t('This field is required'),
+          })}
           placeholder={t('Case Overview')}
           variant="outlined"
           className="lg:w-[75%]"
           error={!!errors.caseOverview}
-          helperText={errors.caseOverview ? 'This field is required' : ''}
+          helperText={errors.caseOverview ? t('This field is required') : ''}
         />
 
-        <div className="flex flex-wrap justify-between gap-5 lg:w-[75%] lg:gap-7">
+        <div className="flex flex-wrap justify-between gap-5 lg:w-[75%] ">
           <TextField
             {...register('mainLegalIssue', {
-              required: 'This field is required',
+              required: t('This field is required'),
             })}
             placeholder={t('Main Legal Issue')}
             variant="outlined"
             className="w-[47%]"
             error={!!errors.mainLegalIssue}
-            helperText={errors.mainLegalIssue ? 'This field is required' : ''}
+            helperText={
+              errors.mainLegalIssue ? t('This field is required') : ''
+            }
           />
           <TextField
-            {...register('legalPoints', { required: 'This field is required' })}
+            {...register('legalPoints', {
+              required: t('This field is required'),
+            })}
             placeholder={t('Legal Points')}
             variant="outlined"
             className="w-[47%]"
             error={!!errors.legalPoints}
-            helperText={errors.legalPoints ? 'This field is required' : ''}
+            helperText={errors.legalPoints ? t('This field is required') : ''}
           />
           <TextField
             {...register('legalJurisprudence', {
-              required: 'This field is required',
+              required: t('This field is required'),
             })}
             placeholder={t('Legal Jurisprudence')}
             variant="outlined"
             className="w-[47%]"
             error={!!errors.legalJurisprudence}
             helperText={
-              errors.legalJurisprudence ? 'This field is required' : ''
+              errors.legalJurisprudence ? t('This field is required') : ''
             }
           />
           <TextField
             {...register('decisionResulting', {
-              required: 'This field is required',
+              required: t('This field is required'),
             })}
             placeholder={t('Decision Resulting')}
             variant="outlined"
             className="w-[47%]"
             error={!!errors.decisionResulting}
             helperText={
-              errors.decisionResulting ? 'This field is required' : ''
+              errors.decisionResulting ? t('This field is required') : ''
             }
           />
         </div>
@@ -201,40 +212,42 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
         </h1>
         <TextField
           {...register('judgementImpact', {
-            required: 'This field is required',
+            required: t('This field is required'),
           })}
           placeholder={t('How does the Judgement Affect Similar Cases')}
           variant="outlined"
           className="lg:w-[75%]"
           error={!!errors.judgementImpact}
-          helperText={errors.judgementImpact ? 'This field is required' : ''}
+          helperText={errors.judgementImpact ? t('This field is required') : ''}
         />
 
         <h1 className="font-[500]">{t('Comparative Legal Analysis')}</h1>
-        <div className="flex flex-wrap justify-between gap-5 lg:w-[75%] lg:gap-7">
+        <div className="flex flex-wrap justify-between gap-5 lg:w-[75%] ">
           <TextField
-            {...register('caseNo1', { required: 'This field is required' })}
+            {...register('caseNo1', { required: t('This field is required') })}
             placeholder={t('Case No')}
             variant="outlined"
             className="w-[29%]"
             error={!!errors.caseNo1}
-            helperText={errors.caseNo1 ? 'This field is required' : ''}
+            helperText={errors.caseNo1 ? t('This field is required') : ''}
           />
           <TextField
-            {...register('dated1', { required: 'This field is required' })}
+            {...register('dated1', { required: t('This field is required') })}
             placeholder={t('Dated')}
             variant="outlined"
             className="w-[29%]"
             error={!!errors.dated1}
-            helperText={errors.dated1 ? 'This field is required' : ''}
+            helperText={errors.dated1 ? t('This field is required') : ''}
           />
           <TextField
-            {...register('courtRuled1', { required: 'This field is required' })}
+            {...register('courtRuled1', {
+              required: t('This field is required'),
+            })}
             placeholder={t('Court Ruled')}
             variant="outlined"
             className="w-[29%]"
             error={!!errors.courtRuled1}
-            helperText={errors.courtRuled1 ? 'This field is required' : ''}
+            helperText={errors.courtRuled1 ? t('This field is required') : ''}
           />
         </div>
 
@@ -243,65 +256,67 @@ const Step3: React.FC<Step3Props> = ({ next, back }) => {
         </h1>
         <TextField
           {...register('legalRecommendations', {
-            required: 'This field is required',
+            required: t('This field is required'),
           })}
           placeholder={t('Legal Recommendations')}
           variant="outlined"
           className="lg:w-[75%]"
           error={!!errors.legalRecommendations}
           helperText={
-            errors.legalRecommendations ? 'This field is required' : ''
+            errors.legalRecommendations ? t('This field is required') : ''
           }
         />
 
-        <div className="flex flex-wrap justify-between gap-5 lg:w-[75%] lg:gap-7">
+        <div className="flex flex-wrap justify-between gap-5 lg:w-[75%] ">
           <TextField
             {...register('futureApplication', {
-              required: 'This field is required',
+              required: t('This field is required'),
             })}
             placeholder={t('How can this judgement be applied in the Future')}
             variant="outlined"
             className="w-[47%]"
             error={!!errors.futureApplication}
             helperText={
-              errors.futureApplication ? 'This field is required' : ''
+              errors.futureApplication ? t('This field is required') : ''
             }
           />
           <TextField
             {...register('keyTakeaways', {
-              required: 'This field is required',
+              required: t('This field is required'),
             })}
             placeholder={t('Key Takeaways from This Case')}
             variant="outlined"
             className="w-[47%]"
             error={!!errors.keyTakeaways}
-            helperText={errors.keyTakeaways ? 'This field is required' : ''}
+            helperText={errors.keyTakeaways ? t('This field is required') : ''}
           />
         </div>
 
         <h1 className="font-[500]">{t('Sources and References')}</h1>
-        <div className="flex flex-wrap justify-between gap-5 lg:w-[75%] lg:gap-7">
+        <div className="flex flex-wrap justify-between gap-5 lg:w-[75%] ">
           <TextField
             {...register('relevantLaws', {
-              required: 'This field is required',
+              required: t('This field is required'),
             })}
             placeholder={t('Relevant Laws and Regulation')}
             variant="outlined"
             className="w-[47%]"
             error={!!errors.relevantLaws}
-            helperText={errors.relevantLaws ? 'This field is required' : ''}
+            helperText={errors.relevantLaws ? t('This field is required') : ''}
           />
           <TextField
-            {...register('legalSource', { required: 'This field is required' })}
+            {...register('legalSource', {
+              required: t('This field is required'),
+            })}
             placeholder={t('Official Legal Source')}
             variant="outlined"
             className="w-[47%]"
             error={!!errors.legalSource}
-            helperText={errors.legalSource ? 'This field is required' : ''}
+            helperText={errors.legalSource ? t('This field is required') : ''}
           />
         </div>
 
-        <div className="my-10 flex justify-between px-5 md:px-10">
+        <div className="my-10 flex justify-between  ">
           <motion.button
             type="button"
             onClick={back}

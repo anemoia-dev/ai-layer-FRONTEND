@@ -37,7 +37,6 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
   });
 
   const onSubmit = (data: Step1FormData) => {
-    console.log(data);
     setFormData((prevFormData) => ({
       ...prevFormData,
       step1: {
@@ -45,7 +44,6 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
         ...data,
       },
     }));
-
     next();
   };
 
@@ -72,12 +70,6 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
             onClick={() => next()}
           >
             {t('Yes')}
-          </button>
-          <button
-            type="button"
-            className="rounded-xl border bg-black px-10 py-2 text-white"
-          >
-            {t('No')}
           </button>
         </div>
       </div>

@@ -52,11 +52,18 @@ const Step4: React.FC<Step4Props> = ({ back }) => {
       ...prevFormData,
       step4: { ...data },
     }));
+    const { step1 } = formData;
+    const { step2 } = formData;
+    const { step3 } = formData;
+    const allData = {
+      step1,
+      step2,
+      step3,
+      step4: data,
+    };
 
     try {
-      setTimeout(async () => {
-        await register({ userCredentials: formData }).unwrap();
-      }, 1000);
+      await register({ userCredentials: allData }).unwrap();
       toast.success('Form submitted successfully!');
       router.push('/home');
     } catch (error) {
@@ -110,7 +117,9 @@ const Step4: React.FC<Step4Props> = ({ back }) => {
                           />
                         }
                         label={
-                          <span className="text-gray-700">{t(option)}</span>
+                          <span className="select-none text-gray-700">
+                            {t(option)}
+                          </span>
                         }
                       />
                     ),
@@ -152,7 +161,11 @@ const Step4: React.FC<Step4Props> = ({ back }) => {
                           }}
                         />
                       }
-                      label={<span className="text-gray-700">{t(option)}</span>}
+                      label={
+                        <span className="select-none text-gray-700">
+                          {t(option)}
+                        </span>
+                      }
                     />
                   ))}
                 </RadioGroup>

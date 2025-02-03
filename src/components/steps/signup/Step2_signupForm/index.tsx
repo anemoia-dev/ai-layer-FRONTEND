@@ -94,6 +94,7 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
                     {...field}
                     placeholder={t('Law Name')}
                     variant="outlined"
+                    error={!!errors.lawName}
                     value={field.value || ''}
                   />
                   {errors.lawName && (
@@ -114,6 +115,7 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
                 >
                   <TextField
                     {...field}
+                    error={!!errors.articleNumber}
                     placeholder={t('Article Number')}
                     variant="outlined"
                     value={field.value || ''}
@@ -139,6 +141,7 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
               >
                 <TextField
                   {...field}
+                  error={!!errors.articleText}
                   placeholder={t('Text of the Article or Judgment')}
                   variant="outlined"
                   value={field.value || ''}
@@ -161,6 +164,7 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
               >
                 <TextField
                   {...field}
+                  error={!!errors.issuingAuthority}
                   placeholder={t('Issuing Authority')}
                   variant="outlined"
                   value={field.value || ''}
@@ -188,6 +192,7 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
                   >
                     <TextField
                       {...field}
+                      error={!!errors.judgmentSummary}
                       variant="outlined"
                       placeholder={t('Judgment summary is required')}
                       value={field.value || ''}
@@ -218,6 +223,7 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
                     <TextField
                       {...field}
                       variant="outlined"
+                      error={!!errors.keyHighlights}
                       placeholder={t('Key Highlights')}
                       value={field.value || ''}
                     />
@@ -246,6 +252,7 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
                   >
                     <TextField
                       {...field}
+                      error={!!errors.practicalExamples}
                       variant="outlined"
                       placeholder={t('Practical Examples of the Judgment')}
                       value={field.value || ''}
@@ -331,11 +338,6 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
                         label={t(
                           'Commercial Laws (Contracts, Intellectual Property)',
                         )}
-                      />
-                      <FormControlLabel
-                        value="Other"
-                        control={<Radio />}
-                        label={t('Other (please specify)')}
                       />
                     </RadioGroup>
                     {errors.priorityLegalAreas && (
