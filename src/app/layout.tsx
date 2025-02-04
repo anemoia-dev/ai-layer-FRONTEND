@@ -13,7 +13,7 @@ import { persistor, store } from '../../store/store';
 function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="font-poppins" dir="rtl">
+      <body className="font-poppins">
         <Head>
           <link rel="icon" href="/favicon-32x32.png" />
           <meta name="description" content="Your site description" />

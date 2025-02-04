@@ -45,7 +45,10 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-white text-black lg:flex-row">
+    <div
+      className="flex min-h-screen flex-col bg-white text-black lg:flex-row"
+      dir="rtl"
+    >
       {/* Large Screen View */}
       <div className="custom-bg sticky top-0 hidden max-h-screen w-full rounded-r-3xl bg-gray-100 p-4 shadow-2xl shadow-gray-400 lg:flex lg:w-[35%] lg:flex-col lg:items-center lg:justify-center">
         <div

@@ -115,7 +115,7 @@ function HeroPage() {
       {/* SHADOW BG */}
       <div className="relative z-10 bg-[#0c172b] pb-10">
         <div
-          className="relative bottom-5 flex min-h-[20%] w-full items-start justify-start bg-[#0c182c] px-5 md:h-1/2 md:px-40"
+          className="relative bottom-5 flex min-h-[20%] w-full items-start justify-center bg-[#0c182c] px-5 md:h-1/2 md:px-40"
           data-animate="shadow"
         >
           <Image

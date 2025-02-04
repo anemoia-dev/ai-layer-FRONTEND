@@ -36,13 +36,6 @@ function SecondChatBox() {
         y: '-20%',
         opacity: 0,
       })
-      .from('[data-animate="chatNav"] div', {
-        y: '-10%',
-        opacity: 0,
-        stagger: {
-          amount: 0.5,
-        },
-      })
       .from('[data-animate="sideBar"]', {
         x: '30%',
         opacity: 0,
@@ -51,37 +44,9 @@ function SecondChatBox() {
         x: '-30%',
         opacity: 0,
       })
-      .from('[data-animate="chatList1"]', {
-        y: '-10%',
-        opacity: 0,
-        stagger: {
-          amount: 0.5,
-        },
-        ease: 'power4.inOut',
-      })
-      .from('[data-animate="chatList2"] div', {
-        y: '-10%',
-        opacity: 0,
-        stagger: {
-          amount: 0.5,
-        },
-        ease: 'power4.inOut',
-      })
       .from('[data-animate="chatBox"]', {
         y: '-50%',
         opacity: 0,
-      })
-      .from('[data-animate="chat"]', {
-        x: '10%',
-        opacity: 0,
-      })
-      .from('[data-animate="chat2"]', {
-        opacity: 0,
-        x: '10%',
-      })
-      .from('[data-animate="chat3"]', {
-        opacity: 0,
-        x: '-10%',
       });
   });
   return (
