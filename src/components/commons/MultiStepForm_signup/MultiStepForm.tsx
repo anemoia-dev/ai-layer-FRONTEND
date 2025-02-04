@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -16,6 +17,7 @@ interface MultiStepFormProps {
 
 const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
   const { t } = useTranslation();
+  const router = useRouter();
 
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -45,13 +47,21 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
   return (
     <div className="flex min-h-screen flex-col bg-white text-black lg:flex-row">
       {/* Large Screen View */}
-      <div className="custom-bg sticky top-0 hidden max-h-[100vh] w-full rounded-r-3xl bg-gray-100 p-4 shadow-2xl shadow-gray-400 lg:flex lg:w-[35%] lg:flex-col lg:items-center lg:justify-center">
+      <div className="custom-bg sticky top-0 hidden max-h-screen w-full rounded-r-3xl bg-gray-100 p-4 shadow-2xl shadow-gray-400 lg:flex lg:w-[35%] lg:flex-col lg:items-center lg:justify-center">
         <div
-          className={`flex items-center ${
+          className={`flex cursor-pointer items-center ${
             language === 'ar' && 'flex-row-reverse'
           } mb-10 w-full justify-center gap-5`}
         >
-          <Image src="/Arabic.png" alt="arabic-img" width={250} height={250} />
+          <Image
+            src="/Arabic.png"
+            onClick={() => {
+              router.push('/');
+            }}
+            alt="arabic-img"
+            width={250}
+            height={250}
+          />
         </div>
 
         <div className="relative flex flex-row items-center justify-between space-y-10 lg:flex-col">
@@ -60,12 +70,12 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
               key={stepNumber}
               className={`flex items-center ${
                 language === 'ar' && 'flex-row-reverse'
-              } relative z-[20] flex-wrap items-center justify-center gap-5`}
+              } relative z-20 flex-wrap items-center justify-center gap-5`}
             >
               <div
                 className={`flex justify-end ${
                   language === 'en' && 'mr-5'
-                } w-[80%] whitespace-nowrap lg:w-[22vw]`}
+                } w-4/5 whitespace-nowrap lg:w-[22vw]`}
               >
                 <div
                   className={`ml-4 hidden w-full justify-end font-[500] text-black lg:flex lg:justify-start lg:text-[9px] xl:text-[0.7rem] 2xl:text-[0.9rem] ${
@@ -83,7 +93,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
                 </div>
               </div>
               <motion.div
-                className={`z-[50] mb-2 flex h-12 w-12 items-center justify-center rounded-[50%] border-2 lg:h-8 lg:w-8 lg:rounded-full xl:h-12 xl:w-12 ${
+                className={`z-50 mb-2 flex size-12 items-center justify-center rounded-[50%] border-2 lg:size-8 lg:rounded-full xl:size-12 ${
                   currentStep >= stepNumber - 1
                     ? 'bg-black text-white'
                     : 'border border-gray-500 bg-white text-gray-500'
@@ -111,13 +121,21 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
         </div>
       </div>
       {/* //////////////// MOBILE  */}
-      <div className="custom-bg  max-h-[100vh] w-full rounded-r-3xl bg-gray-100 p-5 pt-20 lg:hidden">
+      <div className="custom-bg  max-h-screen w-full rounded-r-3xl bg-gray-100 p-5 pt-20 lg:hidden">
         <div
-          className={`flex items-center justify-start ${
+          className={`flex cursor-pointer items-center justify-start ${
             language === 'ar' && 'flex-row-reverse '
           } mb-10 w-full gap-5`}
         >
-          <Image src="/Arabic.png" alt="arabic-img" width={200} height={200} />
+          <Image
+            src="/Arabic.png"
+            onClick={() => {
+              router.push('/');
+            }}
+            alt="arabic-img"
+            width={200}
+            height={200}
+          />
         </div>
 
         <div className="relative flex items-center justify-between space-y-10 ">
@@ -127,12 +145,12 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
                 key={stepNumber}
                 className={`flex items-center ${
                   language === 'ar' && 'flex-row-reverse'
-                } relative z-[20] flex-wrap items-center justify-center `}
+                } relative z-20 flex-wrap items-center justify-center `}
               >
                 <div
                   className={`flex justify-end ${
                     language === 'en' && 'mr-5'
-                  } w-[80%] whitespace-nowrap lg:w-[22vw]`}
+                  } w-4/5 whitespace-nowrap lg:w-[22vw]`}
                 >
                   <div
                     className={`ml-4 hidden w-full font-[500] text-black lg:flex lg:text-[9px] xl:text-[0.7rem] 2xl:text-[0.9rem] ${
@@ -150,7 +168,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ language }) => {
                   </div>
                 </div>
                 <motion.div
-                  className={`z-[50] mb-2 flex h-12 w-12 items-center justify-center rounded-[50%] border-2 lg:h-8 lg:w-8 lg:rounded-full xl:h-12 xl:w-12 ${
+                  className={`z-50 mb-2 flex size-12 items-center justify-center rounded-[50%] border-2 lg:size-8 lg:rounded-full xl:size-12 ${
                     currentStep >= stepNumber - 1
                       ? 'bg-black text-white'
                       : 'border border-gray-500 text-gray-500'

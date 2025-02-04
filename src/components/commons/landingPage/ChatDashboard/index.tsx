@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -14,7 +15,6 @@ import {
   Users,
   Video,
 } from 'lucide-react';
-import Image from 'next/image';
 import React from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -179,7 +179,7 @@ function SecondChatBox() {
             <div className="flex items-center justify-between border-b p-4">
               <div className="flex items-center space-x-2">
                 <div className="flex size-8 items-center justify-center rounded bg-[#1a1a1a]">
-                  <Image alt="logo" src="fullLogo.png" />
+                  <img alt="logo" src="/fullLogo.png" />
                 </div>
                 <div className="text-right">
                   <h2 className="text-sm font-semibold">مستقبل القانون</h2>
@@ -232,7 +232,7 @@ function SecondChatBox() {
                       <p className="text-sm font-medium">{user.name}</p>
                       <p className="text-xs text-gray-500">{user.time}</p>
                     </div>
-                    <Image
+                    <img
                       src={user.img}
                       alt={user.name}
                       className="size-10 rounded-full object-cover"
@@ -268,7 +268,7 @@ function SecondChatBox() {
                       <p className="text-sm font-medium">{user.name}</p>
                       <p className="text-xs text-gray-500">{user.time}</p>
                     </div>
-                    <Image
+                    <img
                       src={user.img}
                       alt={user.name}
                       className="size-10 rounded-full object-cover"
@@ -301,7 +301,7 @@ function SecondChatBox() {
                       القانون المدني • منذ 3 ساعات
                     </p>
                   </div>
-                  <Image
+                  <img
                     src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150"
                     alt="Profile"
                     className="ml-3 size-10 rounded-full object-cover"

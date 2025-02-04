@@ -15,6 +15,7 @@ export const multiStepFormAtom = atom({
     issuingAuthority: '',
     judgmentSummary: '',
     keyHighlights: '',
+    lawName: '',
     practicalExamples: '',
     priorityLegalAreas: '',
   },

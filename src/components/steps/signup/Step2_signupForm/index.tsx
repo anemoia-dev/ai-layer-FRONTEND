@@ -79,7 +79,7 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
           </p>
         </div>
 
-        <div className="flex w-full flex-col justify-between gap-5 p-5 text-sm md:p-10 lg:w-[80%] lg:gap-10">
+        <div className="flex w-full flex-col justify-between gap-5 p-5 text-sm md:p-10 lg:w-4/5 lg:gap-10">
           <div className="flex flex-wrap justify-between">
             <Controller
               name="lawName"

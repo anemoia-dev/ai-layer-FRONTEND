@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
-import Image from 'next/image';
 import React from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -19,7 +19,7 @@ function FirstBoxes() {
         x: '-100%',
         opacity: 0,
       })
-      .from('[data-animate="firstBoxImage"]', {
+      .from('[data-animate="firstBoxImage "]', {
         y: '100%',
         stagger: {
           amount: 0.5,
@@ -30,7 +30,7 @@ function FirstBoxes() {
         x: '100%',
         opacity: 0,
       })
-      .from('[data-animate="secondBoxImage"]', {
+      .from('[data-animate="secondBoxImage "]', {
         x: '-100%',
         opacity: 0,
       });
@@ -53,17 +53,17 @@ function FirstBoxes() {
             </p>
           </div>
           <div className="relative flex h-[70%]   items-end justify-center">
-            <Image
-              alt="justImage"
-              data-animate="firstBoxImage"
+            <img
+              alt="justImage "
+              data-animate="firstBoxImage "
               src="/chatbot.png"
               className="relative left-10 z-0 h-[45%] lg:h-[70%]"
             />
 
-            <Image
-              alt="justImage"
+            <img
+              alt="justImage "
               src="/chat.png"
-              className=" z-10 h-[70%] lg:h-[90%] "
+              className="z-10 h-[70%] lg:h-[90%] "
             />
           </div>
         </div>
@@ -79,9 +79,9 @@ function FirstBoxes() {
             </p>
           </div>
           <div className="relative flex h-[70%]   items-end justify-start px-1">
-            <Image
-              alt="justImage"
-              data-animate="secondBoxImage"
+            <img
+              alt="justImage "
+              data-animate="secondBoxImage "
               src="/Messenger.png"
               className="h-[95%]  w-[90%]"
             />
