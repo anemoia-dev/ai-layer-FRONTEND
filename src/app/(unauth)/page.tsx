@@ -87,9 +87,7 @@ export default function Page() {
             <div className="flex flex-col items-center justify-center gap-2">
               {' '}
               <h1 className=" leading-none">Maximize team productivity</h1>
-              <h1 className="second leading-none">
-                with the worlds fastest shared{' '}
-              </h1>
+              <h1 className=" leading-none">with the worlds fastest shared </h1>
               <h1 className=" leading-none">inbox</h1>
             </div>
 

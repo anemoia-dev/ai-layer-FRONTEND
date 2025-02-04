@@ -4,12 +4,14 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 function HeroPage() {
   const container = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useGSAP(
     () => {
@@ -93,6 +95,9 @@ function HeroPage() {
               className="mt-3 flex items-center gap-3 rounded-3xl border border-white px-5 py-2 text-xs md:text-lg"
               type="button"
               data-animate="button"
+              onClick={() => {
+                router.push('/register');
+              }}
             >
               <p>Enroll now</p>
               <ArrowRight size={20} />
