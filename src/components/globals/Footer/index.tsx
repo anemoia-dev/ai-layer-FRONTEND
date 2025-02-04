@@ -13,26 +13,8 @@ function Footer() {
         <div className="flex flex-col md:flex-row">
           {/* Left Column */}
           <div className="relative z-10 w-full p-5 md:w-1/2 md:p-10">
-            <h3 className="flex items-center gap-2 text-xl">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-6 text-blue-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 10V3L4 14h7v7l9-11h-7z"
-                />
-              </svg>
-              Relate
-            </h3>
-            <p className="mt-3 text-sm text-gray-400">
-              The Collaborative Sales CRM
-            </p>
+            <h3 className="flex items-center gap-2 text-xl">anemoia.dev</h3>
+            <p className="mt-3 text-sm text-gray-400">ai layer</p>
 
             <div className="mt-10 flex w-full justify-between gap-5 md:justify-normal">
               <div className="relative w-3/4">
@@ -128,7 +110,7 @@ function Footer() {
                   d="M13 10V3L4 14h7v7l9-11h-7z"
                 />
               </svg>
-              <p>© 2023 Pixelic, Inc. dba Relate</p>
+              <p>© 2025 ailexfuture.com</p>
             </div>
             <div className="flex items-center gap-2">
               <svg
@@ -141,7 +123,7 @@ function Footer() {
                   d="M12 2L2 19.78h9.75V22h.75v-2.22H22L12 2zm1.5 16.28h-3v-1.5h3v1.5zm0-2.78h-3V9.5h3v6z"
                 />
               </svg>
-              <p>Backed by Y Combinator</p>
+              <p>powered by anemoia.dev</p>
             </div>
           </div>
         </div>

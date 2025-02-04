@@ -15,7 +15,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <body className="font-poppins">
         <Head>
-          <link rel="icon" href="/favicon-32x32.png" />
+          <link rel="icon" href="/fullLogo.png" />
           <meta name="description" content="Your site description" />
         </Head>
         <Provider store={store}>
