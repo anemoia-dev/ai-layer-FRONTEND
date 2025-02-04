@@ -1,4 +1,6 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 function Page() {
   const { t } = useTranslation();
