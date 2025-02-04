@@ -2,14 +2,16 @@ import { useGSAP } from '@gsap/react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
-import { ArrowRight } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 gsap.registerPlugin(ScrollTrigger);
 
 function HeroPage() {
+  const { t } = useTranslation();
   const container = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -49,27 +51,24 @@ function HeroPage() {
       <div className="hero-bg px-5 pb-10 text-white md:h-3/4 md:px-10 md:pb-10">
         <div
           data-animate="firstdiv"
-          className=" flex items-center justify-around border-b border-gray-500 bg-transparent py-5 text-white"
+          className="flex items-center justify-around border-b border-gray-500 bg-transparent py-5 text-white"
         >
           <div>
             <Image
               src="/webLogo.png"
-              alt="Company Logo"
+              alt={t('Company Logo')}
               width={32}
               height={32}
               className="w-8"
               priority
             />
           </div>
-          <div className="flex gap-3">
-            <p>Contact us</p>
-            <ArrowRight size={20} />
-          </div>
+          <div className="flex gap-3" />
         </div>
-        <div className=" mt-32 flex flex-col items-center justify-center gap-5 text-[5vw] md:text-[4vw]">
+        <div className="mt-32 flex flex-col items-center justify-center gap-5 text-[5vw] md:text-[4vw]">
           <Image
             src="/fullLogo.png"
-            alt="Full Logo"
+            alt={t('Full Logo')}
             width={160}
             height={80}
             className="w-40"
@@ -78,15 +77,15 @@ function HeroPage() {
           />
           <div className="flex flex-col gap-2 text-center">
             <h1 className="leading-none" data-animate="first">
-              Your right and your peace of mind
+              {t('Your right and your peace of mind')}
             </h1>
             <h1 className="leading-none" data-animate="second">
-              Legal is our Mission
+              {t('Legal is our Mission')}
             </h1>
           </div>
           <div className="flex w-full flex-col items-center justify-center text-xs text-[#D9D9D9] md:text-lg">
             <p className="mt-3" data-animate="description">
-              Talk to one of our lawyers
+              {t('Talk to one of our lawyers')}
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -99,8 +98,8 @@ function HeroPage() {
                 router.push('/register');
               }}
             >
-              <p>Enroll now</p>
-              <ArrowRight size={20} />
+              <p>{t('Enroll now')}</p>
+              <ArrowLeft size={20} />
             </motion.button>
           </div>
           <div
@@ -120,7 +119,7 @@ function HeroPage() {
         >
           <Image
             src="/mac-screen.png"
-            alt="Mac Screen"
+            alt={t('Mac Screen')}
             width={1200}
             height={800}
             className="object-cover"
