@@ -1,6 +1,8 @@
 import { TextField } from '@mui/material';
 import { motion } from 'framer-motion';
+import gsap from 'gsap';
 import { useAtom } from 'jotai';
+import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -22,6 +24,15 @@ interface Step1Props {
 const Step1: React.FC<Step1Props> = ({ next }) => {
   const { t } = useTranslation();
   const [formData, setFormData] = useAtom(multiStepFormAtom);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    gsap.fromTo(
+      containerRef.current,
+      { opacity: 0, y: 100 },
+      { opacity: 1, y: 0, duration: 1, ease: 'power3.out' },
+    );
+  }, []);
 
   const {
     register,
@@ -50,10 +61,8 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
 
   return (
     <motion.div
+      ref={containerRef}
       className="mb-10 min-h-[80vh] w-full border-b pb-32"
-      initial={{ opacity: 0, y: -50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
     >
       <div className="mt-10 flex w-full flex-col gap-2 border-b p-5 md:px-10">
         <h1 className="text-lg font-[500]">{t('General information')}</h1>
@@ -62,22 +71,13 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
         </p>
       </div>
 
-      {/* Radio buttons for "Are you a Lawyer?" */}
       <div className="relative flex max-w-[100vw] flex-col border-b border-black bg-gray-100 p-5 md:p-10">
         <h2 className="mb-5 font-[500]">{t('Are you a Lawyer?')}</h2>
         <motion.button
-          className="w-20 rounded-md bg-black  py-2 text-white"
+          className="w-20 rounded-md bg-black py-2 text-white"
           onClick={() => next()}
-          whileHover={{
-            scale: 1.05,
-            rotate: -1,
-            transition: { type: 'spring', stiffness: 400 },
-          }}
-          whileTap={{
-            scale: 0.95,
-            rotate: 1,
-            transition: { type: 'spring', stiffness: 400 },
-          }}
+          whileHover={{ scale: 1.05, rotate: -1 }}
+          whileTap={{ scale: 0.95, rotate: 1 }}
         >
           {t('Yes')}
         </motion.button>
@@ -90,9 +90,7 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
             placeholder={t('Full Name')}
             variant="outlined"
             className="w-[45%]"
-            {...register('fullName', {
-              required: t('This field is required'),
-            })}
+            {...register('fullName', { required: t('This field is required') })}
             error={Boolean(errors.fullName)}
             helperText={errors.fullName?.message}
           />
@@ -101,9 +99,7 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
             placeholder={t('Email Address')}
             variant="outlined"
             className="w-[45%]"
-            {...register('email', {
-              required: t('This field is required'),
-            })}
+            {...register('email', { required: t('This field is required') })}
             error={Boolean(errors.email)}
             helperText={errors.email?.message}
           />
@@ -146,16 +142,8 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
       </div>
       <div className="my-10 flex w-full justify-end px-5 md:px-10">
         <motion.button
-          whileHover={{
-            scale: 1.05,
-            rotate: -1,
-            transition: { type: 'spring', stiffness: 400 },
-          }}
-          whileTap={{
-            scale: 0.95,
-            rotate: 1,
-            transition: { type: 'spring', stiffness: 400 },
-          }}
+          whileHover={{ scale: 1.05, rotate: -1 }}
+          whileTap={{ scale: 0.95, rotate: 1 }}
           type="submit"
           onClick={handleSubmit(onSubmit)}
           className="rounded-md bg-black px-8 py-3 text-white"
