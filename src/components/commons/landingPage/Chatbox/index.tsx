@@ -1,6 +1,6 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { ArrowLeft, Info, X } from 'lucide-react';
+import { Info, X } from 'lucide-react';
 import React from 'react';
 
 function Chatbox() {
@@ -17,15 +17,15 @@ function Chatbox() {
         opacity: 0,
       })
       .from('[data-animate="firstMsg"]', {
-        x: '-100%',
+        x: '100%',
         opacity: 0,
       })
       .from('[data-animate="secondMsg"]', {
         opacity: 0,
-        x: '100%',
+        x: '-100%',
       })
       .from('[data-animate="thirdMsg"]', {
-        x: '-100%',
+        x: '100%',
         opacity: 0,
       });
   });
@@ -38,13 +38,10 @@ function Chatbox() {
       <div className="flex h-[90%] w-full flex-col items-center justify-end overflow-hidden  rounded-b-3xl  bg-gradient-to-r from-[#E8F3FF] via-[#D6EAFE] to-[#C4E0FD] pt-10">
         <div
           data-animate="mainChat"
-          className=" w-4/5 max-w-3xl overflow-hidden rounded-t-3xl bg-white shadow-lg md:w-2/5"
+          className=" w-4/5 max-w-3xl overflow-hidden rounded-t-3xl bg-white shadow-lg lg:w-2/5"
         >
           {/* Header */}
           <header className="flex items-center border-b px-3 py-2 sm:px-4 sm:py-3 ">
-            <button type="button" className="text-blue-500 hover:text-blue-600">
-              <ArrowLeft className="size-5 sm:size-6" />
-            </button>
             <div className=" ml-2 flex items-center">
               <div className="flex size-8 items-center justify-center rounded-lg bg-black sm:size-10">
                 <span className="text-xs text-white sm:text-sm">AI</span>
