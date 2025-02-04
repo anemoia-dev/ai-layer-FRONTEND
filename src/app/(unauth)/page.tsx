@@ -97,10 +97,9 @@ export default function Page() {
 
             <div className="flex w-full flex-col items-center justify-center text-xs font-medium md:text-lg">
               <p className="mt-3 font-medium text-gray-700">
-                {t(
-                  'Our Ai-enhanced Inbox is lightning fast, easy to use, and optimized for efficiency',
-                )}
+                {t('Our Ai-enhanced Inbox is lightning fast, easy to use')}
               </p>
+              <p>{t('and optimized for efficiency')}</p>
               <p className="mt-3 text-gray-700">
                 {t('everything a modern support team needs')}
               </p>

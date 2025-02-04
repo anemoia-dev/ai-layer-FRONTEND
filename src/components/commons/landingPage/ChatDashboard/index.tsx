@@ -14,14 +14,11 @@ import {
   Users,
   Video,
 } from 'lucide-react';
-import React, { useState } from 'react';
+import React from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 function SecondChatBox() {
-  const [showSidebar, setShowSidebar] = useState(false);
-  const [showNextBar, setShowNextBar] = useState(false);
-
   useGSAP(() => {
     const secondchatBox = gsap.timeline({
       scrollTrigger: {
@@ -65,18 +62,10 @@ function SecondChatBox() {
           className="flex items-center justify-between border-b px-4 py-3 md:px-10 md:py-5"
         >
           <div className="flex items-center space-x-4">
-            <button
-              type="button"
-              onClick={() => setShowSidebar(!showSidebar)}
-              className="lg:hidden"
-            >
+            <button type="button" className="lg:hidden">
               <Menu className="size-5" />
             </button>
-            <button
-              type="button"
-              onClick={() => setShowNextBar(!showNextBar)}
-              className="lg:hidden"
-            >
+            <button type="button" className="lg:hidden">
               <Users className="size-5" />
             </button>
           </div>
