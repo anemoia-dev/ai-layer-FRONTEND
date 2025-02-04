@@ -1,8 +1,4 @@
-'use client';
-
-import { motion } from 'framer-motion';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 function Page() {
   const { t } = useTranslation();
@@ -38,4 +34,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default page;

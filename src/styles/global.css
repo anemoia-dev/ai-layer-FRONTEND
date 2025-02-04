@@ -9,5 +9,23 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+.hero-bg{
+  background-image: url('/heropage-bg.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.mac-bg{
+  background-image: url('/mac-screen.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
 
+
+
+
+
+
+/* scaling-animation  */
 @tailwind utilities;

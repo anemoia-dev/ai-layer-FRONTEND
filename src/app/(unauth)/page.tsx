@@ -2,19 +2,65 @@
 
 import 'react-toastify/dist/ReactToastify.css';
 
+import { useGSAP } from '@gsap/react';
+import { motion } from 'framer-motion';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/all';
+import { ArrowRight } from 'lucide-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 
-import SubwayForm from '@/components/commons/MultiStepForm_signup/MultiStepForm';
+import Chatbox from '@/components/commons/landingPage/Chatbox';
+import SecondChatBox from '@/components/commons/landingPage/ChatDashboard';
+import Features from '@/components/commons/landingPage/Features';
+import FirstBoxes from '@/components/commons/landingPage/FirstBoxesAnimation';
+import HeroPage from '@/components/commons/landingPage/HeroPage';
+import SecondBoxes from '@/components/commons/landingPage/SecondBoxes';
+import Footer from '@/components/globals/Footer';
+import Testimonial from '@/components/globals/Testimonial/page';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Page() {
   const { i18n } = useTranslation();
   const getLanguage = i18n.language as 'ar' | 'en';
+  useGSAP(() => {
+    const secondlastTitle = gsap.timeline({
+      scrollTrigger: {
+        trigger: '[data-animate="secondLastTitle"]',
+        start: 'top 30%',
+      },
+    });
 
+    secondlastTitle.from('[data-animate="secondLastTitle"] div', {
+      y: '10%',
+      opacity: 0,
+      stagger: {
+        amount: 0.6,
+      },
+    });
+    const lt = gsap.timeline({
+      scrollTrigger: {
+        trigger: '[data-animate="lastSection"]',
+      },
+    });
+    lt.from('[data-animate="lastSection"] h1 ', {
+      y: '-10%',
+      opacity: 0,
+      stagger: {
+        amount: 0.6,
+      },
+    }).from('[data-animate="lastSection"] button', {
+      x: '-10%',
+      opacity: 0,
+      stagger: {
+        amount: 0.5,
+      },
+    });
+  });
   return (
     <div className="relative" dir={getLanguage === 'ar' ? 'rtl' : 'ltr'}>
-      {/* ToastContainer to display toast messages globally */}
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -23,8 +69,90 @@ export default function Page() {
         closeOnClick
         rtl={getLanguage === 'ar'}
       />
+      <div className="max-w-[100vw] overflow-hidden">
+        <HeroPage />
+        <Features />
+        <Chatbox />
+        <FirstBoxes />
+        <Testimonial />
+        <SecondBoxes />
+        <section>
+          <div
+            data-animate="secondLastTitle"
+            className=" mt-32 flex flex-col items-center justify-center bg-[radial-gradient(ellipse_90%_60%_at_center,#c7b92930,#a2a51300)] text-[5vw] md:text-[4vw]"
+          >
+            <p className="mb-3 rounded-2xl bg-gradient-to-r from-[#faf7ef]  to-[#FBD482] px-4 py-1 text-xs font-[600] md:text-lg">
+              PROACTIVE SUPPORT
+            </p>
+            <div className="flex flex-col items-center justify-center gap-2">
+              {' '}
+              <h1 className=" leading-none">Maximize team productivity</h1>
+              <h1 className=" leading-none">with the worlds fastest shared </h1>
+              <h1 className=" leading-none">inbox</h1>
+            </div>
 
-      <SubwayForm language={getLanguage} />
+            <div className="flex w-full flex-col items-center  justify-center text-xs  font-medium md:text-lg">
+              <p className=" mt-3 font-medium text-gray-700">
+                Our Ai-enhanced Inbox is lightning fast , east to-use, and
+                optimized for efficiency
+              </p>
+              <p className=" mt-3 text-gray-700">
+                everything a modern support team needs
+              </p>
+            </div>
+          </div>
+        </section>
+        <SecondChatBox />
+        <section
+          data-animate=""
+          className=" mt-32 flex flex-col  items-center justify-center gap-10 text-[5vw] md:text-[4vw] lg:mt-44"
+        >
+          <div data-animate="" className=" flex flex-col gap-2 text-center">
+            <h1 className="leading-none">Combine automation and </h1>
+            <h1 className="leading-none">human support today</h1>
+          </div>
+          <div className="flex gap-3 text-sm font-semibold md:text-lg">
+            <motion.button
+              className="flex items-center gap-3 rounded-3xl bg-[#0057FF] px-5 py-2 text-white"
+              whileHover={{
+                scale: 1.05,
+                boxShadow: '0 10px 20px -3px rgba(0, 87, 255, 0.3)',
+              }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 10 }}
+            >
+              <p>About us</p>
+              <motion.span
+                animate={{ x: 5 }}
+                transition={{ type: 'spring', stiffness: 500 }}
+              >
+                <ArrowRight />
+              </motion.span>
+            </motion.button>
+
+            <motion.button
+              className="flex items-center gap-3 rounded-3xl border-2 border-[#0057FF] px-5 py-2 text-[#0057FF]"
+              whileHover={{
+                scale: 1.05,
+                backgroundColor: '#EFF4FF',
+                transition: { type: 'spring', stiffness: 300 },
+              }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: 'spring', stiffness: 250, damping: 12 }}
+            >
+              <p>Contact us</p>
+              <motion.span
+                initial={{ x: 0 }}
+                whileHover={{ x: 5 }}
+                transition={{ type: 'spring', stiffness: 600 }}
+              >
+                <ArrowRight />
+              </motion.span>
+            </motion.button>
+          </div>
+        </section>
+        <Footer />
+      </div>
     </div>
   );
 }
