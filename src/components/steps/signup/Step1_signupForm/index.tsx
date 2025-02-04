@@ -1,15 +1,14 @@
-import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useAtom } from 'jotai';
-import { Controller, useForm } from 'react-hook-form'; // Import Controller
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { multiStepFormAtom } from '../signup_state';
+import { multiStepFormAtom } from '../state';
 
 interface Step1FormData {
   fullName: string;
   email: string;
-  mobileNumber: string;
   institution: string;
   fieldOfStudy: string;
   academicLevel: string;
@@ -34,7 +33,6 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
     defaultValues: formData.step1 || {
       fullName: '',
       email: '',
-      mobileNumber: '',
       institution: '',
       fieldOfStudy: '',
       academicLevel: '',
@@ -46,40 +44,148 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
   const onSubmit = (data: Step1FormData) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      step1: data,
+      step1: {
+        ...prevFormData.step1,
+        ...data,
+      },
     }));
     next();
   };
 
   return (
-    <>
-      <motion.div
-        className="min-h-[80vh] w-full border-b"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="mt-10 flex w-full flex-col gap-2 border-b p-5 md:px-10">
-          <h1 className="text-lg font-[500]">{t('General information')}</h1>
-          <p className="text-xs text-gray-400">
-            {t('Please provide the information required in the below form')}
+    <motion.div
+      className="mb-10 min-h-[80vh] w-full border-b pb-32"
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="mt-10 flex w-full flex-col gap-2 border-b p-5 md:px-10">
+        <h1 className="text-lg font-[500]">{t('General information')}</h1>
+        <p className="text-xs text-gray-400">
+          {t('Please provide the information required in the below form')}
+        </p>
+      </div>
+
+      {/* Radio buttons for "Are you a student?" */}
+      <div className="relative flex max-w-[100vw] flex-col border-b border-black bg-gray-100 p-5 md:p-10">
+        <div className="absolute left-0 top-0 rounded-br-3xl bg-green-500 px-10  py-5 font-bold text-white ">
+          <p className="important-check">{t('Important !')}</p>
+        </div>
+        <h2 className="mb-5 font-[500]">{t('Are you a student?')}</h2>
+        <Controller
+          name="isStudent"
+          control={control}
+          rules={{ required: t('This field is required') }}
+          render={({ field }) => (
+            <RadioGroup {...field} className="text-gray-700">
+              <FormControlLabel
+                value
+                control={
+                  <Radio
+                    sx={{
+                      color: 'black',
+                      '&.Mui-checked': { color: 'black' },
+                    }}
+                  />
+                }
+                label={t('Yes')}
+              />
+              <FormControlLabel
+                value={false}
+                control={
+                  <Radio
+                    sx={{
+                      color: 'black',
+                      '&.Mui-checked': { color: 'black' },
+                    }}
+                  />
+                }
+                label={t('No')}
+              />
+            </RadioGroup>
+          )}
+        />
+        {errors.isStudent && (
+          <p className="text-xs text-red-500 sm:text-sm">
+            {errors.isStudent?.message || t('This field is required')}
           </p>
+        )}
+      </div>
+
+      <div className="flex w-[100%] flex-col gap-5 p-5 md:p-10 lg:w-[80%]">
+        <div className="flex flex-wrap justify-between gap-5 lg:gap-10">
+          <TextField
+            id="fullName"
+            placeholder={t('Full Name')}
+            variant="outlined"
+            className="w-[45%]"
+            {...register('fullName', {
+              required: t('This field is required'),
+            })}
+            error={Boolean(errors.fullName)}
+            helperText={errors.fullName?.message}
+          />
+          <TextField
+            id="email"
+            placeholder={t('Email Address')}
+            variant="outlined"
+            className="w-[45%]"
+            {...register('email', {
+              required: t('This field is required'),
+            })}
+            error={Boolean(errors.email)}
+            helperText={errors.email?.message}
+          />
+          <TextField
+            id="institution"
+            placeholder={t('University Or Educational Institution')}
+            variant="outlined"
+            className="w-full"
+            {...register('institution', {
+              required: t('This field is required'),
+            })}
+            error={Boolean(errors.institution)}
+            helperText={errors.institution?.message}
+          />
         </div>
 
-        {/* Radio buttons for "Are you a student?" */}
-        <div className="relative flex max-w-[100vw] flex-col border-b border-black bg-gray-100 p-5 md:p-10">
-          <div className="absolute left-0 top-0 rounded-br-3xl bg-green-500 px-10  py-5 font-bold text-white ">
-            <p className="important-check">{t('Important !')}</p>
-          </div>
-          <h2 className="mb-5 font-[500]">{t('Are you a student?')}</h2>
+        <TextField
+          id="fieldOfStudy"
+          placeholder={t('Field of Study')}
+          variant="outlined"
+          className="w-full"
+          {...register('fieldOfStudy', {
+            required: t('This field is required'),
+          })}
+          error={Boolean(errors.fieldOfStudy)}
+          helperText={errors.fieldOfStudy?.message}
+        />
+
+        <TextField
+          id="academicLevel"
+          placeholder={t('Academic Level')}
+          variant="outlined"
+          className="w-full"
+          {...register('academicLevel', {
+            required: t('This field is required'),
+          })}
+          error={Boolean(errors.academicLevel)}
+          helperText={errors.academicLevel?.message}
+        />
+
+        {/* Question for legal training */}
+        <div>
+          <h2 className="mb-5 font-[500]">
+            {t('Are you currently enrolled in a legal training program?')}
+          </h2>
           <Controller
-            name="isStudent"
+            name="legalTraining"
             control={control}
             rules={{ required: t('This field is required') }}
             render={({ field }) => (
               <RadioGroup {...field} className="text-gray-700">
                 <FormControlLabel
-                  value
+                  value="Yes"
                   control={
                     <Radio
                       sx={{
@@ -91,7 +197,7 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
                   label={t('Yes')}
                 />
                 <FormControlLabel
-                  value={false}
+                  value="No"
                   control={
                     <Radio
                       sx={{
@@ -105,132 +211,13 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
               </RadioGroup>
             )}
           />
-          {errors.isStudent && (
+          {errors.legalTraining && (
             <p className="text-xs text-red-500 sm:text-sm">
-              {errors.isStudent?.message || t('This field is required')}
+              {errors.legalTraining?.message || t('This field is required')}
             </p>
           )}
         </div>
-
-        <div className="flex w-[100%] flex-col gap-5 p-5 md:p-10 lg:w-[80%]">
-          <div className="flex flex-wrap justify-between gap-5 lg:gap-10">
-            <TextField
-              id="fullName"
-              placeholder={t('Full Name')}
-              variant="outlined"
-              className="w-[45%]"
-              {...register('fullName', {
-                required: t('This field is required'),
-              })}
-              error={Boolean(errors.fullName)}
-              helperText={errors.fullName?.message}
-            />
-            <TextField
-              id="email"
-              placeholder={t('Email Address')}
-              variant="outlined"
-              className="w-[45%]"
-              {...register('email', {
-                required: t('This field is required'),
-              })}
-              error={Boolean(errors.email)}
-              helperText={errors.email?.message}
-            />
-            <TextField
-              id="mobileNumber"
-              placeholder={t('Mobile Number')}
-              variant="outlined"
-              className="w-[45%]"
-              {...register('mobileNumber', {
-                required: t('This field is required'),
-              })}
-              error={Boolean(errors.mobileNumber)}
-              helperText={errors.mobileNumber?.message}
-            />
-            <TextField
-              id="institution"
-              placeholder={t('University Or Educational Institution')}
-              variant="outlined"
-              className="w-[45%]"
-              {...register('institution', {
-                required: t('This field is required'),
-              })}
-              error={Boolean(errors.institution)}
-              helperText={errors.institution?.message}
-            />
-          </div>
-
-          <TextField
-            id="fieldOfStudy"
-            placeholder={t('Field of Study')}
-            variant="outlined"
-            className="w-full"
-            {...register('fieldOfStudy', {
-              required: t('This field is required'),
-            })}
-            error={Boolean(errors.fieldOfStudy)}
-            helperText={errors.fieldOfStudy?.message}
-          />
-
-          <TextField
-            id="academicLevel"
-            placeholder={t('Academic Level')}
-            variant="outlined"
-            className="w-full"
-            {...register('academicLevel', {
-              required: t('This field is required'),
-            })}
-            error={Boolean(errors.academicLevel)}
-            helperText={errors.academicLevel?.message}
-          />
-
-          {/* Question for legal training */}
-          <div>
-            <h2 className="mb-5 font-[500]">
-              {t('Are you currently enrolled in a legal training program?')}
-            </h2>
-            <Controller
-              name="legalTraining"
-              control={control}
-              rules={{ required: t('This field is required') }}
-              render={({ field }) => (
-                <RadioGroup {...field} className="text-gray-700">
-                  <FormControlLabel
-                    value="Yes"
-                    control={
-                      <Radio
-                        sx={{
-                          color: 'black',
-                          '&.Mui-checked': { color: 'black' },
-                        }}
-                      />
-                    }
-                    label={t('Yes')}
-                  />
-                  <FormControlLabel
-                    value="No"
-                    control={
-                      <Radio
-                        sx={{
-                          color: 'black',
-                          '&.Mui-checked': { color: 'black' },
-                        }}
-                      />
-                    }
-                    label={t('No')}
-                  />
-                </RadioGroup>
-              )}
-            />
-            {errors.legalTraining && (
-              <p className="text-xs text-red-500 sm:text-sm">
-                {errors.legalTraining?.message || t('This field is required')}
-              </p>
-            )}
-          </div>
-        </div>
-      </motion.div>
-
+      </div>
       <div className="my-10 flex w-full justify-end px-5 md:px-10">
         <motion.button
           whileHover={{
@@ -243,14 +230,14 @@ const Step1: React.FC<Step1Props> = ({ next }) => {
             rotate: 1,
             transition: { type: 'spring', stiffness: 400 },
           }}
-          type="button"
-          onClick={handleSubmit(onSubmit)}
+          type="submit"
           className="rounded-md bg-black px-8 py-3 text-white"
         >
           {t('Next')}
         </motion.button>
       </div>
-    </>
+    </form>
+    </motion.div >
   );
 };
 
