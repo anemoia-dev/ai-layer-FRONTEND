@@ -3,12 +3,12 @@ import React from 'react';
 function Page() {
   const { t } = useTranslation();
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="max-w-lg rounded-2xl bg-white p-10 text-center shadow-xl"
+        className="max-w-lg p-10 text-center bg-white shadow-xl rounded-2xl"
       >
         <motion.h1
           initial={{ y: -50, opacity: 0 }}
@@ -34,4 +34,4 @@ function Page() {
   );
 }
 
-export default page;
+export default Page;
