@@ -1,26 +1,27 @@
 import {
-  Checkbox,
   FormControl,
   FormControlLabel,
-  FormGroup,
   FormHelperText,
+  Radio,
+  RadioGroup,
   TextField,
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useAtom } from 'jotai';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
+// import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { multiStepFormAtom } from '../signup_state';
+import { multiStepFormAtom } from '../state';
 
 interface Step4Props {
   next: () => void;
   back: () => void;
 }
 
-interface FormData {
-  caseType: string;
+interface Step2FormData {
+  lawName: string;
   articleNumber: string;
   articleText: string;
   issuingAuthority: string;
@@ -29,17 +30,17 @@ interface FormData {
   practicalExamples: string;
   priorityLegalAreas: string;
 }
+
 const Step2: React.FC<Step4Props> = ({ next, back }) => {
   const { t } = useTranslation();
-  const [formData] = useAtom(multiStepFormAtom);
+  const [formData, setFormData] = useAtom(multiStepFormAtom);
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
-    defaultValues: formData.step4 || {
-      caseType: '',
+  } = useForm<Step2FormData>({
+    defaultValues: formData.step2 || {
       articleNumber: '',
       articleText: '',
       issuingAuthority: '',
@@ -50,7 +51,14 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
     },
   });
 
-  const onSubmit = () => {
+  const onSubmit = (data: Step2FormData) => {
+    setFormData((prevdata) => ({
+      ...prevdata,
+      step2: {
+        ...prevdata.step2,
+        ...data,
+      },
+    }));
     next();
   };
 
@@ -63,31 +71,34 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
         transition={{ duration: 0.5 }}
       >
         <div className="mt-10 flex flex-col gap-2 border-b p-5 md:px-10">
-          <h1 className="text-lg font-[500]">{t('Case Type')}</h1>
+          <h1 className="text-lg font-[500]">
+            {t('Relevant Laws and Judgments in the Application')}
+          </h1>
           <p className="text-xs text-gray-400">
             {t('Please provide the information required in the below form')}
           </p>
         </div>
 
-        <div className="flex w-full flex-col justify-between gap-5 p-5 text-sm md:p-10 lg:w-[80%] lg:gap-10">
+        <div className="flex w-full flex-col justify-between gap-5 p-5 text-sm md:p-10 lg:w-4/5 lg:gap-10">
           <div className="flex flex-wrap justify-between">
             <Controller
-              name="caseType"
+              name="lawName"
               control={control}
               rules={{ required: t('This field is required') }}
               render={({ field }) => (
                 <FormControl
                   className="w-[45%]"
-                  error={Boolean(errors.caseType)}
+                  error={Boolean(errors.lawName)}
                 >
                   <TextField
                     {...field}
-                    placeholder={t('Case Type')}
+                    placeholder={t('Law Name')}
                     variant="outlined"
+                    error={!!errors.lawName}
                     value={field.value || ''}
                   />
-                  {errors.caseType && (
-                    <FormHelperText>{errors.caseType.message}</FormHelperText>
+                  {errors.lawName && (
+                    <FormHelperText>{errors.lawName.message}</FormHelperText>
                   )}
                 </FormControl>
               )}
@@ -104,6 +115,7 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
                 >
                   <TextField
                     {...field}
+                    error={!!errors.articleNumber}
                     placeholder={t('Article Number')}
                     variant="outlined"
                     value={field.value || ''}
@@ -129,6 +141,7 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
               >
                 <TextField
                   {...field}
+                  error={!!errors.articleText}
                   placeholder={t('Text of the Article or Judgment')}
                   variant="outlined"
                   value={field.value || ''}
@@ -151,6 +164,7 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
               >
                 <TextField
                   {...field}
+                  error={!!errors.issuingAuthority}
                   placeholder={t('Issuing Authority')}
                   variant="outlined"
                   value={field.value || ''}
@@ -178,6 +192,7 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
                   >
                     <TextField
                       {...field}
+                      error={!!errors.judgmentSummary}
                       variant="outlined"
                       placeholder={t('Judgment summary is required')}
                       value={field.value || ''}
@@ -208,6 +223,7 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
                     <TextField
                       {...field}
                       variant="outlined"
+                      error={!!errors.keyHighlights}
                       placeholder={t('Key Highlights')}
                       value={field.value || ''}
                     />
@@ -236,6 +252,7 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
                   >
                     <TextField
                       {...field}
+                      error={!!errors.practicalExamples}
                       variant="outlined"
                       placeholder={t('Practical Examples of the Judgment')}
                       value={field.value || ''}
@@ -263,12 +280,11 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
                     error={Boolean(errors.priorityLegalAreas)}
                     className="w-full"
                   >
-                    <FormGroup className="text-gray-700">
+                    <RadioGroup {...field} className="text-gray-700">
                       <FormControlLabel
+                        value="Labor and Corporate Laws"
                         control={
-                          <Checkbox
-                            {...field}
-                            value="Labor and Corporate Laws"
+                          <Radio
                             sx={{
                               color: 'black',
                               '&.Mui-checked': {
@@ -280,10 +296,9 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
                         label={t('Labor and Corporate Laws')}
                       />
                       <FormControlLabel
+                        value="Family Laws (Marriage, Divorce, Custody)"
                         control={
-                          <Checkbox
-                            {...field}
-                            value="Family Laws (Marriage, Divorce, Custody)"
+                          <Radio
                             sx={{
                               color: 'black',
                               '&.Mui-checked': {
@@ -295,10 +310,9 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
                         label={t('Family Laws (Marriage, Divorce, Custody)')}
                       />
                       <FormControlLabel
+                        value="International Laws"
                         control={
-                          <Checkbox
-                            {...field}
-                            value="International Laws"
+                          <Radio
                             sx={{
                               color: 'black',
                               '&.Mui-checked': {
@@ -310,10 +324,9 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
                         label={t('International Laws')}
                       />
                       <FormControlLabel
+                        value="Commercial Laws (Contracts, Intellectual Property)"
                         control={
-                          <Checkbox
-                            {...field}
-                            value="Commercial Laws (Contracts, Intellectual Property)"
+                          <Radio
                             sx={{
                               color: 'black',
                               '&.Mui-checked': {
@@ -326,7 +339,7 @@ const Step2: React.FC<Step4Props> = ({ next, back }) => {
                           'Commercial Laws (Contracts, Intellectual Property)',
                         )}
                       />
-                    </FormGroup>
+                    </RadioGroup>
                     {errors.priorityLegalAreas && (
                       <FormHelperText>
                         {errors.priorityLegalAreas.message}

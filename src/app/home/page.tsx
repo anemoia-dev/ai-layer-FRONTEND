@@ -20,7 +20,7 @@ function Page() {
           transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
           className="mb-4 text-4xl font-extrabold text-gray-800"
         >
-          {t(`Thank you!`)}
+          {t(`!Thank you`)}
         </motion.h1>
         <motion.p
           initial={{ y: 50, opacity: 0 }}

@@ -1,44 +1,76 @@
-import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
+'use client';
+
+import 'react-toastify/dist/ReactToastify.css';
+
+import {
+  CircularProgress,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+} from '@mui/material';
 import { motion } from 'framer-motion';
 import { useAtom } from 'jotai';
-import React from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import { useRegisterUserMutation } from 'store/api/auth/auth';
 
-import { multiStepFormAtom } from '../signup_state';
+import { multiStepFormAtom } from '../state';
 
-interface Step2Data {
-  LawFirm: string;
-  Mobile_Number: string;
-  legalWorkType: string;
-  interestArea: string;
-  specificSkills: string;
-  practicalExperience: string;
-}
-
-interface Step2Props {
-  next: () => void;
+interface Step4Props {
   back: () => void;
 }
 
-const Step4: React.FC<Step2Props> = ({ next, back }) => {
+interface Step4FormData {
+  timeDedication: string;
+  participateInDevelopment: string;
+}
+
+const Step4: React.FC<Step4Props> = ({ back }) => {
   const { t } = useTranslation();
-  const [formData] = useAtom(multiStepFormAtom);
+  const [register] = useRegisterUserMutation();
+  const [formData, setFormData] = useAtom(multiStepFormAtom);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<Step2Data>({
-    defaultValues: formData.step2,
+  } = useForm<Step4FormData>({
+    defaultValues: formData.step4,
   });
 
-  const onSubmit = () => {
-    // setFormData((prev) => ({
-    //   ...prev,
-    //   step4: data,
-    // }));
-    next();
+  const onSubmit = async (data: Step4FormData) => {
+    setIsSubmitting(true);
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      step4: { ...data },
+    }));
+    const { step1 } = formData;
+    const { step2 } = formData;
+    const { step3 } = formData;
+    const allData = {
+      step1,
+      step2,
+      step3,
+      step4: data,
+    };
+
+    try {
+      await register({ userCredentials: allData }).unwrap();
+      toast.success('Form submitted successfully!');
+      router.push('/home');
+    } catch (error) {
+      toast.error('Failed to submit form. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -50,157 +82,123 @@ const Step4: React.FC<Step2Props> = ({ next, back }) => {
         transition={{ duration: 0.5 }}
       >
         <div className="mt-10 flex w-full flex-col gap-2 border-b p-5 md:px-10">
-          <h1 className="text-lg font-[500]">{t('Law firm')}</h1>
+          <h1 className="text-lg font-medium">
+            {t('Commitment and Collaboration')}
+          </h1>
           <p className="text-xs text-gray-400">
             {t('Please provide the information required in the below form')}
           </p>
         </div>
 
-        <div className="flex w-full flex-col gap-10 p-5 md:p-10 lg:w-[80%]">
-          <div className="flex flex-wrap justify-between gap-5 lg:gap-10">
-            <Controller
-              name="LawFirm"
-              control={control}
-              rules={{ required: t('This field is required') }}
-              render={({ field }) => (
-                <TextField
-                  placeholder={t('Law firm')}
-                  variant="outlined"
-                  className="w-[45%]"
-                  {...field}
-                  error={!!errors.LawFirm}
-                  helperText={errors.LawFirm?.message}
-                />
-              )}
-            />
-            <Controller
-              name="Mobile_Number"
-              control={control}
-              rules={{ required: t('This field is required') }}
-              render={({ field }) => (
-                <TextField
-                  placeholder={t('Mobile Number')}
-                  variant="outlined"
-                  className="w-[45%]"
-                  {...field}
-                  error={!!errors.Mobile_Number}
-                  helperText={errors.Mobile_Number?.message}
-                />
-              )}
-            />
-          </div>
-          <Controller
-            name="legalWorkType"
-            control={control}
-            rules={{ required: t('This field is required') }}
-            render={({ field }) => (
-              <TextField
-                placeholder={t('Type of Legal Work')}
-                variant="outlined"
-                className="w-full lg:w-[100%]"
-                {...field}
-                error={!!errors.legalWorkType}
-                helperText={errors.legalWorkType?.message}
-              />
-            )}
-          />
-          <Controller
-            name="interestArea"
-            control={control}
-            rules={{ required: t('This field is required') }}
-            render={({ field }) => (
-              <TextField
-                placeholder={t('Which area of law interests you the most')}
-                variant="outlined"
-                className="w-full lg:w-[100%]"
-                {...field}
-                error={!!errors.interestArea}
-                helperText={errors.interestArea?.message}
-              />
-            )}
-          />
-          <div className="flex flex-col gap-3">
-            <h2 className="text-sm font-[500]">
+        <div className="flex flex-col gap-5 p-5 font-[500] md:p-10">
+          <FormControl component="fieldset" error={!!errors.timeDedication}>
+            <FormLabel component="legend">
               {t(
-                'Do you have specific interests in developing particular skills such as drafting legal memos, case management, or advocacy?',
+                'How much time can you dedicate daily to using the application?',
               )}
-            </h2>
+            </FormLabel>
             <Controller
-              name="specificSkills"
+              name="timeDedication"
               control={control}
               rules={{ required: t('This field is required') }}
               render={({ field }) => (
-                <RadioGroup {...field} className="text-gray-700 ">
-                  <FormControlLabel
-                    value="Yes"
-                    control={
-                      <Radio
-                        sx={{
-                          color: 'black',
-                          '&.Mui-checked': { color: 'black' },
-                        }}
+                <RadioGroup {...field}>
+                  {['Less than an hour', '1-2 hours', 'More than 2 hours'].map(
+                    (option) => (
+                      <FormControlLabel
+                        key={option}
+                        value={option}
+                        control={
+                          <Radio
+                            sx={{
+                              color: 'black',
+                              '&.Mui-checked': { color: 'black' },
+                            }}
+                          />
+                        }
+                        label={
+                          <span className="select-none text-gray-700">
+                            {t(option)}
+                          </span>
+                        }
                       />
-                    }
-                    label={t('Yes')}
-                  />
-                  <FormControlLabel
-                    value="No"
-                    control={
-                      <Radio
-                        sx={{
-                          color: 'black',
-                          '&.Mui-checked': { color: 'black' },
-                        }}
-                      />
-                    }
-                    label={t('No')}
-                  />
+                    ),
+                  )}
                 </RadioGroup>
               )}
             />
-            {errors.specificSkills && (
-              <p className="text-xs text-red-500">
-                {errors.specificSkills.message}
+            {errors.timeDedication && (
+              <p className="text-sm text-red-500">
+                {errors.timeDedication?.message}
               </p>
             )}
-          </div>
+          </FormControl>
+
+          <FormControl
+            component="fieldset"
+            error={!!errors.participateInDevelopment}
+          >
+            <FormLabel component="legend">
+              {t(
+                'Are you willing to participate in the application development phases?',
+              )}
+            </FormLabel>
+            <Controller
+              name="participateInDevelopment"
+              control={control}
+              rules={{ required: t('This field is required') }}
+              render={({ field }) => (
+                <RadioGroup {...field}>
+                  {['Yes', 'No'].map((option) => (
+                    <FormControlLabel
+                      key={option}
+                      value={option}
+                      control={
+                        <Radio
+                          sx={{
+                            color: 'black',
+                            '&.Mui-checked': { color: 'black' },
+                          }}
+                        />
+                      }
+                      label={
+                        <span className="select-none text-gray-700">
+                          {t(option)}
+                        </span>
+                      }
+                    />
+                  ))}
+                </RadioGroup>
+              )}
+            />
+            {errors.participateInDevelopment && (
+              <p className="text-sm text-red-500">
+                {errors.participateInDevelopment?.message}
+              </p>
+            )}
+          </FormControl>
         </div>
       </motion.div>
 
-      <div className="mb-10 mt-8 flex justify-between px-5 md:px-10">
+      <div className="my-10 flex justify-between px-5 md:px-10">
         <motion.button
-          whileHover={{
-            scale: 1.05,
-            rotate: -1,
-            transition: { type: 'spring', stiffness: 400 },
-          }}
-          whileTap={{
-            scale: 0.95,
-            rotate: 1,
-            transition: { type: 'spring', stiffness: 400 },
-          }}
           type="button"
           onClick={back}
-          className="rounded-md border-2 border-black bg-white px-8 py-3 font-[500] text-black"
+          className="rounded-md border-2 border-black bg-white px-8 py-3 text-black"
         >
           {t('Previous')}
         </motion.button>
         <motion.button
-          whileHover={{
-            scale: 1.05,
-            rotate: -1,
-            transition: { type: 'spring', stiffness: 400 },
-          }}
-          whileTap={{
-            scale: 0.95,
-            rotate: 1,
-            transition: { type: 'spring', stiffness: 400 },
-          }}
           type="button"
           onClick={handleSubmit(onSubmit)}
-          className="rounded-md bg-black px-8 py-3 text-white"
+          className="flex items-center justify-center rounded-md bg-green-500 px-8 py-3 text-white"
+          disabled={isSubmitting}
         >
-          {t('Next')}
+          {isSubmitting ? (
+            <CircularProgress size={24} sx={{ color: 'white' }} />
+          ) : (
+            t('Submit')
+          )}
         </motion.button>
       </div>
     </>
