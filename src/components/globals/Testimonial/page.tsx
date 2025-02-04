@@ -23,7 +23,11 @@ function Testimonial() {
         </h2>
       </div>
       <div className="flex items-center gap-5">
-        <img alt="nextImage" src="/picture.png" className="w-12" />
+        <img
+          alt="nextImage"
+          src="/Picture.png"
+          className="w-12 rounded-[50%]"
+        />
         <div className="flex flex-col items-start text-sm">
           <h4 className="font-bold">{t('Stuart skyes')}</h4>
           <p>{t('Founder of LEXFUTURE')}</p>

@@ -58,7 +58,7 @@ function SecondChatBox() {
       data-animate="secondChatBox"
       className="mt-4 flex flex-col items-center justify-center px-2 md:mt-32 md:px-4"
     >
-      <div className="h-[95vh] w-full overflow-hidden rounded-xl shadow-xl shadow-gray-400 md:h-[80vh] md:w-[95%] lg:h-[80vh] xl:h-[85vh]">
+      <div className="h-[65vh] w-full overflow-hidden rounded-xl shadow-xl shadow-gray-400 md:h-[80vh] md:w-[95%] lg:h-[80vh] xl:h-[85vh]">
         {/* Mac Window Buttons */}
         <div
           data-animate="chatNav"

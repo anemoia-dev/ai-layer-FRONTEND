@@ -70,7 +70,7 @@ export default function Page() {
         closeOnClick
         rtl={getLanguage === 'ar'}
       />
-      <div className="max-w-[100vw] overflow-hidden bg-[radial-gradient(ellipse_30%_10%_at_bottom_left,#2fe0e030,#a2a51300)]">
+      <div className="max-w-[100vw] overflow-hidden ">
         <HeroPage />
         <Features />
         <Chatbox />

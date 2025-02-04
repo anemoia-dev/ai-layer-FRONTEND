@@ -61,18 +61,18 @@ function FirstBoxes() {
               )}
             </p>
           </div>
-          <div className="relative flex h-3/5  items-end md:h-[65%]">
+          <div className="relative m-5 flex  h-3/5 items-end rounded-2xl bg-gradient-to-r from-[#e3e7e7] to-[#d8e0e2] md:h-[65%]">
             <img
               alt="Chatbot interface"
               data-animate="firstBoxImage"
               src="/chatbot.png"
-              className="absolute left-10 top-32 z-0 h-1/2 w-[50%] object-contain md:h-3/4 lg:left-16 xl:h-4/5"
+              className="absolute bottom-6 left-10 z-0  h-1/2 w-[50%] object-contain md:h-3/4 lg:bottom-0 lg:left-16 xl:h-4/5"
             />
             <img
               alt="Chat bubbles"
               data-animate="firstBoxSecondImg"
               src="/chat.png"
-              className=" relative   top-4 z-10 h-3/4 w-4/5 object-contain md:h-4/5 xl:h-[90%]"
+              className=" relative bottom-2 z-10  h-3/4 w-4/5 object-contain md:h-4/5 lg:bottom-0 xl:h-[90%]"
             />
           </div>
         </div>
