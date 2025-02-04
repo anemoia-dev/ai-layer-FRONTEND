@@ -63,7 +63,7 @@ function FirstBoxes() {
             <img
               alt="justImage "
               src="/chat.png"
-              className="z-10 h-[70%] lg:h-[90%] "
+              className="z-10 h-[70%] lg:h-[90%]"
             />
           </div>
         </div>

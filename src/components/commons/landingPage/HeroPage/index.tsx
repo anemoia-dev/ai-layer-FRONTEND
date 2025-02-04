@@ -26,10 +26,10 @@ function HeroPage() {
       })
         .from('[data-animate="logo"]', { y: '-100%', opacity: 0 })
         .from('[data-animate="first"]', { y: '-50%', opacity: 0, scale: 0.7 })
-        .from('[data-animate="second"]', { y: '50%', opacity: 0, scale: 0.7 })
-        .from('[data-animate="description"]', { x: '-50%', opacity: 0 })
-        .from('[data-animate="button"]', { x: '50%', opacity: 0 })
-        .from('[data-animate="mouse"]', { x: '-50%', opacity: 0 });
+        .from('[data-animate="second"]', { y: '-50%', opacity: 0, scale: 0.7 })
+        .from('[data-animate="description"]', { y: '-50%', opacity: 0 })
+        .from('[data-animate="button"]', { y: '50%', opacity: 0 })
+        .from('[data-animate="mouse"]', { y: '-50%', opacity: 0 });
 
       gsap.from('[data-animate="shadow"]', {
         x: '-100%',
