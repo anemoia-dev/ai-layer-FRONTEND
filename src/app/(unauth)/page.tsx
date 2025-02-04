@@ -82,7 +82,7 @@ export default function Page() {
             data-animate="secondLastTitle"
             className="mt-32 flex flex-col items-center justify-center bg-[radial-gradient(ellipse_90%_60%_at_center,#c7b92930,#a2a51300)] text-[5vw] md:text-[4vw]"
           >
-            <p className="mb-3 rounded-2xl bg-gradient-to-r from-[#faf7ef]  to-[#FBD482] px-4 py-1 text-xs font-[600] md:text-lg">
+            <p className=" mb-10 rounded-2xl bg-gradient-to-r from-[#faf7ef]  to-[#FBD482] px-4 py-1 text-xs font-[600] md:text-lg">
               {t('PROACTIVE SUPPORT')}
             </p>
             <div className="flex flex-col items-center justify-center gap-2">
