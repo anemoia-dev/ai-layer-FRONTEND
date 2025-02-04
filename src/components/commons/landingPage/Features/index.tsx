@@ -33,7 +33,7 @@ function Features() {
         className="flex flex-col items-center justify-center bg-white bg-[radial-gradient(ellipse_90%_60%_at_center,#2fe0e030,#a2a51300)] pt-10 text-center capitalize"
       >
         <div className="flex flex-col items-center justify-center gap-2 ">
-          <p className="mb-8 w-40 rounded-2xl bg-gradient-to-r  from-[#C4E0FD] to-[#5EADFF] px-4 py-1 text-xs font-[600] md:text-lg">
+          <p className="mb-10 w-40 rounded-2xl bg-gradient-to-r  from-[#C4E0FD] to-[#5EADFF] px-4 py-1  text-xs font-[600] md:text-lg">
             {t('AUTOMATION')}
           </p>
           <h1 className="text-[5vw] leading-none md:text-[4vw]">

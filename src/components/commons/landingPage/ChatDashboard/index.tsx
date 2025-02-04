@@ -14,14 +14,11 @@ import {
   Users,
   Video,
 } from 'lucide-react';
-import React, { useState } from 'react';
+import React from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 function SecondChatBox() {
-  const [showSidebar, setShowSidebar] = useState(false);
-  const [showNextBar, setShowNextBar] = useState(false);
-
   useGSAP(() => {
     const secondchatBox = gsap.timeline({
       scrollTrigger: {
@@ -65,139 +62,21 @@ function SecondChatBox() {
           className="flex items-center justify-between border-b px-4 py-3 md:px-10 md:py-5"
         >
           <div className="flex items-center space-x-4">
-            <button
-              type="button"
-              onClick={() => setShowSidebar(!showSidebar)}
-              className="lg:hidden"
-            >
+            <button type="button" className="lg:hidden">
               <Menu className="size-5" />
             </button>
-            <button
-              type="button"
-              onClick={() => setShowNextBar(!showNextBar)}
-              className="lg:hidden"
-            >
+            <button type="button" className="lg:hidden">
               <Users className="size-5" />
             </button>
           </div>
-          <div className="flex space-x-2">
+          <div className="flex gap-2">
             <div className="size-3 rounded-full bg-[#FF5F56] md:size-5" />
             <div className="size-3 rounded-full bg-[#FFBD2E] md:size-5" />
             <div className="size-3 rounded-full bg-[#27C93F] md:size-5" />
           </div>
         </div>
 
-        <div className="relative flex h-[calc(100%-3rem)] flex-row-reverse">
-          {/* Sidebar - Mobile */}
-          <div
-            className={`absolute inset-y-0 right-0 z-30 w-72 bg-white transition-transform duration-300 ease-in-out lg:hidden${
-              showSidebar ? 'translate-x-0' : 'translate-x-full'
-            }`}
-          >
-            <div className="h-full overflow-y-auto border-l">
-              {/* Sidebar Content */}
-              <div className="p-4">
-                <div className="px-4 py-2">
-                  <div className="relative">
-                    <input
-                      type="text"
-                      placeholder="البحث..."
-                      className="w-full rounded-lg bg-[#F5F5F5] py-2 pl-10 pr-4 text-right text-sm"
-                    />
-                    <Search className="absolute left-3 top-2.5 size-4 text-gray-400" />
-                  </div>
-                </div>
-
-                <nav className="px-4 py-2">
-                  <ul className="space-y-1">
-                    {[
-                      {
-                        icon: MessageCircle,
-                        text: 'صندوق البريد الرئيسي',
-                        count: '2',
-                      },
-                      { icon: Settings, text: 'الإعدادات' },
-                      { icon: Users, text: 'المحادثون' },
-                      { icon: Calendar, text: 'التقسيمات' },
-                    ].map((item) => (
-                      <li key={item.text}>
-                        <p className="flex items-center justify-end rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-100">
-                          {item.count && (
-                            <span className="mr-2 rounded-full bg-blue-100 px-2 text-xs text-blue-600">
-                              {item.count}
-                            </span>
-                          )}
-                          <span className="flex-1 text-right">{item.text}</span>
-                          <item.icon className="ml-2 size-4" />
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
-              </div>
-            </div>
-          </div>
-
-          {/* NextBar - Mobile */}
-          <div
-            className={`absolute inset-y-0 right-0 z-20 w-72 bg-white transition-transform duration-300 ease-in-out lg:hidden${
-              showNextBar ? 'translate-x-0' : 'translate-x-full'
-            }`}
-          >
-            <div className="h-full overflow-y-auto border-l">
-              {/* NextBar Content */}
-              <div className="flex items-center justify-between border-b p-4">
-                <div className="flex items-center space-x-2">
-                  <div className="flex size-8 items-center justify-center rounded bg-[#1a1a1a]">
-                    <img alt="logo" src="/fullLogo.png" />
-                  </div>
-                  <div className="text-right">
-                    <h2 className="text-sm font-semibold">مستقبل القانون</h2>
-                    <p className="text-xs text-gray-500">صندوق الوارد</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="px-4 py-2">
-                <div data-animate="chatList1" className="space-y-2">
-                  {[
-                    {
-                      name: 'عمر',
-                      time: '10:30 - 11:30',
-                      img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150',
-                    },
-                    {
-                      name: 'فرح',
-                      time: '10:30 - 11:30',
-                      img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150',
-                    },
-                    {
-                      name: 'محمد',
-                      time: '10:30 - 11:30',
-                      img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150',
-                    },
-                  ].map((user) => (
-                    <div
-                      key={user.name}
-                      className="flex cursor-pointer items-center justify-end rounded-lg bg-gray-100 p-2 shadow-md shadow-gray-200 hover:bg-gray-50"
-                    >
-                      <div className="mr-3 text-right">
-                        <p className="text-sm font-medium">{user.name}</p>
-                        <p className="text-xs text-gray-500">{user.time}</p>
-                      </div>
-                      <img
-                        src={user.img}
-                        alt={user.name}
-                        className="size-10 rounded-full object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Sidebar - Desktop */}
+        <div className="relative flex h-[calc(100%-3rem)]  flex-row-reverse">
           <div
             data-animate="sideBar"
             className="hidden w-72 border-r bg-white lg:block"
