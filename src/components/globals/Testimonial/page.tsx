@@ -1,44 +1,32 @@
-// import { t } from 'i18next';
-// import React from 'react';
-
-// function Testimonial() {
-//   return (
-//     <div className="mt-20 flex flex-col items-center justify-center gap-8 px-5 md:px-10 lg:mt-36 lg:px-20">
-//       <img src="/zilch.png" className="w-[20vw] md:w-[8vw]" />
-
-//       <div className="flex flex-col items-center justify-center text-sm font-[500] md:text-2xl">
-//         <h1>{t('Our bot deflection rate with our previous')}</h1>
-//         <h1>{t('customer service solution was 5-10%.')}</h1>
-//         <h1>{t(' With intercom, we achieved 65% bot')}</h1>
-//         <h1>{t('deflection within just one week ')}</h1>
-//         <h1>{t('of going live')}</h1>
-//       </div>
-
-//       {/* Profile Section */}
-//       <div className="mt-5 flex items-center gap-4">
-//         {/* Circular Image */}
-//         <img
-//           src="/Picture.png" // Replace with your actual image path
-//           alt="Profile"
-//           className="h-14 w-14 rounded-full border-2 border-gray-300 object-cover"
-//         />
-
-//         {/* Name & Title */}
-//         <div className="flex flex-col">
-//           <h2 className="text-sm font-semibold">{t('Stuart Skyes')}</h2>
-//           <p className="text-xs text-gray-500">{t('Founder of LEXFUTURE')}</p>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Testimonial;
-
+import Image from 'next/image';
 import React from 'react';
 
-function page() {
-  return <div>page</div>;
+function Testimonial() {
+  return (
+    <section className="mt-10 flex flex-col  items-center justify-center gap-5 px-10 text-center text-[2.5vw] md:mt-32 md:px-20 md:text-[1.5vw] lg:px-32">
+      <div className="flex flex-col items-center justify-center ">
+        <Image alt="nextImage" src="zilch.png" className="h-8  " />
+        <h2>Our bot deflection rate with our previous customer service</h2>
+        <h2 className="flex gap-2">
+          solution was 5-10% .With intercom , we acheived{' '}
+          <span className="font-semibold">65% bot</span>
+        </h2>
+        <h2 className="flex gap-2">
+          <span className="font-semibold">
+            deflection withing just one week
+          </span>
+          of going life
+        </h2>
+      </div>
+      <div className="flex items-center gap-5">
+        <Image alt="nextImage" src="picture.png" className="w-12" />
+        <div className="flex flex-col items-start text-sm ">
+          <h4 className="font-bold">Stuart skyes</h4>
+          <p>Founder of LEXFUTURE</p>
+        </div>
+      </div>
+    </section>
+  );
 }
 
-export default page;
+export default Testimonial;
