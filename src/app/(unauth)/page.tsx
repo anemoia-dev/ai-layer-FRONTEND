@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+
 'use client';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -7,6 +10,7 @@ import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 import { ArrowLeft } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
@@ -24,6 +28,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Page() {
   const { i18n } = useTranslation();
+  const router = useRouter();
   const getLanguage = i18n.language as 'ar' | 'en';
   const { t } = useTranslation();
   useGSAP(() => {
@@ -126,7 +131,13 @@ export default function Page() {
               whileTap={{ scale: 0.95 }}
               transition={{ type: 'spring', stiffness: 250, damping: 12 }}
             >
-              <p>{t('Get Started')}</p>
+              <p
+                onClick={() => {
+                  router.push('/register');
+                }}
+              >
+                {t('Get Started')}
+              </p>
               <motion.span
                 initial={{ x: 0 }}
                 whileHover={{ x: 5 }}
