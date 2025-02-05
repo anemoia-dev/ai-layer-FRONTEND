@@ -54,18 +54,18 @@ function SecondBoxes() {
             <h1 className="text-2xl font-[600] lg:text-3xl">
               {t('Fast Customer Support')}
             </h1>
-            <p className="w-[85%] text-xs font-[400] md:w-3/4 md:text-sm">
+            <p className="w-[85%] text-xs font-[400] text-gray-600 md:w-3/4 md:text-sm">
               {t(
                 'Proactively address common issues and manage support requests efficiently',
               )}
             </p>
           </div>
-          <div className="relative m-5 flex h-4/5  flex-col  items-end justify-center overflow-hidden rounded-2xl bg-gradient-to-r from-[#e9ecec83] to-[#1111] ">
+          <div className="relative flex h-4/5 flex-col  items-end  justify-end overflow-hidden rounded-2xl p-1  ">
             <img
               alt="nextImage"
               data-animate="firstImg"
               src="/sideImg.png"
-              className=" relative   top-4 z-10 h-3/4 w-4/5 object-contain md:h-4/5 xl:h-[90%]"
+              className=""
             />
           </div>
         </div>
@@ -77,18 +77,18 @@ function SecondBoxes() {
             <h1 className="text-2xl font-[600] lg:text-3xl">
               {t('Workflows')}
             </h1>
-            <p className="w-[85%] text-xs font-[400] md:w-3/4 md:text-sm">
+            <p className="w-[85%] text-xs font-[400] text-gray-600 md:w-3/4 md:text-sm">
               {t(
                 'Easily build powerful no-code automation with bots, triggers, conditions, and rules - all in one place',
               )}
             </p>
           </div>
-          <div className="relative flex h-[70%] flex-col items-end  ">
+          <div className="relative flex h-[70%] flex-col items-end p-1  ">
             <img
               alt="nextImage"
               data-animate="secondImg"
               src="/translator.png"
-              className=" relative   top-4 z-10  h-3/4 w-4/5 object-contain md:h-4/5 xl:h-[90%]"
+              className="w-1/2 object-contain lg:w-[55%] 2xl:w-2/5"
             />
           </div>
         </div>

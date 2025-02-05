@@ -29,7 +29,7 @@ function Testimonial() {
           className="w-12 rounded-[50%]"
         />
         <div className="flex flex-col items-start text-sm">
-          <h4 className="font-bold">{t('Stuart skyes')}</h4>
+          <h4 className="font-bold">{t('Ibrahim Aldhari')}</h4>
           <p>{t('Founder of LEXFUTURE')}</p>
         </div>
       </div>
