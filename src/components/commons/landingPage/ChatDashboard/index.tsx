@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -53,13 +54,13 @@ function SecondChatBox() {
   return (
     <section
       data-animate="secondChatBox"
-      className="mt-4 flex flex-col items-center justify-center px-5 md:mt-32 md:px-10 lg:px-20"
+      className="mt-4 flex flex-col  items-center justify-center  px-5 md:mt-32 md:px-10 lg:px-20"
     >
-      <div className=" h-[55vh] w-full overflow-hidden rounded-xl shadow-xl shadow-gray-400 md:h-[70vh] lg:h-[90vh] ">
+      <div className=" h-[55vh] w-full   overflow-hidden rounded-xl shadow-xl shadow-gray-400 md:h-[70vh] lg:h-[90vh] ">
         {/* Mac Window Buttons */}
         <div
           data-animate="chatNav"
-          className="flex items-center justify-between border-b px-4 py-3 md:px-10 md:py-5"
+          className="items-cente flex  justify-between border-b px-4 py-3 md:px-10 md:py-5"
         >
           <div className="flex items-center space-x-4">
             <button type="button" className="lg:hidden">
@@ -76,7 +77,7 @@ function SecondChatBox() {
           </div>
         </div>
 
-        <div className="relative flex h-[calc(100%-3rem)]  flex-row-reverse">
+        <div className="relative flex h-[calc(100%-3rem)]">
           <div
             data-animate="sideBar"
             className="hidden w-72 border-r bg-white lg:block"
