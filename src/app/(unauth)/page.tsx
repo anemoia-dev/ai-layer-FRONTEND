@@ -23,6 +23,7 @@ import HeroPage from '@/components/commons/landingPage/HeroPage';
 import SecondBoxes from '@/components/commons/landingPage/SecondBoxes';
 import Footer from '@/components/globals/Footer';
 import Testimonial from '@/components/globals/Testimonial/page';
+import LanguageSwitcher from '@/components/globals/dropdown/LanguageSwitcher';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -31,6 +32,9 @@ export default function Page() {
   const router = useRouter();
   const getLanguage = i18n.language as 'ar' | 'en';
   const { t } = useTranslation();
+
+
+
   useGSAP(() => {
     const secondlastTitle = gsap.timeline({
       scrollTrigger: {
@@ -75,7 +79,10 @@ export default function Page() {
         closeOnClick
         rtl={getLanguage === 'ar'}
       />
+      
+      
       <div className="max-w-[100vw] overflow-hidden ">
+
         <HeroPage />
         <Features />
         <Chatbox />
@@ -90,7 +97,7 @@ export default function Page() {
             <p className=" mb-10 rounded-2xl bg-gradient-to-r from-[#faf7ef]  to-[#FBD482] px-4 py-1 text-xs font-[600] md:text-lg">
               {t('PROACTIVE SUPPORT')}
             </p>
-            <div className="flex flex-col items-center justify-center gap-2">
+            <div className="flex flex-col items-center  justify-center gap-2">
               <h1 className="leading-none">
                 {t('Maximize team productivity')}
               </h1>
